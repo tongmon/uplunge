@@ -1,0 +1,6 @@
+# Build output
+*.exe
+/bin/
+
+# Debug output (screenshots, recorded replays)
+/out/

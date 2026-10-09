@@ -1,0 +1,5 @@
+# Keep LF everywhere so gofmt agrees on every OS.
+* text=auto eol=lf
+
+*.png binary
+*.aseprite binary

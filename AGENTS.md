@@ -64,6 +64,25 @@ Rules for using them:
 - **Keep data separate from code.** Tunables and content definitions (weapons, upgrades, enemies) live in data files, so balancing doesn't require code changes.
 - Prefer the smallest design that satisfies the current milestone. Don't add speculative abstractions.
 
+### Package layout
+
+Module path: `github.com/tongmon/uplunge`. Create a package only when the first code that needs it lands.
+
+| Path | Role | Ebitengine |
+|---|---|---|
+| `cmd/uplunge/` | Entry point. Parses flags and calls `app.Run`. | via app |
+| `internal/app/` | Window, fixed-step loop (`ebiten.SetTPS(sim.Hz)`, one `sim.World.Step` per `Update`), debug flags. | yes |
+| `internal/render/` | Drawing the world. | yes |
+| `internal/input/` | Maps devices to `sim.Input`. | yes |
+| `internal/sim/` | Simulation state and `Step`. | **no** |
+| `internal/collide/` | Integer-pixel movement and AABB-vs-tile collision. | **no** |
+| `internal/level/` | Tile maps and the LDtk chunk loader. | **no** |
+| `internal/tuning/` | Tunable definitions and parsing. | **no** |
+| `internal/replay/` | Input recording format. | **no** |
+| `data/` | Tunables (JSON). | |
+| `assets/` | Art and LDtk chunks. | |
+| `tools/` | Developer scripts and tools. | |
+
 ## Go conventions
 
 - `gofmt` clean, `go vet ./...` clean.
@@ -104,4 +123,4 @@ The PR description lists:
   - Lua scripting: `--script`
   - Export: `--sheet ... --data ... --format json-array`
 - LDtk: installed. Level chunks are authored as `.ldtk` files.
-- GitHub CLI `gh`. The repo `tongmon/uplunge` is private.
+- GitHub CLI `gh`. The repo `tongmon/uplunge` is public (since 2026-10-10).
