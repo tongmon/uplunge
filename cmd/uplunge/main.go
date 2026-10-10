@@ -15,7 +15,17 @@ func main() {
 	chunk := flag.String("chunk", "", "chunk to play in (default: the replay's chunk, else the first one)")
 	replayPath := flag.String("replay", "", "play back inputs from this replay file, then exit")
 	recordPath := flag.String("record", "", "save this run's inputs to this replay file on exit")
+	shots := flag.String("shots", "", "comma-separated ticks to save as PNGs, then exit (e.g. 0,30,120)")
+	shotsDir := flag.String("shots-dir", "out/shots", "directory for -shots PNGs")
 	flag.Parse()
+
+	var shotTicks []uint64
+	if *shots != "" {
+		var err error
+		if shotTicks, err = app.ParseShotTicks(*shots); err != nil {
+			log.Fatal(err)
+		}
+	}
 
 	cfg := app.Config{
 		Scale:      *scale,
@@ -24,6 +34,8 @@ func main() {
 		Chunk:      *chunk,
 		ReplayPath: *replayPath,
 		RecordPath: *recordPath,
+		ShotTicks:  shotTicks,
+		ShotsDir:   *shotsDir,
 	}
 	if err := app.Run(cfg); err != nil {
 		log.Fatal(err)

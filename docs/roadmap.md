@@ -16,7 +16,7 @@
 - [x] 정수 픽셀 충돌 처리 (사각형 대 타일) → `internal/collide` (2026-10-10)
 - [ ] 디버그 도구
   - 입력 기록/재생 ✅ `-record`, `-replay`, 골든 리플레이 테스트 (2026-10-10)
-  - 지정 프레임 스크린샷 후 자동 종료
+  - 지정 프레임 스크린샷 후 자동 종료 ✅ `-shots`, `-shots-dir` (2026-10-10)
   - 수치 실시간 조정 (설정 파일 자동 재로드)
 - [x] LDtk 조각 로더 → `internal/level` (2026-10-10)
 - [x] `go test` 기반 테스트 + 자동 검사 → `tools/check.ps1`, GitHub Actions (windows-latest) (2026-10-10)
