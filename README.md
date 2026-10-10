@@ -13,4 +13,6 @@ go run ./cmd/uplunge
 
 - `-scale N`: 창 배율 (기본 2)
 - `-tuning PATH`: 조정값 파일 (기본 `data/tuning.json`)
+- `-chunks PATH`: LDtk 조각 파일 (기본 `assets/chunks/chunks.ldtk`)
+- `-chunk NAME`: 플레이할 조각 이름 (기본: 첫 번째 조각)
 - 조작 (임시): 좌우 화살표 또는 A·D, 점프는 Z 또는 Space
