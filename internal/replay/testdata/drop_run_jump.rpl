@@ -1,0 +1,17 @@
+uplunge-replay 1
+chunk Start
+frames 300
+
+# Drop onto the first platform, walk off its right edge, then jump and
+# steer back left with a short hop at the end.
+0 -
+40 R
+75 -
+110 B
+130 LB
+150 L
+170 -
+200 B
+204 -
+230 RB
+260 -

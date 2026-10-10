@@ -4,6 +4,9 @@
 package sim
 
 import (
+	"fmt"
+
+	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/level"
 	"github.com/tongmon/uplunge/internal/tuning"
 )
@@ -47,4 +50,17 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 func (w *World) Step(in Input) {
 	w.Player.step(in, w.Tuning.Player, w.Map)
 	w.Tick++
+}
+
+// NewWorldInChunk returns a world with the player dropped in at the top
+// centre of m. Chunks carry no start position, so the spot must be open for
+// the whole hitbox.
+func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
+	p := t.Player
+	x := (m.Cols*m.TileSize - p.Width) / 2
+	if p.Height > m.Rows*m.TileSize || collide.Overlaps(m, x, 0, p.Width, p.Height) {
+		return nil, fmt.Errorf("sim: no room to spawn a %dx%d player at the top centre (%d, 0)",
+			p.Width, p.Height, x)
+	}
+	return NewWorld(t, m, x, 0), nil
 }

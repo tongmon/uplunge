@@ -1,0 +1,11 @@
+tick 0 x 98 y 0 vx 0 vy 0 ground false
+tick 30 x 98 y 44 vx 0 vy 0 ground true
+tick 60 x 151 y 58 vx 180 vy 210 ground false
+tick 90 x 180 y 215 vx 0 vy 320 ground false
+tick 120 x 180 y 201 vx 0 vy -210 ground false
+tick 150 x 131 y 236 vx -180 vy 0 ground false
+tick 180 x 65 y 316 vx 0 vy 0 ground true
+tick 210 x 65 y 292 vx 0 vy -30 ground false
+tick 240 x 85 y 281 vx 180 vy -210 ground false
+tick 270 x 155 y 316 vx 0 vy 0 ground true
+tick 300 x 155 y 316 vx 0 vy 0 ground true

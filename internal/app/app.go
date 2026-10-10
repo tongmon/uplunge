@@ -3,16 +3,16 @@
 package app
 
 import (
+	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 
-	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/input"
 	"github.com/tongmon/uplunge/internal/level"
 	"github.com/tongmon/uplunge/internal/render"
+	"github.com/tongmon/uplunge/internal/replay"
 	"github.com/tongmon/uplunge/internal/sim"
 	"github.com/tongmon/uplunge/internal/tuning"
 )
@@ -32,8 +32,14 @@ type Config struct {
 	TuningPath string
 	// ChunksPath is the LDtk project holding the level chunks.
 	ChunksPath string
-	// Chunk names the chunk to play in. Empty means the first chunk.
+	// Chunk names the chunk to play in. Empty means the replay's chunk, or
+	// else the first chunk.
 	Chunk string
+	// ReplayPath, if set, plays back recorded inputs instead of reading the
+	// keyboard and exits when they run out.
+	ReplayPath string
+	// RecordPath, if set, saves every step's input there when the game exits.
+	RecordPath string
 }
 
 // Run opens the window and blocks until the game exits.
@@ -49,12 +55,29 @@ func Run(cfg Config) error {
 	if err != nil {
 		return err
 	}
-	m, err := pickChunk(chunks, cfg.Chunk)
+
+	g := &game{recording: cfg.RecordPath != ""}
+	chunk := cfg.Chunk
+	if cfg.ReplayPath != "" {
+		r, err := replay.Load(cfg.ReplayPath)
+		if err != nil {
+			return err
+		}
+		if chunk != "" && chunk != r.Chunk {
+			return fmt.Errorf("app: -chunk %q does not match the replay's chunk %q", chunk, r.Chunk)
+		}
+		chunk = r.Chunk
+		g.playback = r.Inputs
+		g.replaying = true
+	}
+	if chunk == "" {
+		chunk = chunks[0].Name
+	}
+	m, err := level.FindChunk(chunks, chunk)
 	if err != nil {
 		return err
 	}
-	spawnX, spawnY, err := spawnPoint(m, tun.Player)
-	if err != nil {
+	if g.world, err = sim.NewWorldInChunk(tun, m); err != nil {
 		return err
 	}
 
@@ -62,42 +85,40 @@ func Run(cfg Config) error {
 	ebiten.SetWindowSize(ScreenWidth*cfg.Scale, ScreenHeight*cfg.Scale)
 	ebiten.SetTPS(sim.Hz)
 	ebiten.SetScreenFilterEnabled(false)
-	return ebiten.RunGame(&game{world: sim.NewWorld(tun, m, spawnX, spawnY)})
-}
-
-// spawnPoint drops the player in at the top centre of the chunk. Chunks carry
-// no start position, so the spot must be open for the whole hitbox.
-func spawnPoint(m *level.TileMap, p tuning.Player) (x, y int, err error) {
-	x = (m.Cols*m.TileSize - p.Width) / 2
-	if p.Height > m.Rows*m.TileSize || collide.Overlaps(m, x, y, p.Width, p.Height) {
-		return 0, 0, fmt.Errorf("app: no room to spawn a %dx%d player at the top centre (%d, %d)",
-			p.Width, p.Height, x, y)
-	}
-	return x, y, nil
-}
-
-func pickChunk(chunks []level.Chunk, name string) (*level.TileMap, error) {
-	if name == "" {
-		return chunks[0].Map, nil
-	}
-	names := make([]string, len(chunks))
-	for i, c := range chunks {
-		if c.Name == name {
-			return c.Map, nil
+	runErr := ebiten.RunGame(g)
+	if g.recording {
+		if err := replay.Save(cfg.RecordPath, replay.Replay{Chunk: chunk, Inputs: g.recorded}); err != nil {
+			return errors.Join(runErr, err)
 		}
-		names[i] = c.Name
 	}
-	return nil, fmt.Errorf("app: no chunk %q; have %s", name, strings.Join(names, ", "))
+	return runErr
 }
 
 type game struct {
 	world *sim.World
+
+	replaying bool
+	playback  []sim.Input
+	recording bool
+	recorded  []sim.Input
 }
 
 // Update runs exactly one simulation step. Ebitengine calls it sim.Hz times
 // per second and catches up with extra calls when a frame runs long.
 func (g *game) Update() error {
-	g.world.Step(input.Read())
+	var in sim.Input
+	if g.replaying {
+		if g.world.Tick >= uint64(len(g.playback)) {
+			return ebiten.Termination
+		}
+		in = g.playback[g.world.Tick]
+	} else {
+		in = input.Read()
+	}
+	if g.recording {
+		g.recorded = append(g.recorded, in)
+	}
+	g.world.Step(in)
 	return nil
 }
 
