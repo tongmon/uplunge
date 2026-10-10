@@ -394,7 +394,7 @@ func walkOff(t *testing.T) *World {
 
 func TestCoyoteJump(t *testing.T) {
 	p := testTuning().Player
-	n := steps(p.CoyoteTime)
+	n := 6 // CoyoteTime 0.1 s at 60 Hz
 	for k := 1; k <= n+2; k++ {
 		t.Run(fmt.Sprintf("press on air step %d", k), func(t *testing.T) {
 			w := walkOff(t)
@@ -436,7 +436,7 @@ func landingStep(t *testing.T) int {
 
 func TestJumpBuffer(t *testing.T) {
 	p := testTuning().Player
-	n := steps(p.JumpBufferTime)
+	n := 5 // JumpBufferTime 0.08 s at 60 Hz, rounded
 	land := landingStep(t)
 	// Step land+1 is the first one that starts on the ground. A tap j steps
 	// earlier is remembered for n steps, counting the step it happened on.
@@ -494,5 +494,23 @@ func TestApexGravity(t *testing.T) {
 				t.Fatalf("VY = %v, want %v", w.Player.VY, tt.want)
 			}
 		})
+	}
+}
+
+func TestReleasedBufferedJumpCannotBeExtended(t *testing.T) {
+	p := testTuning().Player
+	land := landingStep(t)
+	w := NewWorld(testTuning(), testRoom(t), 96, 0)
+	// Tap and release before landing, so the buffered jump launches with the
+	// button up, then press again right after the launch.
+	for i := 1; i <= land+1; i++ {
+		w.Step(Input{Button: i == land})
+	}
+	if w.Player.VY != -p.JumpSpeed {
+		t.Fatal("buffered press did not jump")
+	}
+	w.Step(Input{Button: true})
+	if w.Player.VY == -p.JumpSpeed {
+		t.Fatal("a new press after a released buffered jump extended the jump hold")
 	}
 }

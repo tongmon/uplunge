@@ -88,7 +88,12 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 	}
 	if pl.bufferSteps > 0 && pl.coyoteSteps > 0 {
 		pl.VY = -p.JumpSpeed
-		pl.jumpHoldSteps = steps(p.JumpHoldTime) - 1
+		// A buffered tap already released gets no hold, so a fresh press
+		// right after the launch cannot stretch it into a full jump.
+		pl.jumpHoldSteps = 0
+		if in.Button {
+			pl.jumpHoldSteps = steps(p.JumpHoldTime) - 1
+		}
 		pl.bufferSteps = 0
 		pl.coyoteSteps = 0
 	}
