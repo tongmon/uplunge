@@ -101,13 +101,16 @@ Choose checks in proportion to the change:
 - **Level chunks:** the reachability validator must pass for every chunk.
 - **Docs and config-only changes:** proofread and check links.
 
-Before opening a PR, run:
+Before opening a PR, run `./tools/check.ps1`. It runs the following and fails if any of them fails:
 
 ```
 gofmt -l .
+go mod tidy -diff
 go vet ./...
 go test ./...
 ```
+
+CI (`.github/workflows/check.yml`, `windows-latest`) runs the same script on every PR and on pushes to `main`.
 
 The PR description lists:
 
