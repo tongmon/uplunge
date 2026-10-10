@@ -176,13 +176,14 @@ type game struct {
 	// newSeeds makes each restart climb a new tower from the clock, unless
 	// -seed fixed it.
 	newSeeds bool
-	// rise and gap are the two sides of the core tuning ratio for the HUD:
-	// the current tuning's magazine rise (a lower bound unless riseDone), and
-	// the average gap between the run's stompers stompable enemies.
-	rise     int
-	riseDone bool
-	gap      float64
-	stompers int
+	// The core tuning ratio for the HUD (docs/design.md section 4) is a
+	// reach over gap. The reaches are the current tuning's, from the ground
+	// and from a stomp (lower bounds unless reachDone); gap is the average
+	// between the run's stompers stompable enemies.
+	groundReach, stompReach int
+	reachDone               bool
+	gap                     float64
+	stompers                int
 
 	replaying bool
 	playback  []sim.Input
@@ -205,7 +206,7 @@ func (g *game) begin(start replay.Replay, t tuning.Tuning) error {
 	}
 	g.world, g.start, g.startMap, g.recorded = w, start, m, nil
 	g.fx = render.NewEffects()
-	g.rise, g.riseDone = sim.MagazineRise(t)
+	g.measureReach(t)
 	g.gap, g.stompers = sim.EnemyGap(t, m)
 	return nil
 }
@@ -231,6 +232,13 @@ func (g *game) restart() {
 	if g.newSeeds {
 		logClimb(next)
 	}
+}
+
+// measureReach updates the HUD's reaches for tuning t.
+func (g *game) measureReach(t tuning.Tuning) {
+	ground, gDone := sim.GroundReach(t)
+	stomp, sDone, _ := sim.StompReach(t)
+	g.groundReach, g.stompReach, g.reachDone = ground, stomp, gDone && sDone
 }
 
 // canRestart reports whether R starts the next run now: once a run is over
@@ -287,7 +295,7 @@ func (g *game) pollTuning() {
 	applied, err := reloadTuning(g.world, g.reloadPath)
 	if applied {
 		// Part of the tuning may apply even when err says what was kept.
-		g.rise, g.riseDone = sim.MagazineRise(g.world.Tuning())
+		g.measureReach(g.world.Tuning())
 	}
 	if err != nil {
 		if msg := err.Error(); msg != g.lastReloadErr {
@@ -330,17 +338,18 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if wt := g.world.Water; wt.On {
 		msg += fmt.Sprintf("  water %+.0f", wt.Y-float64(p.Body.Y+p.Body.H))
 	}
-	mag := fmt.Sprint(g.rise)
-	if !g.riseDone {
-		mag = ">=" + mag // the measurement hit its step limit
+	reach := fmt.Sprintf("%d/%d", g.groundReach, g.stompReach)
+	if !g.reachDone {
+		reach = ">=" + reach // a measurement hit its step limit
 	}
 	switch {
 	case g.stompers < 2:
-		msg += fmt.Sprintf("\nratio - (mag %s, %d stompable enemies)", mag, g.stompers)
+		msg += fmt.Sprintf("\nratio - (reach %s, %d stompable enemies)", reach, g.stompers)
 	case g.gap == 0:
-		msg += fmt.Sprintf("\nratio - (mag %s, enemies all at one height)", mag)
+		msg += fmt.Sprintf("\nratio - (reach %s, enemies all at one height)", reach)
 	default:
-		msg += fmt.Sprintf("\nratio %.2f = mag %s / gap %.0f", float64(g.rise)/g.gap, mag, g.gap)
+		msg += fmt.Sprintf("\nratio %.2f floor %.2f stomp\n  = reach %s / gap %.0f",
+			float64(g.groundReach)/g.gap, float64(g.stompReach)/g.gap, reach, g.gap)
 	}
 	switch {
 	case g.world.Over:
