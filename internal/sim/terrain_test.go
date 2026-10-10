@@ -333,7 +333,7 @@ func TestSetTuningKeepsBlocksThatAreInUse(t *testing.T) {
 	}
 }
 
-func TestShippedChunksMatchShippedBlocks(t *testing.T) {
+func TestShippedChunksMatchShippedData(t *testing.T) {
 	tun, err := tuning.Load("../../data/tuning.json")
 	if err != nil {
 		t.Fatal(err)
@@ -344,8 +344,17 @@ func TestShippedChunksMatchShippedBlocks(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, c := range chunks {
-		if err := newBlockTable(tun.Blocks).check(c.Map); err != nil {
+		if err := checkLevel(tun, c.Map); err != nil {
 			t.Errorf("chunk %s: %v", c.Name, err)
+		}
+	}
+	names, err := level.EntityNames(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, n := range names {
+		if _, ok := enemyDef(tun, n); !ok {
+			t.Errorf("LDtk entity %q has no enemy definition", n)
 		}
 	}
 	values, err := level.CollisionValues(path)

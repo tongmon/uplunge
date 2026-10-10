@@ -22,6 +22,30 @@ type Tuning struct {
 	Camera Camera  `json:"camera"`
 	Tower  Tower   `json:"tower"`
 	Blocks []Block `json:"blocks"`
+	// Enemies defines every enemy kind, by the name chunks place it with.
+	Enemies []Enemy `json:"enemies"`
+}
+
+// Enemy defines one enemy kind.
+type Enemy struct {
+	// Name matches the entity identifier in the LDtk project.
+	Name   string `json:"name"`
+	Width  int    `json:"width"`
+	Height int    `json:"height"`
+	// HP is the number of bullet hits it takes. A stomp always kills.
+	HP int `json:"hp"`
+	// Stompable enemies are safe on top; the rest hurt from every side.
+	Stompable bool `json:"stompable,omitempty"`
+	// Speed is how fast it flies sideways, turning at walls. 0 keeps it in
+	// place.
+	Speed float64 `json:"speed"`
+	// Color is the grey-box draw color, "#rrggbb".
+	Color string `json:"color"`
+}
+
+// RGB returns Color as bytes. Parse has already checked its format.
+func (e Enemy) RGB() (r, g, b uint8) {
+	return Block{Color: e.Color}.RGB()
 }
 
 // Camera holds how the view follows the player up the tower.
@@ -50,6 +74,7 @@ const MaxTowerLength = 1000
 func (t Tuning) Clone() Tuning {
 	t.Blocks = slices.Clone(t.Blocks)
 	t.Tower.Pool = slices.Clone(t.Tower.Pool)
+	t.Enemies = slices.Clone(t.Enemies)
 	return t
 }
 
@@ -101,6 +126,19 @@ type Player struct {
 	// DrillBounce caps the upward speed after the head breaks a block:
 	// VY = min(VY, -DrillBounce).
 	DrillBounce float64 `json:"drillBounce"`
+
+	// StompSpeed is held as the upward speed for StompHoldTime after
+	// stomping an enemy, whether or not the button is down.
+	StompSpeed    float64 `json:"stompSpeed"`
+	StompHoldTime float64 `json:"stompHoldTime"`
+
+	// MaxHP is the HP a run starts with. A hit takes 1, refills the
+	// magazine, knocks the player away by KnockbackX and up by KnockbackY,
+	// and makes the player immune to hits for InvulnTime.
+	MaxHP      int     `json:"maxHP"`
+	KnockbackX float64 `json:"knockbackX"`
+	KnockbackY float64 `json:"knockbackY"`
+	InvulnTime float64 `json:"invulnTime"`
 }
 
 // Block defines one non-empty value of the chunks' Collision layer.
@@ -196,6 +234,12 @@ func (t Tuning) validate() error {
 		{"player.oneWayAssist", p.OneWayAssist},
 		{"player.cornerCorrection", float64(p.CornerCorrection)},
 		{"player.drillBounce", p.DrillBounce},
+		{"player.stompSpeed", p.StompSpeed},
+		{"player.stompHoldTime", p.StompHoldTime},
+		{"player.maxHP", float64(p.MaxHP)},
+		{"player.knockbackX", p.KnockbackX},
+		{"player.knockbackY", p.KnockbackY},
+		{"player.invulnTime", p.InvulnTime},
 		{"gun.magazine", float64(g.Magazine)},
 		{"gun.fireInterval", g.FireInterval},
 		{"gun.thrust", g.Thrust},
@@ -224,7 +268,33 @@ func (t Tuning) validate() error {
 	case slices.Contains(t.Tower.Pool, ""):
 		return fmt.Errorf("tower.pool has an empty chunk name")
 	}
-	return validateBlocks(t.Blocks)
+	if err := validateBlocks(t.Blocks); err != nil {
+		return err
+	}
+	return validateEnemies(t.Enemies)
+}
+
+func validateEnemies(enemies []Enemy) error {
+	names := map[string]bool{}
+	for i, e := range enemies {
+		where := fmt.Sprintf("enemies[%d]", i)
+		switch {
+		case e.Name == "":
+			return fmt.Errorf("%s.name is missing", where)
+		case names[e.Name]:
+			return fmt.Errorf("%s.name %q is defined twice", where, e.Name)
+		case e.Width <= 0 || e.Height <= 0:
+			return fmt.Errorf("%s size must be positive, got %dx%d", where, e.Width, e.Height)
+		case e.HP <= 0:
+			return fmt.Errorf("%s.hp must be positive, got %d", where, e.HP)
+		case !(e.Speed >= 0):
+			return fmt.Errorf("%s.speed must not be negative, got %v", where, e.Speed)
+		case !isHexColor(e.Color):
+			return fmt.Errorf("%s.color must be #rrggbb, got %q", where, e.Color)
+		}
+		names[e.Name] = true
+	}
+	return nil
 }
 
 func validateBlocks(blocks []Block) error {

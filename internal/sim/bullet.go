@@ -24,11 +24,15 @@ func (w *World) spawnBullet() {
 		w.blocks.breakIn(w.Map, b.X, b.Y, b.W, b.H, byBullet)
 		return
 	}
+	if w.shootEnemy(b.X, b.Y, b.W, b.H) {
+		return
+	}
 	w.Bullets = append(w.Bullets, Bullet{Body: b, life: steps(g.BulletLife)})
 }
 
 // stepBullets moves every bullet and drops the ones that hit a solid,
-// breaking the blocks right under them that bullets break. Bullets pass
+// breaking the blocks right under them that bullets break, or an enemy,
+// damaging it. Bullets pass
 // through one-way platforms. A bullet that used up its last move the step
 // before is dropped first, so it covers its full range and is still seen at
 // the end of it.
@@ -41,6 +45,9 @@ func (w *World) stepBullets() {
 		}
 		if bb := &b.Body; bb.MoveYThrough(w.Map, speed*Dt) {
 			w.blocks.breakIn(w.Map, bb.X, bb.Y+bb.H, bb.W, 1, byBullet)
+			continue
+		}
+		if w.shootEnemy(b.Body.X, b.Body.Y, b.Body.W, b.Body.H) {
 			continue
 		}
 		b.life--

@@ -94,3 +94,17 @@ func TestValues(t *testing.T) {
 		t.Fatalf("Values() = %v, want [1 3 5]", got)
 	}
 }
+
+func TestFingerprintCoversSpawns(t *testing.T) {
+	a := NewTileMap(2, 2, 16)
+	before := a.Fingerprint()
+	a.Spawns = []Spawn{{"E", 8, 8}}
+	b := a.Clone()
+	b.Spawns[0].X = 9
+	if a.Fingerprint() == before || a.Fingerprint() == b.Fingerprint() {
+		t.Fatal("spawns do not change the fingerprint")
+	}
+	if a.Spawns[0].X != 8 {
+		t.Fatal("clone shares spawns with the original")
+	}
+}

@@ -1,0 +1,15 @@
+uplunge-replay 1
+chunk Enemies
+frames 400
+
+# Drop onto a Floater and stomp it; the bounce carries the player onto the
+# second Floater. Land, walk right into the Spiker and get hurt, pass
+# through it while immune, then jump back over it and shoot it dead.
+0 -
+160 R
+200 -
+260 LB
+266 L
+270 -
+271 B
+341 -

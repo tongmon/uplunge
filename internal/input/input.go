@@ -3,6 +3,7 @@ package input
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/tongmon/uplunge/internal/sim"
 )
@@ -13,6 +14,11 @@ var (
 	rightKeys  = []ebiten.Key{ebiten.KeyArrowRight, ebiten.KeyD}
 	buttonKeys = []ebiten.Key{ebiten.KeyZ, ebiten.KeySpace}
 )
+
+// Restart reports whether the restart key was pressed this frame.
+func Restart() bool {
+	return inpututil.IsKeyJustPressed(ebiten.KeyR)
+}
 
 // Read samples the keyboard for the current step.
 func Read() sim.Input {

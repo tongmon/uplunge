@@ -3,6 +3,7 @@ package level
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"strings"
 )
@@ -11,6 +12,10 @@ import (
 // the tiles: 0 is Empty, 1 is Solid, and the block definitions in the tuning
 // give every other value its meaning.
 const CollisionLayer = "Collision"
+
+// EntitiesLayer is the optional Entities layer that places enemies and other
+// entities in a chunk.
+const EntitiesLayer = "Entities"
 
 // Chunk authoring rules (docs/design.md section 7): 16 px tiles, 13 tiles
 // across including both walls. Height is free.
@@ -45,7 +50,10 @@ type ldtkProject struct {
 	Levels         []ldtkLevel       `json:"levels"`
 	Worlds         []json.RawMessage `json:"worlds"`
 	Defs           struct {
-		Layers []ldtkLayerDef `json:"layers"`
+		Layers   []ldtkLayerDef `json:"layers"`
+		Entities []struct {
+			Identifier string `json:"identifier"`
+		} `json:"entities"`
 	} `json:"defs"`
 }
 
@@ -76,6 +84,18 @@ type ldtkLayer struct {
 	// Sum of the layer definition's and this instance's pixel offsets.
 	OffsetX int `json:"__pxTotalOffsetX"`
 	OffsetY int `json:"__pxTotalOffsetY"`
+
+	Entities []ldtkEntity `json:"entityInstances"`
+}
+
+type ldtkEntity struct {
+	Identifier string `json:"__identifier"`
+	// Px is the entity's pivot point; Pivot is where that point sits in the
+	// entity, as fractions of its size.
+	Px     [2]int     `json:"px"`
+	Pivot  [2]float64 `json:"__pivot"`
+	Width  int        `json:"width"`
+	Height int        `json:"height"`
 }
 
 // ParseLDtk decodes an LDtk project into chunks, in the project's level order.
@@ -108,11 +128,13 @@ func parseLevel(lv ldtkLevel) (*TileMap, error) {
 	if lv.LayerInstances == nil {
 		return nil, fmt.Errorf("no layer instances")
 	}
-	var layer *ldtkLayer
+	var layer, entities *ldtkLayer
 	for i := range *lv.LayerInstances {
-		if l := &(*lv.LayerInstances)[i]; l.Identifier == CollisionLayer {
+		switch l := &(*lv.LayerInstances)[i]; l.Identifier {
+		case CollisionLayer:
 			layer = l
-			break
+		case EntitiesLayer:
+			entities = l
 		}
 	}
 	if layer == nil {
@@ -146,19 +168,29 @@ func parseLevel(lv ldtkLevel) (*TileMap, error) {
 		}
 		m.Set(col, row, Tile(v))
 	}
+	if entities != nil {
+		if entities.Type != "Entities" {
+			return nil, fmt.Errorf("layer %q is %s, want Entities", EntitiesLayer, entities.Type)
+		}
+		if entities.OffsetX != 0 || entities.OffsetY != 0 {
+			return nil, fmt.Errorf("layer %q has pixel offset (%d, %d), want none",
+				EntitiesLayer, entities.OffsetX, entities.OffsetY)
+		}
+		for _, e := range entities.Entities {
+			left := e.Px[0] - int(math.Round(e.Pivot[0]*float64(e.Width)))
+			top := e.Px[1] - int(math.Round(e.Pivot[1]*float64(e.Height)))
+			m.Spawns = append(m.Spawns, Spawn{Name: e.Identifier, X: left + e.Width/2, Y: top + e.Height/2})
+		}
+	}
 	return m, nil
 }
 
 // CollisionValues returns the values the project defines for its Collision
 // layer, so they can be checked against the block definitions.
 func CollisionValues(path string) ([]IntGridValue, error) {
-	data, err := os.ReadFile(path)
+	p, err := loadProject(path)
 	if err != nil {
-		return nil, fmt.Errorf("level: %w", err)
-	}
-	var p ldtkProject
-	if err := json.Unmarshal(data, &p); err != nil {
-		return nil, fmt.Errorf("level: %s: %w", path, err)
+		return nil, err
 	}
 	for _, l := range p.Defs.Layers {
 		if l.Identifier == CollisionLayer {
@@ -166,6 +198,32 @@ func CollisionValues(path string) ([]IntGridValue, error) {
 		}
 	}
 	return nil, fmt.Errorf("level: %s: no %q layer definition", path, CollisionLayer)
+}
+
+// EntityNames returns the identifiers of the entities the project defines,
+// so they can be checked against the enemy definitions.
+func EntityNames(path string) ([]string, error) {
+	p, err := loadProject(path)
+	if err != nil {
+		return nil, err
+	}
+	names := make([]string, len(p.Defs.Entities))
+	for i, e := range p.Defs.Entities {
+		names[i] = e.Identifier
+	}
+	return names, nil
+}
+
+func loadProject(path string) (ldtkProject, error) {
+	var p ldtkProject
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return p, fmt.Errorf("level: %w", err)
+	}
+	if err := json.Unmarshal(data, &p); err != nil {
+		return p, fmt.Errorf("level: %s: %w", path, err)
+	}
+	return p, nil
 }
 
 // FindChunk returns the map of the chunk called name.

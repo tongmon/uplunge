@@ -83,6 +83,13 @@ func BuildTower(chunks []Chunk, base string, pool []string, length int, r *rng.R
 				tower.Set(c, top+r, m.At(src, r))
 			}
 		}
+		for _, s := range m.Spawns {
+			if parts[i].Flipped {
+				s.X = m.Cols*m.TileSize - s.X
+			}
+			s.Y += top * m.TileSize
+			tower.Spawns = append(tower.Spawns, s)
+		}
 		parts[i].Row = top
 		bottom = top
 	}
