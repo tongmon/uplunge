@@ -22,7 +22,8 @@
 | 밟기 | 바운스 -2.5, 100 피해 | `scrEnemyStomped:6-17` |
 | 콤보 | 처치마다 +1, 착지 시 종료. 8 → 젬 100 / 15 → 최대 탄약 +1 / 25 → HP +1 | `comboDone`, `comboRewardText_Create_0` |
 | 젬하이 | 연속 획득 100개, 타이머 300f | `scrControlBeginstepCheck:66-76` |
-| HP | 4, 피격 후 무적 90f | `scrPlayerGlobalStat:45`, `scrPDamage` |
+| HP | 4, 피격 후 무적 90f | `scrPlayerGlobalStat:45`, `scrPDamage:4-11` |
+| 피격 넉백 | 적마다 다른 값을 넘김 (공통 수치 없음) | `scrTypicalDamage:1-10` |
 
 → 모든 보상이 "땅에 닿지 말고 밟으며 계속 떨어져라"를 가리킨다. 밟기가 처치, 충전, 바운스, 콤보를 동시에 하는 중심 동작이다.
 
