@@ -20,7 +20,7 @@ const valid = `{"player": {
 	"runSpeed": 180, "runAccel": 2000, "airAccelMult": 0.65,
 	"oneWayAssist": 80, "cornerCorrection": 4, "drillBounce": 240,
 	"stompSpeed": 280, "stompHoldTime": 0.2,
-	"maxHP": 4, "knockbackX": 120, "knockbackY": 240, "invulnTime": 1.5
+	"maxHP": 4, "knockbackX": 180, "knockbackY": 190, "invulnTime": 1.5
 }, "gun": {
 	"magazine": 8, "fireInterval": 0.1, "thrust": 240,
 	"bulletSpeed": 480, "bulletLife": 0.2, "bulletWidth": 4, "bulletHeight": 8

@@ -1,6 +1,7 @@
 package sim
 
 import (
+	"math"
 	"strings"
 	"testing"
 
@@ -135,8 +136,9 @@ func TestTouchHurts(t *testing.T) {
 			if p.HP != tun.Player.MaxHP-1 {
 				t.Fatalf("HP = %d, want one hit", p.HP)
 			}
-			if p.VX != tt.wantDir*tun.Player.KnockbackX || p.VY != -tun.Player.KnockbackY {
-				t.Fatalf("knockback VX=%v VY=%v, want %v, %v", p.VX, p.VY, tt.wantDir*tun.Player.KnockbackX, -tun.Player.KnockbackY)
+			if p.VX*tt.wantDir <= 0 || math.Abs(p.VX) > tun.Player.KnockbackX || p.VY != -tun.Player.KnockbackY {
+				t.Fatalf("knockback VX=%v VY=%v, want VX toward %v up to %v and VY %v",
+					p.VX, p.VY, tt.wantDir, tun.Player.KnockbackX, -tun.Player.KnockbackY)
 			}
 			if p.Fuel != tun.Gun.Magazine || !p.Invulnerable() || len(w.Enemies) != 1 {
 				t.Fatalf("Fuel=%d invulnerable=%v enemies=%d, want refilled, immune, enemy alive",
@@ -356,5 +358,30 @@ func TestSetTuningKeepsBlocksThatWouldTrapAnEnemy(t *testing.T) {
 	}
 	if w.Map.ShapeAt(6, 60) != level.ShapeOneWay {
 		t.Fatal("block definitions changed although they trap an enemy")
+	}
+}
+
+func TestKnockbackFollowsTheHitAngle(t *testing.T) {
+	tun := testTuning()
+	k := tun.Player.KnockbackX
+	tests := []struct {
+		name   string
+		dx, dy float64
+		vx     float64 // VX before the hit
+		wantVX float64
+	}{
+		{"from the left", 10, 0, 0, k},
+		{"from the right", -10, 0, 0, -k},
+		{"from below left at 45 degrees", 10, -10, 0, k / math.Sqrt2},
+		{"from straight above keeps VX", 0, 10, 50, 50},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			pl := Player{VX: tt.vx, HP: 4}
+			pl.hurt(tun, tt.dx, tt.dy)
+			if math.Abs(pl.VX-tt.wantVX) > 1e-9 || pl.VY != -tun.Player.KnockbackY {
+				t.Fatalf("VX=%v VY=%v, want VX %v VY %v", pl.VX, pl.VY, tt.wantVX, -tun.Player.KnockbackY)
+			}
+		})
 	}
 }

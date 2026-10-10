@@ -102,7 +102,7 @@ func (w *World) enemyInWall() error {
 // them, and a step with a stomp hurts no one: the safe top stays safe even
 // when the player also clips a dangerous enemy. Otherwise touching an enemy
 // hurts, unless the player is immune, and knocks the player away from the
-// nearest one touched.
+// nearest one touched (nearest sideways, between centres).
 func (w *World) touchEnemies(prevBottom int) {
 	pl := &w.Player
 	kept, stomped := w.Enemies[:0], false
@@ -134,11 +134,10 @@ func (w *World) touchEnemies(prevBottom int) {
 	if nearest < 0 {
 		return
 	}
-	dir := 1
-	if e := w.Enemies[nearest].Body; pc < e.X*2+e.W {
-		dir = -1
-	}
-	pl.hurt(w.tuning, dir)
+	e, b := w.Enemies[nearest].Body, pl.Body
+	// Centre to centre, doubled to stay in integers; only the direction
+	// counts.
+	pl.hurt(w.tuning, float64(b.X*2+b.W-e.X*2-e.W), float64(b.Y*2+b.H-e.Y*2-e.H))
 }
 
 func abs(n int) int {

@@ -71,13 +71,19 @@ func (pl *Player) stomp(t tuning.Tuning) {
 	pl.Fuel = t.Gun.Magazine
 }
 
-// hurt takes 1 HP, refills the magazine, knocks the player up and away
-// toward dir (-1 left, 1 right), and makes it immune to hits for a while.
-func (pl *Player) hurt(t tuning.Tuning, dir int) {
+// hurt takes 1 HP, refills the magazine, knocks the player up and away,
+// and makes it immune to hits for a while. (dx, dy) points from what hit
+// the player to the player: the sideways knockback is KnockbackX scaled by
+// its horizontal part, so a hit from the side pushes hardest and one from
+// straight above or below leaves VX as it was. The upward knockback is
+// always KnockbackY.
+func (pl *Player) hurt(t tuning.Tuning, dx, dy float64) {
 	p := t.Player
 	pl.HP = max(0, pl.HP-1)
 	pl.Fuel = t.Gun.Magazine
-	pl.VX = float64(dir) * p.KnockbackX
+	if dx != 0 {
+		pl.VX = p.KnockbackX * dx / math.Hypot(dx, dy)
+	}
 	pl.VY = -p.KnockbackY
 	pl.jumpHoldSteps = 0
 	pl.bounceSteps = 0

@@ -20,7 +20,7 @@ func testTuning() tuning.Tuning {
 		RunSpeed: 180, RunAccel: 2000, AirAccelMult: 0.65,
 		OneWayAssist: 80, CornerCorrection: 4, DrillBounce: 240,
 		StompSpeed: 280, StompHoldTime: 0.2,
-		MaxHP: 4, KnockbackX: 120, KnockbackY: 240, InvulnTime: 1.5,
+		MaxHP: 4, KnockbackX: 180, KnockbackY: 190, InvulnTime: 1.5,
 	}, Gun: tuning.Gun{
 		Magazine: 8, FireInterval: 0.1, Thrust: 240,
 		BulletSpeed: 480, BulletLife: 0.2, BulletWidth: 4, BulletHeight: 8,

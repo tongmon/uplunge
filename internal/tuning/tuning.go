@@ -133,8 +133,9 @@ type Player struct {
 	StompHoldTime float64 `json:"stompHoldTime"`
 
 	// MaxHP is the HP a run starts with. A hit takes 1, refills the
-	// magazine, knocks the player away by KnockbackX and up by KnockbackY,
-	// and makes the player immune to hits for InvulnTime.
+	// magazine, knocks the player up by KnockbackY and away by up to
+	// KnockbackX (scaled by how much the hit came from the side), and makes
+	// the player immune to hits for InvulnTime.
 	MaxHP      int     `json:"maxHP"`
 	KnockbackX float64 `json:"knockbackX"`
 	KnockbackY float64 `json:"knockbackY"`
