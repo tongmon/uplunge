@@ -27,20 +27,19 @@ type Input struct {
 // World is the complete simulation state.
 type World struct {
 	// Tick counts the steps taken since the world was created.
-	Tick uint64
-	// Tuning is read every step, so replacing it changes movement on the next
-	// step. The player's size is the exception: it is copied into the body by
-	// NewWorld and does not follow later changes.
-	Tuning tuning.Tuning
+	Tick   uint64
 	Map    *level.TileMap
 	Player Player
+
+	// tuning is read every step; change it with SetTuning.
+	tuning tuning.Tuning
 }
 
 // NewWorld returns a world at tick zero with the player's top-left corner at
 // (x, y).
 func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 	return &World{
-		Tuning: t,
+		tuning: t,
 		Map:    m,
 		Player: newPlayer(t.Player, x, y),
 	}
@@ -48,7 +47,7 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 
 // Step advances the world by exactly one fixed timestep of Dt seconds.
 func (w *World) Step(in Input) {
-	w.Player.step(in, w.Tuning.Player, w.Map)
+	w.Player.step(in, w.tuning.Player, w.Map)
 	w.Tick++
 }
 
@@ -63,4 +62,27 @@ func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
 			p.Width, p.Height, x)
 	}
 	return NewWorld(t, m, x, 0), nil
+}
+
+// Tuning returns the tuning the world currently steps with.
+func (w *World) Tuning() tuning.Tuning {
+	return w.tuning
+}
+
+// SetTuning replaces the tuning from the next step on. A new player size is
+// applied around the middle of the player's feet. If the resized hitbox would
+// overlap a solid, the old size is kept and an error says so; every other
+// value is still applied, and calling SetTuning again later retries the size.
+func (w *World) SetTuning(t tuning.Tuning) error {
+	var err error
+	b := &w.Player.Body
+	if p := t.Player; p.Width != b.W || p.Height != b.H {
+		if !b.Resize(w.Map, p.Width, p.Height) {
+			err = fmt.Errorf("sim: kept the %dx%d player size: %dx%d would overlap a solid here",
+				b.W, b.H, p.Width, p.Height)
+			t.Player.Width, t.Player.Height = b.W, b.H
+		}
+	}
+	w.tuning = t
+	return err
 }

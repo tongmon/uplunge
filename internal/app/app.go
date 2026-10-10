@@ -45,7 +45,13 @@ type Config struct {
 	// ticks (ascending) and exits after the last one.
 	ShotTicks []uint64
 	ShotsDir  string
+	// Reload, if set, reloads TuningPath while the game runs whenever the file
+	// changes.
+	Reload bool
 }
+
+// reloadPollSteps is how often, in steps, Reload checks the tuning file.
+const reloadPollSteps = sim.Hz / 2
 
 // Run opens the window and blocks until the game exits.
 func Run(cfg Config) error {
@@ -90,6 +96,12 @@ func Run(cfg Config) error {
 	if g.world, err = sim.NewWorldInChunk(tun, m); err != nil {
 		return err
 	}
+	if cfg.Reload {
+		if g.recording {
+			return fmt.Errorf("app: -reload cannot be combined with -record: the replay would not reproduce the run")
+		}
+		g.reloadPath = cfg.TuningPath
+	}
 	if len(cfg.ShotTicks) > 0 {
 		last := cfg.ShotTicks[len(cfg.ShotTicks)-1]
 		if g.replaying && last > uint64(len(g.playback)) {
@@ -123,6 +135,10 @@ type game struct {
 	recorded  []sim.Input
 
 	shots *shooter
+
+	reloadPath    string // empty unless -reload
+	reloadWait    int
+	lastReloadErr string
 }
 
 // Update runs exactly one simulation step. Ebitengine calls it sim.Hz times
@@ -148,8 +164,52 @@ func (g *game) Update() error {
 	if g.recording {
 		g.recorded = append(g.recorded, in)
 	}
+	if g.reloadPath != "" {
+		g.pollTuning()
+	}
 	g.world.Step(in)
 	return nil
+}
+
+// pollTuning applies tuning file edits between steps. The same error is
+// logged only once, so a broken file or a blocked resize does not flood the log
+// while it is retried.
+func (g *game) pollTuning() {
+	if g.reloadWait--; g.reloadWait > 0 {
+		return
+	}
+	g.reloadWait = reloadPollSteps
+
+	applied, err := reloadTuning(g.world, g.reloadPath)
+	if err != nil {
+		if msg := err.Error(); msg != g.lastReloadErr {
+			log.Printf("tuning reload at tick %d: %v", g.world.Tick, err)
+			g.lastReloadErr = msg
+		}
+		return
+	}
+	g.lastReloadErr = ""
+	if applied {
+		log.Printf("tuning reloaded at tick %d", g.world.Tick)
+	}
+}
+
+// reloadTuning reads path and, if its values differ from the ones w steps
+// with, applies them. The file is re-read and compared every time instead of
+// trusting its modification time, so a failed read is retried on the next
+// call, an edit that keeps the size and time is still seen, and an edit saved
+// while the game was starting is not missed. applied reports whether w
+// changed; err is set when the file could not be loaded (w unchanged) or when
+// the new player size did not fit (other values applied).
+func reloadTuning(w *sim.World, path string) (applied bool, err error) {
+	t, err := tuning.Load(path)
+	if err != nil {
+		return false, fmt.Errorf("keeping the current values: %w", err)
+	}
+	if t.Fingerprint() == w.Tuning().Fingerprint() {
+		return false, nil
+	}
+	return true, w.SetTuning(t)
 }
 
 func (g *game) Draw(screen *ebiten.Image) {

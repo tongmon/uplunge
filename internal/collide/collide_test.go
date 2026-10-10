@@ -179,3 +179,34 @@ func TestFloorDiv(t *testing.T) {
 		}
 	}
 }
+
+func TestResizeKeepsFeetCentre(t *testing.T) {
+	m := testRoom(t)
+	b := Body{X: 20, Y: 40, W: 12, H: 20}
+	for _, size := range [][2]int{{13, 20}, {14, 21}, {15, 18}, {12, 20}} {
+		if !b.Resize(m, size[0], size[1]) {
+			t.Fatalf("resize to %v blocked in open space", size)
+		}
+		if bottom := b.Y + b.H; bottom != 60 {
+			t.Fatalf("after resize to %v the feet are at y %d, want 60", size, bottom)
+		}
+		// Centre in half pixels: 2*(left edge) + width, left edge = X + remX.
+		if c2 := 2*(float64(b.X)+b.remX) + float64(b.W); c2 != 2*20+12 {
+			t.Fatalf("after resize to %v the centre is %v half pixels, want %d", size, c2, 2*20+12)
+		}
+	}
+	if b.X != 20 || b.remX != 0 {
+		t.Fatalf("back at 12x20 the body is at x %d + %v, want 20 + 0", b.X, b.remX)
+	}
+}
+
+func TestResizeBlocked(t *testing.T) {
+	m := testRoom(t)
+	b := Body{X: 20, Y: 44, W: 10, H: 20} // feet on the floor at y 64
+	if b.Resize(m, 10, 60) {
+		t.Fatal("resize through the ceiling succeeded")
+	}
+	if b != (Body{X: 20, Y: 44, W: 10, H: 20}) {
+		t.Fatalf("blocked resize changed the body: %+v", b)
+	}
+}
