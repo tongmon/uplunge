@@ -17,6 +17,8 @@ func baseTuning() tuning.Tuning {
 		Width: 12, Height: 20,
 		Gravity: 1800, MaxFall: 320,
 		JumpSpeed: 210, JumpHoldTime: 0.2,
+		CoyoteTime: 0.1, JumpBufferTime: 0.08,
+		ApexGravThreshold: 80, ApexGravMult: 0.5,
 		RunSpeed: 180, RunAccel: 2000, AirAccelMult: 0.65,
 	}}
 }
