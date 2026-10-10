@@ -98,7 +98,7 @@ Choose checks in proportion to the change:
 - **Physics and feel tuning:** replay tests assert measurable outcomes (heights, distances, timings).
   - Whether it *feels* good needs the developer's playtest. Say so instead of claiming it.
 - **Visual and render changes:** run the game in debug mode so it captures PNGs at chosen frames and exits, then inspect the images.
-- **Level chunks:** the reachability validator must pass for every chunk.
+- **Level chunks:** `go test ./internal/level/` loads every shipped chunk and enforces the authoring rules. Once the reachability validator exists (M2), it must pass for every chunk too.
 - **Docs and config-only changes:** proofread and check links.
 
 Before opening a PR, run `./tools/check.ps1`. It runs the following and fails if any of them fails:

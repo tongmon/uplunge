@@ -9,6 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 
+	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/input"
 	"github.com/tongmon/uplunge/internal/level"
 	"github.com/tongmon/uplunge/internal/render"
@@ -52,15 +53,27 @@ func Run(cfg Config) error {
 	if err != nil {
 		return err
 	}
-	// Drop the player in at the top centre of the chunk.
-	spawnX := (m.Cols*m.TileSize - tun.Player.Width) / 2
-	spawnY := 0
+	spawnX, spawnY, err := spawnPoint(m, tun.Player)
+	if err != nil {
+		return err
+	}
 
 	ebiten.SetWindowTitle("uplunge")
 	ebiten.SetWindowSize(ScreenWidth*cfg.Scale, ScreenHeight*cfg.Scale)
 	ebiten.SetTPS(sim.Hz)
 	ebiten.SetScreenFilterEnabled(false)
 	return ebiten.RunGame(&game{world: sim.NewWorld(tun, m, spawnX, spawnY)})
+}
+
+// spawnPoint drops the player in at the top centre of the chunk. Chunks carry
+// no start position, so the spot must be open for the whole hitbox.
+func spawnPoint(m *level.TileMap, p tuning.Player) (x, y int, err error) {
+	x = (m.Cols*m.TileSize - p.Width) / 2
+	if p.Height > m.Rows*m.TileSize || collide.Overlaps(m, x, y, p.Width, p.Height) {
+		return 0, 0, fmt.Errorf("app: no room to spawn a %dx%d player at the top centre (%d, %d)",
+			p.Width, p.Height, x, y)
+	}
+	return x, y, nil
 }
 
 func pickChunk(chunks []level.Chunk, name string) (*level.TileMap, error) {

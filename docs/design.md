@@ -250,7 +250,7 @@ Downwell은 23종, 전부 1회 획득, 균등 확률 추첨, 조합 효과 로�
 - LDtk 프로젝트 하나([assets/chunks/chunks.ldtk](../assets/chunks/chunks.ldtk))에 레벨 하나 = 조각 하나.
 - 충돌은 IntGrid 레이어 `Collision`: 0 = 빈칸, 1 = solid. 단방향 발판과 드릴 블록 값은 M1에서 추가.
 - 조각 폭은 양쪽 벽을 포함해 13칸 (16px 타일), 높이는 자유.
-- 레벨을 별도 파일로 저장하는 옵션(Save levels to separate files)은 쓰지 않음.
+- 레벨을 별도 파일로 저장하는 옵션(Save levels to separate files), 여러 월드(Multi-worlds), `Collision` 레이어의 픽셀 오프셋은 쓰지 않음. 로더가 오류로 거부함.
 
 ## 8. 아트 디렉션 (초안) 🔶
 

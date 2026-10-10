@@ -10,6 +10,13 @@ import (
 // tiles: 0 is Empty and 1 is Solid.
 const CollisionLayer = "Collision"
 
+// Chunk authoring rules (docs/design.md section 7): 16 px tiles, 13 tiles
+// across including both walls. Height is free.
+const (
+	ChunkTileSize = 16
+	ChunkCols     = 13
+)
+
 // Chunk is one hand-authored level piece: one level in the LDtk project.
 type Chunk struct {
 	Name string
@@ -32,8 +39,9 @@ func LoadLDtk(path string) ([]Chunk, error) {
 // The subset of the LDtk project JSON the loader reads. LDtk writes many more
 // fields; they are ignored.
 type ldtkProject struct {
-	ExternalLevels bool        `json:"externalLevels"`
-	Levels         []ldtkLevel `json:"levels"`
+	ExternalLevels bool              `json:"externalLevels"`
+	Levels         []ldtkLevel       `json:"levels"`
+	Worlds         []json.RawMessage `json:"worlds"`
 }
 
 type ldtkLevel struct {
@@ -48,6 +56,9 @@ type ldtkLayer struct {
 	Rows       int    `json:"__cHei"`
 	GridSize   int    `json:"__gridSize"`
 	IntGridCSV []int  `json:"intGridCsv"`
+	// Sum of the layer definition's and this instance's pixel offsets.
+	OffsetX int `json:"__pxTotalOffsetX"`
+	OffsetY int `json:"__pxTotalOffsetY"`
 }
 
 // ParseLDtk decodes an LDtk project into chunks, in the project's level order.
@@ -58,6 +69,9 @@ func ParseLDtk(data []byte) ([]Chunk, error) {
 	}
 	if p.ExternalLevels {
 		return nil, fmt.Errorf("levels saved in separate files are not supported")
+	}
+	if len(p.Levels) == 0 && len(p.Worlds) > 0 {
+		return nil, fmt.Errorf("multi-world projects are not supported")
 	}
 	if len(p.Levels) == 0 {
 		return nil, fmt.Errorf("project has no levels")
@@ -90,9 +104,18 @@ func parseLevel(lv ldtkLevel) (*TileMap, error) {
 	if layer.Type != "IntGrid" {
 		return nil, fmt.Errorf("layer %q is %s, want IntGrid", CollisionLayer, layer.Type)
 	}
-	if layer.Cols <= 0 || layer.Rows <= 0 || layer.GridSize <= 0 {
-		return nil, fmt.Errorf("layer %q has invalid size %dx%d, grid %d",
-			CollisionLayer, layer.Cols, layer.Rows, layer.GridSize)
+	if layer.GridSize != ChunkTileSize {
+		return nil, fmt.Errorf("layer %q has %d px tiles, want %d", CollisionLayer, layer.GridSize, ChunkTileSize)
+	}
+	if layer.Cols != ChunkCols {
+		return nil, fmt.Errorf("layer %q is %d tiles across, want %d", CollisionLayer, layer.Cols, ChunkCols)
+	}
+	if layer.Rows <= 0 {
+		return nil, fmt.Errorf("layer %q has no rows", CollisionLayer)
+	}
+	if layer.OffsetX != 0 || layer.OffsetY != 0 {
+		return nil, fmt.Errorf("layer %q has pixel offset (%d, %d), want none",
+			CollisionLayer, layer.OffsetX, layer.OffsetY)
 	}
 	if got, want := len(layer.IntGridCSV), layer.Cols*layer.Rows; got != want {
 		return nil, fmt.Errorf("layer %q has %d cells, want %d", CollisionLayer, got, want)
