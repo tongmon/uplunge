@@ -16,11 +16,19 @@ type Player struct {
 	// OnGround reports whether the player stood on a solid after the last step.
 	OnGround bool
 
+	// The timers below count whole steps rather than seconds, so each lasts
+	// exactly its tuned time instead of drifting with float error.
+
 	// jumpHoldSteps is the number of steps left during which holding the
-	// button keeps VY at -JumpSpeed. Counting whole steps keeps the hold
-	// exactly JumpHoldTime long instead of drifting with float error.
+	// button keeps VY at -JumpSpeed.
 	jumpHoldSteps int
-	prevButton    bool
+	// coyoteSteps is the number of airborne steps left in which a jump is
+	// still allowed after walking off a ledge.
+	coyoteSteps int
+	// bufferSteps is the number of steps left in which an earlier press still
+	// starts a jump once one is allowed.
+	bufferSteps int
+	prevButton  bool
 }
 
 func newPlayer(p tuning.Player, x, y int) Player {
@@ -49,17 +57,18 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 
 	// Fall. Gravity is skipped on the ground; otherwise the sub-pixel pull
 	// into the floor makes VY flicker between 0 and one step of gravity.
+	// Holding the button near the top of an arc softens gravity there.
 	if !grounded {
-		pl.VY = approach(pl.VY, p.MaxFall, p.Gravity*Dt)
+		g := p.Gravity
+		if in.Button && math.Abs(pl.VY) < p.ApexGravThreshold {
+			g *= p.ApexGravMult
+		}
+		pl.VY = approach(pl.VY, p.MaxFall, g*Dt)
 	}
 
-	// Jump: holding the button keeps the launch speed for up to JumpHoldTime,
-	// counting the launch step; releasing early ends the hold and gives a
-	// lower jump.
-	if pressed && grounded {
-		// At least the launch step, however small JumpHoldTime is.
-		pl.jumpHoldSteps = max(1, int(math.Round(p.JumpHoldTime*Hz)))
-	}
+	// Jump hold: holding the button keeps the launch speed for up to
+	// JumpHoldTime, counting the launch step; releasing early ends the hold
+	// and gives a lower jump.
 	if pl.jumpHoldSteps > 0 {
 		if in.Button {
 			pl.VY = min(pl.VY, -p.JumpSpeed)
@@ -67,6 +76,32 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 		} else {
 			pl.jumpHoldSteps = 0
 		}
+	}
+
+	// Jump: a press is remembered for JumpBufferTime, and a jump is allowed
+	// on the ground and for CoyoteTime after walking off a ledge.
+	if grounded {
+		pl.coyoteSteps = steps(p.CoyoteTime)
+	}
+	if pressed {
+		pl.bufferSteps = steps(p.JumpBufferTime)
+	}
+	if pl.bufferSteps > 0 && pl.coyoteSteps > 0 {
+		pl.VY = -p.JumpSpeed
+		// A buffered tap already released gets no hold, so a fresh press
+		// right after the launch cannot stretch it into a full jump.
+		pl.jumpHoldSteps = 0
+		if in.Button {
+			pl.jumpHoldSteps = steps(p.JumpHoldTime) - 1
+		}
+		pl.bufferSteps = 0
+		pl.coyoteSteps = 0
+	}
+	if pl.bufferSteps > 0 {
+		pl.bufferSteps--
+	}
+	if !grounded && pl.coyoteSteps > 0 {
+		pl.coyoteSteps--
 	}
 
 	if b.MoveX(m, pl.VX*Dt) {
@@ -77,6 +112,11 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 		pl.jumpHoldSteps = 0
 	}
 	pl.OnGround = collide.Overlaps(m, b.X, b.Y+1, b.W, b.H)
+}
+
+// steps converts a tuned time to whole steps, at least one.
+func steps(seconds float64) int {
+	return max(1, int(math.Round(seconds*Hz)))
 }
 
 // approach moves v toward target by at most step.

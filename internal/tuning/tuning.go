@@ -32,6 +32,14 @@ type Player struct {
 	// JumpSpeed is held for up to JumpHoldTime while the button stays down.
 	JumpSpeed    float64 `json:"jumpSpeed"`
 	JumpHoldTime float64 `json:"jumpHoldTime"`
+	// CoyoteTime is how long after leaving the ground a jump is still allowed.
+	CoyoteTime float64 `json:"coyoteTime"`
+	// JumpBufferTime is how long a press is remembered until a jump is allowed.
+	JumpBufferTime float64 `json:"jumpBufferTime"`
+	// Gravity is scaled by ApexGravMult while the button is held and the
+	// vertical speed is below ApexGravThreshold.
+	ApexGravThreshold float64 `json:"apexGravThreshold"`
+	ApexGravMult      float64 `json:"apexGravMult"`
 
 	RunSpeed float64 `json:"runSpeed"`
 	RunAccel float64 `json:"runAccel"`
@@ -82,6 +90,10 @@ func (t Tuning) validate() error {
 		{"player.maxFall", p.MaxFall},
 		{"player.jumpSpeed", p.JumpSpeed},
 		{"player.jumpHoldTime", p.JumpHoldTime},
+		{"player.coyoteTime", p.CoyoteTime},
+		{"player.jumpBufferTime", p.JumpBufferTime},
+		{"player.apexGravThreshold", p.ApexGravThreshold},
+		{"player.apexGravMult", p.ApexGravMult},
 		{"player.runSpeed", p.RunSpeed},
 		{"player.runAccel", p.RunAccel},
 		{"player.airAccelMult", p.AirAccelMult},

@@ -15,6 +15,8 @@ const valid = `{"player": {
 	"width": 12, "height": 20,
 	"gravity": 1800, "maxFall": 320,
 	"jumpSpeed": 210, "jumpHoldTime": 0.2,
+	"coyoteTime": 0.1, "jumpBufferTime": 0.08,
+	"apexGravThreshold": 80, "apexGravMult": 0.5,
 	"runSpeed": 180, "runAccel": 2000, "airAccelMult": 0.65
 }}`
 

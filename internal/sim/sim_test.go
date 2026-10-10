@@ -1,6 +1,7 @@
 package sim
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/tongmon/uplunge/internal/level"
@@ -14,6 +15,8 @@ func testTuning() tuning.Tuning {
 		Width: 12, Height: 20,
 		Gravity: 1800, MaxFall: 320,
 		JumpSpeed: 210, JumpHoldTime: 0.2,
+		CoyoteTime: 0.1, JumpBufferTime: 0.08,
+		ApexGravThreshold: 80, ApexGravMult: 0.5,
 		RunSpeed: 180, RunAccel: 2000, AirAccelMult: 0.65,
 	}}
 }
@@ -346,5 +349,168 @@ func TestSetTuningResizeRoundTripDoesNotDrift(t *testing.T) {
 	}
 	if w.Player.Body.X != 96 {
 		t.Fatalf("X = %d after resizing back to 12, want 96", w.Player.Body.X)
+	}
+}
+
+// ledgeWorld returns a world with the player standing near the right end of
+// a ledge (tiles 1..5 of row 9) above a floor at the bottom of a 20-row room.
+func ledgeWorld(t *testing.T) *World {
+	t.Helper()
+	rows := []string{}
+	for r := 0; r < 9; r++ {
+		rows = append(rows, "#...........#")
+	}
+	rows = append(rows, "######......#")
+	for r := 10; r < 19; r++ {
+		rows = append(rows, "#...........#")
+	}
+	rows = append(rows, "#############")
+	m, err := level.ParseRows(tile, rows...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	tun := testTuning()
+	w := NewWorld(tun, m, 6*tile-tun.Player.Width-2, 9*tile-tun.Player.Height)
+	w.Step(Input{})
+	if !w.Player.OnGround {
+		t.Fatal("player does not start on the ledge")
+	}
+	return w
+}
+
+// walkOff runs right until the player has left the ledge, so the next step is
+// the first one taken in the air.
+func walkOff(t *testing.T) *World {
+	t.Helper()
+	w := ledgeWorld(t)
+	for i := 0; w.Player.OnGround; i++ {
+		if i > Hz {
+			t.Fatal("player did not walk off the ledge within 1 s")
+		}
+		w.Step(Input{Right: true})
+	}
+	return w
+}
+
+func TestCoyoteJump(t *testing.T) {
+	p := testTuning().Player
+	n := 6 // CoyoteTime 0.1 s at 60 Hz
+	for k := 1; k <= n+2; k++ {
+		t.Run(fmt.Sprintf("press on air step %d", k), func(t *testing.T) {
+			w := walkOff(t)
+			run(w, Input{Right: true}, k-1)
+			w.Step(Input{Right: true, Button: true})
+			jumped := w.Player.VY == -p.JumpSpeed
+			if want := k <= n; jumped != want {
+				t.Fatalf("jumped = %v (VY %v), want %v with %d coyote steps", jumped, w.Player.VY, want, n)
+			}
+		})
+	}
+}
+
+func TestCoyoteTimeEndsWithJump(t *testing.T) {
+	p := testTuning().Player
+	w := standingWorld(t)
+	w.Step(Input{Button: true})
+	w.Step(Input{})
+	w.Step(Input{Button: true})
+	if w.Player.VY == -p.JumpSpeed {
+		t.Fatal("a second press right after a jump jumped again")
+	}
+}
+
+// landingStep drops the player from the top of testRoom with no input and
+// returns how many steps it takes until the player reports OnGround.
+func landingStep(t *testing.T) int {
+	t.Helper()
+	w := NewWorld(testTuning(), testRoom(t), 96, 0)
+	for i := 1; i <= 2*Hz; i++ {
+		w.Step(Input{})
+		if w.Player.OnGround {
+			return i
+		}
+	}
+	t.Fatal("player did not land within 2 s")
+	return 0
+}
+
+func TestJumpBuffer(t *testing.T) {
+	p := testTuning().Player
+	n := 5 // JumpBufferTime 0.08 s at 60 Hz, rounded
+	land := landingStep(t)
+	// Step land+1 is the first one that starts on the ground. A tap j steps
+	// earlier is remembered for n steps, counting the step it happened on.
+	for j := 0; j <= n+1; j++ {
+		t.Run(fmt.Sprintf("tap %d steps early", j), func(t *testing.T) {
+			w := NewWorld(testTuning(), testRoom(t), 96, 0)
+			tapAt := land + 1 - j
+			for i := 1; i <= land+1; i++ {
+				w.Step(Input{Button: i == tapAt})
+			}
+			jumped := w.Player.VY == -p.JumpSpeed
+			if want := j < n; jumped != want {
+				t.Fatalf("jumped = %v (VY %v), want %v with a %d-step buffer", jumped, w.Player.VY, want, n)
+			}
+		})
+	}
+}
+
+func TestBufferedJumpIsUsedOnce(t *testing.T) {
+	w := NewWorld(testTuning(), testRoom(t), 96, 0)
+	land := landingStep(t)
+	for i := 1; i <= land+1; i++ {
+		w.Step(Input{Button: i == land})
+	}
+	if w.Player.VY != -testTuning().Player.JumpSpeed {
+		t.Fatal("buffered press did not jump")
+	}
+	run(w, Input{}, 2*Hz)
+	if !w.Player.OnGround || w.Player.VY != 0 {
+		t.Fatalf("player jumped again from the same press: VY=%v OnGround=%v", w.Player.VY, w.Player.OnGround)
+	}
+}
+
+func TestApexGravity(t *testing.T) {
+	p := testTuning().Player
+	full := p.Gravity * Dt
+	tests := []struct {
+		name   string
+		vy     float64
+		button bool
+		want   float64
+	}{
+		{"slow rise held", -50, true, -50 + full*p.ApexGravMult},
+		{"slow fall held", 50, true, 50 + full*p.ApexGravMult},
+		{"slow rise released", -50, false, -50 + full},
+		{"fast rise held", -100, true, -100 + full},
+		{"at threshold held", -p.ApexGravThreshold, true, -p.ApexGravThreshold + full},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			w := NewWorld(testTuning(), testRoom(t), 96, 64)
+			w.Player.VY = tt.vy
+			w.Step(Input{Button: tt.button})
+			if w.Player.VY != tt.want {
+				t.Fatalf("VY = %v, want %v", w.Player.VY, tt.want)
+			}
+		})
+	}
+}
+
+func TestReleasedBufferedJumpCannotBeExtended(t *testing.T) {
+	p := testTuning().Player
+	land := landingStep(t)
+	w := NewWorld(testTuning(), testRoom(t), 96, 0)
+	// Tap and release before landing, so the buffered jump launches with the
+	// button up, then press again right after the launch.
+	for i := 1; i <= land+1; i++ {
+		w.Step(Input{Button: i == land})
+	}
+	if w.Player.VY != -p.JumpSpeed {
+		t.Fatal("buffered press did not jump")
+	}
+	w.Step(Input{Button: true})
+	if w.Player.VY == -p.JumpSpeed {
+		t.Fatal("a new press after a released buffered jump extended the jump hold")
 	}
 }
