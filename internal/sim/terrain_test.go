@@ -393,3 +393,64 @@ func TestRisingThroughOneWayIsNotLanding(t *testing.T) {
 		}
 	}
 }
+
+func TestOneWayAssistHittingADrillBlockBreaksIt(t *testing.T) {
+	// Head touching a drill ceiling (row 8) while rising slowly through a
+	// one-way platform (row 9): the main move rounds to 0 px and only the
+	// assist reaches the ceiling, which must still drill it.
+	m := testRoom(t)
+	m.Set(6, 8, drill)
+	m.Set(6, 9, oneWay)
+	w := NewWorld(testTuning(), m, 98, 9*tile)
+	w.Player.VY = -31 // -1 after one step of gravity
+	w.Step(Input{})
+	if w.Map.At(6, 8) != level.Empty {
+		t.Fatal("drill block not broken by the assist move")
+	}
+}
+
+func TestSetTuningKeepsBlocksThatWouldTrapThePlayer(t *testing.T) {
+	m := testRoom(t)
+	for c := 1; c < 12; c++ {
+		m.Set(c, 9, oneWay)
+	}
+	w := NewWorld(testTuning(), m, 96, 9*tile-4) // overlaps the platform
+	tun := testTuning()
+	tun.Blocks[1].OneWay = false
+	if err := w.SetTuning(tun); err == nil {
+		t.Fatal("making the platform the player is inside solid gave no error")
+	}
+	if w.Map.ShapeAt(6, 9) != level.ShapeOneWay || !w.Tuning().Blocks[1].OneWay {
+		t.Fatal("block definitions changed although they trap the player")
+	}
+}
+
+func TestTuningBlocksAreNotShared(t *testing.T) {
+	tun := testTuning()
+	w := NewWorld(tun, testRoom(t), 96, 0)
+	tun.Blocks[0].Value = 9
+	got := w.Tuning()
+	got.Blocks[1].Name = "changed"
+	if b := w.Tuning().Blocks; b[0].Value != 1 || b[1].Name != "one_way" {
+		t.Fatalf("world blocks changed through a caller's slice: %+v", b[:2])
+	}
+	tun = testTuning()
+	if err := w.SetTuning(tun); err != nil {
+		t.Fatal(err)
+	}
+	tun.Blocks[0].Value = 9
+	if w.Tuning().Blocks[0].Value != 1 {
+		t.Fatal("world blocks changed through the slice passed to SetTuning")
+	}
+}
+
+func TestSpawnCheckUsesBlockShapes(t *testing.T) {
+	// A one-way tile at the top centre does not block the spawn.
+	m, err := level.ParseRows(tile, "#.....2.....#", "#...........#", "#############")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := NewWorldInChunk(testTuning(), m); err != nil {
+		t.Fatalf("spawn over a one-way tile: %v", err)
+	}
+}

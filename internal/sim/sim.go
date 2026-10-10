@@ -6,6 +6,7 @@ package sim
 import (
 	"errors"
 	"fmt"
+	"slices"
 
 	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/level"
@@ -44,6 +45,7 @@ type World struct {
 // (x, y). The world plays on its own copy of m, so breaking blocks leaves m
 // unchanged. Every tile value in m must have a block definition in t.
 func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
+	t.Blocks = slices.Clone(t.Blocks)
 	w := &World{
 		tuning: t,
 		Map:    m.Clone(),
@@ -72,34 +74,36 @@ func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
 	}
 	p := t.Player
 	x := (m.Cols*m.TileSize - p.Width) / 2
-	if p.Height > m.Rows*m.TileSize || collide.Overlaps(m, x, 0, p.Width, p.Height) {
+	w := NewWorld(t, m, x, 0)
+	// Check on the world's map, which has the block shapes applied.
+	if p.Height > m.Rows*m.TileSize || collide.Overlaps(w.Map, x, 0, p.Width, p.Height) {
 		return nil, fmt.Errorf("sim: no room to spawn a %dx%d player at the top centre (%d, 0)",
 			p.Width, p.Height, x)
 	}
-	return NewWorld(t, m, x, 0), nil
+	return w, nil
 }
 
-// Tuning returns the tuning the world currently steps with.
+// Tuning returns a copy of the tuning the world currently steps with.
 func (w *World) Tuning() tuning.Tuning {
-	return w.tuning
+	t := w.tuning
+	t.Blocks = slices.Clone(t.Blocks)
+	return t
 }
 
 // SetTuning replaces the tuning from the next step on. A new player size is
 // applied around the middle of the player's feet. If the resized hitbox would
 // overlap a solid, the old size is kept and an error says so; likewise the old
 // block definitions are kept if the new ones leave a tile value of the map
-// undefined. Every other value is still applied, and calling SetTuning again
-// later retries what was kept.
+// undefined or would turn a tile the player is inside solid. Every other value
+// is still applied, and calling SetTuning again later retries what was kept.
 func (w *World) SetTuning(t tuning.Tuning) error {
 	var errs []error
-	if bt := newBlockTable(t.Blocks); bt.check(w.Map) != nil {
-		errs = append(errs, fmt.Errorf("sim: kept the block definitions: %w", bt.check(w.Map)))
-		t.Blocks = w.tuning.Blocks
-	} else {
-		w.blocks = bt
-		w.blocks.apply(w.Map)
-	}
+	t.Blocks = slices.Clone(t.Blocks)
 	b := &w.Player.Body
+	if err := w.setBlocks(t.Blocks); err != nil {
+		errs = append(errs, fmt.Errorf("sim: kept the block definitions: %w", err))
+		t.Blocks = w.tuning.Blocks
+	}
 	if p := t.Player; p.Width != b.W || p.Height != b.H {
 		if !b.Resize(w.Map, p.Width, p.Height) {
 			errs = append(errs, fmt.Errorf("sim: kept the %dx%d player size: %dx%d would overlap a solid here",
@@ -110,4 +114,20 @@ func (w *World) SetTuning(t tuning.Tuning) error {
 	w.Player.Fuel = min(w.Player.Fuel, t.Gun.Magazine)
 	w.tuning = t
 	return errors.Join(errs...)
+}
+
+// setBlocks applies new block definitions to the map, or leaves the old ones
+// in place and says why.
+func (w *World) setBlocks(blocks []tuning.Block) error {
+	bt := newBlockTable(blocks)
+	if err := bt.check(w.Map); err != nil {
+		return err
+	}
+	bt.apply(w.Map)
+	if b := w.Player.Body; collide.Overlaps(w.Map, b.X, b.Y, b.W, b.H) {
+		w.blocks.apply(w.Map)
+		return fmt.Errorf("a tile the player is inside would become solid")
+	}
+	w.blocks = bt
+	return nil
 }

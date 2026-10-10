@@ -155,8 +155,10 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 	}
 	// Rising through a one-way platform gets a push, so a jump that only
 	// just reaches one still ends on top.
-	if !grounded && pl.VY <= 0 && collide.OverlapsShape(m, b.X, b.Y, b.W, b.H, level.ShapeOneWay) {
-		b.MoveY(m, -p.OneWayAssist*Dt)
+	if !grounded && pl.VY <= 0 && collide.OverlapsShape(m, b.X, b.Y, b.W, b.H, level.ShapeOneWay) &&
+		b.MoveY(m, -p.OneWayAssist*Dt) && !pl.clearCeiling(p, m, bt) {
+		pl.VY = 0
+		pl.jumpHoldSteps = 0
 	}
 	pl.OnGround = pl.VY >= 0 && b.OnGround(m)
 	// Landing refills the magazine on the step it happens.
