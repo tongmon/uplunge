@@ -1,601 +1,601 @@
-tick 0 x 98 y 0 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 93
-tick 1 x 98 y 0 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 93
-tick 2 x 98 y 2 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 93
-tick 3 x 98 y 3 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 93
-tick 4 x 98 y 5 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 93
-tick 5 x 98 y 7 vx 0 vy 150 ground false fuel 8 bullets 0 tiles 93
-tick 6 x 98 y 11 vx 0 vy 180 ground false fuel 8 bullets 0 tiles 93
-tick 7 x 98 y 14 vx 0 vy 210 ground false fuel 8 bullets 0 tiles 93
-tick 8 x 98 y 18 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 93
-tick 9 x 98 y 22 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 93
-tick 10 x 98 y 28 vx 0 vy 300 ground false fuel 8 bullets 0 tiles 93
-tick 11 x 98 y 33 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 12 x 98 y 38 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 13 x 98 y 43 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 14 x 98 y 49 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 15 x 98 y 54 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 16 x 98 y 59 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 17 x 98 y 65 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 18 x 98 y 70 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 19 x 98 y 75 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 20 x 98 y 81 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 21 x 98 y 86 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 22 x 98 y 91 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 23 x 98 y 97 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 24 x 98 y 102 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 25 x 98 y 107 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 26 x 98 y 113 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 27 x 98 y 118 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 28 x 98 y 123 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 29 x 98 y 129 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 30 x 98 y 134 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 31 x 98 y 139 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 32 x 98 y 145 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 33 x 98 y 150 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 34 x 98 y 155 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 35 x 98 y 161 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 36 x 98 y 166 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 37 x 98 y 171 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 38 x 98 y 177 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 39 x 98 y 182 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 40 x 98 y 187 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 41 x 98 y 193 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 42 x 98 y 198 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 43 x 98 y 203 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 44 x 98 y 209 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 45 x 98 y 214 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 46 x 98 y 219 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 47 x 98 y 225 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 48 x 98 y 230 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 49 x 98 y 235 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 50 x 98 y 241 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 51 x 98 y 246 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 52 x 98 y 251 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 53 x 98 y 257 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 54 x 98 y 262 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 55 x 98 y 267 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 56 x 98 y 273 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 57 x 98 y 278 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 58 x 98 y 283 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 59 x 98 y 289 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 60 x 98 y 294 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 61 x 98 y 299 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 62 x 98 y 305 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 63 x 98 y 310 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 64 x 98 y 315 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93
-tick 65 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 66 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 67 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 68 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 69 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 70 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 71 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 72 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 73 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 74 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 75 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 76 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 77 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 78 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 79 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 80 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 81 x 97 y 316 vx -33.333333333333336 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 82 x 96 y 316 vx -66.66666666666667 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 83 x 95 y 316 vx -100 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 84 x 92 y 316 vx -133.33333333333334 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 85 x 90 y 316 vx -166.66666666666669 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 86 x 87 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 87 x 84 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 88 x 81 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 89 x 78 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 90 x 75 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 91 x 72 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 92 x 69 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 93 x 66 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 94 x 63 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 95 x 60 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 96 x 57 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 97 x 54 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 98 x 51 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 99 x 48 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 100 x 45 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 101 x 42 y 316 vx -146.66666666666666 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 102 x 40 y 316 vx -113.33333333333331 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 103 x 39 y 316 vx -79.99999999999997 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 104 x 38 y 316 vx -46.666666666666636 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 105 x 38 y 316 vx -13.3333333333333 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 106 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 107 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 108 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 109 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 110 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93
-tick 111 x 38 y 312 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 112 x 38 y 309 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 113 x 38 y 305 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 114 x 38 y 301 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 115 x 38 y 296 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 116 x 38 y 291 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 117 x 38 y 286 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 118 x 38 y 281 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 119 x 38 y 277 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 120 x 38 y 272 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 121 x 38 y 268 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 122 x 38 y 265 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93
-tick 123 x 38 y 262 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 93
-tick 124 x 38 y 259 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 93
-tick 125 x 38 y 257 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 93
-tick 126 x 38 y 256 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 93
-tick 127 x 38 y 256 vx 0 vy -240 ground false fuel 8 bullets 0 tiles 91
-tick 128 x 38 y 252 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 129 x 38 y 250 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 91
-tick 130 x 38 y 247 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 91
-tick 131 x 38 y 245 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 91
-tick 132 x 38 y 243 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 91
-tick 133 x 38 y 243 vx 0 vy -60 ground false fuel 8 bullets 0 tiles 91
-tick 134 x 38 y 242 vx 0 vy -30 ground false fuel 8 bullets 0 tiles 91
-tick 135 x 38 y 242 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 91
-tick 136 x 38 y 242 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 91
-tick 137 x 38 y 244 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 91
-tick 138 x 38 y 245 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 91
-tick 139 x 38 y 247 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 91
-tick 140 x 38 y 249 vx 0 vy 150 ground false fuel 8 bullets 0 tiles 91
-tick 141 x 38 y 253 vx 0 vy 180 ground false fuel 8 bullets 0 tiles 91
-tick 142 x 38 y 256 vx 0 vy 210 ground false fuel 8 bullets 0 tiles 91
-tick 143 x 38 y 260 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 91
-tick 144 x 38 y 264 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 91
-tick 145 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 146 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 147 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 148 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 149 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 150 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 151 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 152 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 153 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 154 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 155 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 156 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 157 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 158 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 159 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 160 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 161 x 38 y 264 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 162 x 38 y 261 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 163 x 38 y 257 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 164 x 38 y 254 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 165 x 38 y 250 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 166 x 38 y 247 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 167 x 38 y 244 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 91
-tick 168 x 38 y 242 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 91
-tick 169 x 38 y 240 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 91
-tick 170 x 38 y 238 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 91
-tick 171 x 38 y 234 vx 0 vy -240 ground false fuel 7 bullets 1 tiles 91
-tick 172 x 38 y 230 vx 0 vy -210 ground false fuel 7 bullets 1 tiles 91
-tick 173 x 38 y 228 vx 0 vy -180 ground false fuel 7 bullets 1 tiles 91
-tick 174 x 38 y 225 vx 0 vy -150 ground false fuel 7 bullets 1 tiles 91
-tick 175 x 38 y 223 vx 0 vy -120 ground false fuel 7 bullets 1 tiles 91
-tick 176 x 38 y 221 vx 0 vy -90 ground false fuel 7 bullets 1 tiles 91
-tick 177 x 38 y 217 vx 0 vy -240 ground false fuel 6 bullets 2 tiles 91
-tick 178 x 38 y 214 vx 0 vy -210 ground false fuel 6 bullets 2 tiles 91
-tick 179 x 38 y 211 vx 0 vy -180 ground false fuel 6 bullets 2 tiles 91
-tick 180 x 38 y 209 vx 0 vy -150 ground false fuel 6 bullets 2 tiles 91
-tick 181 x 38 y 207 vx 0 vy -120 ground false fuel 6 bullets 1 tiles 91
-tick 182 x 38 y 205 vx 0 vy -90 ground false fuel 6 bullets 1 tiles 91
-tick 183 x 38 y 201 vx 0 vy -240 ground false fuel 5 bullets 2 tiles 91
-tick 184 x 38 y 197 vx 0 vy -210 ground false fuel 5 bullets 2 tiles 91
-tick 185 x 38 y 195 vx 0 vy -180 ground false fuel 5 bullets 2 tiles 91
-tick 186 x 38 y 192 vx 0 vy -150 ground false fuel 5 bullets 2 tiles 91
-tick 187 x 38 y 189 vx 0 vy -120 ground false fuel 5 bullets 2 tiles 91
-tick 188 x 38 y 186 vx 0 vy -90 ground false fuel 5 bullets 2 tiles 91
-tick 189 x 38 y 181 vx 0 vy -240 ground false fuel 4 bullets 2 tiles 91
-tick 190 x 38 y 176 vx 0 vy -210 ground false fuel 4 bullets 2 tiles 91
-tick 191 x 38 y 171 vx 0 vy -180 ground false fuel 4 bullets 2 tiles 91
-tick 192 x 38 y 168 vx 0 vy -150 ground false fuel 4 bullets 2 tiles 91
-tick 193 x 38 y 164 vx 0 vy -120 ground false fuel 4 bullets 2 tiles 91
-tick 194 x 38 y 161 vx 0 vy -90 ground false fuel 4 bullets 2 tiles 91
-tick 195 x 38 y 156 vx 0 vy -240 ground false fuel 3 bullets 3 tiles 91
-tick 196 x 38 y 153 vx 0 vy -210 ground false fuel 3 bullets 2 tiles 91
-tick 197 x 38 y 150 vx 0 vy -180 ground false fuel 3 bullets 2 tiles 91
-tick 198 x 38 y 147 vx 0 vy -150 ground false fuel 3 bullets 2 tiles 91
-tick 199 x 38 y 145 vx 0 vy -120 ground false fuel 3 bullets 2 tiles 91
-tick 200 x 38 y 144 vx 0 vy -90 ground false fuel 3 bullets 2 tiles 91
-tick 201 x 38 y 140 vx 0 vy -240 ground false fuel 2 bullets 3 tiles 91
-tick 202 x 38 y 136 vx 0 vy -210 ground false fuel 2 bullets 2 tiles 91
-tick 203 x 38 y 133 vx 0 vy -180 ground false fuel 2 bullets 2 tiles 91
-tick 204 x 38 y 131 vx 0 vy -150 ground false fuel 2 bullets 2 tiles 91
-tick 205 x 38 y 129 vx 0 vy -120 ground false fuel 2 bullets 2 tiles 91
-tick 206 x 36 y 127 vx 0 vy -90 ground false fuel 2 bullets 2 tiles 91
-tick 207 x 36 y 123 vx 0 vy -240 ground false fuel 1 bullets 3 tiles 91
-tick 208 x 36 y 119 vx 0 vy -210 ground false fuel 1 bullets 2 tiles 91
-tick 209 x 36 y 117 vx 0 vy -180 ground false fuel 1 bullets 2 tiles 91
-tick 210 x 36 y 114 vx 0 vy -150 ground false fuel 1 bullets 2 tiles 91
-tick 211 x 36 y 112 vx 0 vy -120 ground false fuel 1 bullets 2 tiles 91
-tick 212 x 36 y 110 vx 0 vy -90 ground false fuel 1 bullets 2 tiles 91
-tick 213 x 36 y 106 vx 0 vy -240 ground false fuel 0 bullets 3 tiles 91
-tick 214 x 36 y 103 vx 0 vy -210 ground false fuel 0 bullets 2 tiles 91
-tick 215 x 36 y 100 vx 0 vy -180 ground false fuel 0 bullets 2 tiles 91
-tick 216 x 36 y 98 vx 0 vy -150 ground false fuel 0 bullets 2 tiles 91
-tick 217 x 36 y 96 vx 0 vy -120 ground false fuel 0 bullets 2 tiles 91
-tick 218 x 36 y 94 vx 0 vy -90 ground false fuel 0 bullets 2 tiles 91
-tick 219 x 36 y 93 vx 0 vy -60 ground false fuel 0 bullets 2 tiles 91
-tick 220 x 36 y 92 vx 0 vy -45 ground false fuel 0 bullets 1 tiles 91
-tick 221 x 36 y 92 vx 0 vy -30 ground false fuel 0 bullets 1 tiles 91
-tick 222 x 36 y 92 vx 0 vy -15 ground false fuel 0 bullets 1 tiles 91
-tick 223 x 36 y 92 vx 0 vy 0 ground false fuel 0 bullets 1 tiles 91
-tick 224 x 36 y 92 vx 0 vy 15 ground false fuel 0 bullets 1 tiles 91
-tick 225 x 36 y 92 vx 0 vy 30 ground false fuel 0 bullets 1 tiles 91
-tick 226 x 36 y 93 vx 0 vy 45 ground false fuel 0 bullets 0 tiles 91
-tick 227 x 36 y 94 vx 0 vy 60 ground false fuel 0 bullets 0 tiles 91
-tick 228 x 36 y 95 vx 0 vy 75 ground false fuel 0 bullets 0 tiles 91
-tick 229 x 36 y 97 vx 0 vy 90 ground false fuel 0 bullets 0 tiles 91
-tick 230 x 36 y 99 vx 0 vy 120 ground false fuel 0 bullets 0 tiles 91
-tick 231 x 36 y 101 vx 0 vy 150 ground false fuel 0 bullets 0 tiles 91
-tick 232 x 36 y 104 vx 0 vy 180 ground false fuel 0 bullets 0 tiles 91
-tick 233 x 36 y 108 vx 0 vy 210 ground false fuel 0 bullets 0 tiles 91
-tick 234 x 36 y 112 vx 0 vy 240 ground false fuel 0 bullets 0 tiles 91
-tick 235 x 36 y 116 vx 0 vy 270 ground false fuel 0 bullets 0 tiles 91
-tick 236 x 36 y 121 vx 0 vy 300 ground false fuel 0 bullets 0 tiles 91
-tick 237 x 36 y 127 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91
-tick 238 x 36 y 132 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91
-tick 239 x 36 y 137 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91
-tick 240 x 36 y 143 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91
-tick 241 x 36 y 148 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91
-tick 242 x 36 y 153 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91
-tick 243 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 244 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 245 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 246 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 247 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 248 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 249 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 250 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 251 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 252 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 253 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 254 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 255 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 256 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 257 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 258 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 259 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 260 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 261 x 37 y 156 vx 33.333333333333336 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 262 x 38 y 156 vx 66.66666666666667 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 263 x 39 y 156 vx 100 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 264 x 42 y 156 vx 133.33333333333334 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 265 x 44 y 156 vx 166.66666666666669 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 266 x 47 y 156 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 267 x 50 y 156 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 268 x 53 y 156 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 91
-tick 269 x 56 y 152 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 270 x 59 y 149 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 271 x 62 y 145 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 272 x 65 y 142 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 273 x 68 y 138 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 274 x 71 y 135 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91
-tick 275 x 74 y 132 vx 180 vy -180 ground false fuel 8 bullets 0 tiles 91
-tick 276 x 77 y 130 vx 180 vy -150 ground false fuel 8 bullets 0 tiles 91
-tick 277 x 80 y 128 vx 180 vy -120 ground false fuel 8 bullets 0 tiles 91
-tick 278 x 83 y 126 vx 180 vy -90 ground false fuel 8 bullets 0 tiles 91
-tick 279 x 86 y 122 vx 180 vy -240 ground false fuel 7 bullets 1 tiles 91
-tick 280 x 89 y 118 vx 180 vy -210 ground false fuel 7 bullets 1 tiles 91
-tick 281 x 92 y 116 vx 180 vy -180 ground false fuel 7 bullets 1 tiles 91
-tick 282 x 95 y 113 vx 180 vy -150 ground false fuel 7 bullets 1 tiles 91
-tick 283 x 98 y 111 vx 180 vy -120 ground false fuel 7 bullets 1 tiles 91
-tick 284 x 101 y 109 vx 180 vy -90 ground false fuel 7 bullets 1 tiles 91
-tick 285 x 104 y 105 vx 180 vy -240 ground false fuel 6 bullets 2 tiles 91
-tick 286 x 107 y 102 vx 180 vy -210 ground false fuel 6 bullets 2 tiles 91
-tick 287 x 110 y 99 vx 180 vy -180 ground false fuel 6 bullets 2 tiles 91
-tick 288 x 113 y 97 vx 180 vy -150 ground false fuel 6 bullets 2 tiles 91
-tick 289 x 116 y 95 vx 180 vy -120 ground false fuel 6 bullets 2 tiles 91
-tick 290 x 116 y 93 vx 0 vy -90 ground false fuel 6 bullets 2 tiles 91
-tick 291 x 116 y 89 vx 21.666666666666668 vy -240 ground false fuel 5 bullets 3 tiles 91
-tick 292 x 117 y 85 vx 43.333333333333336 vy -210 ground false fuel 5 bullets 2 tiles 91
-tick 293 x 117 y 83 vx 21.666666666666668 vy -180 ground false fuel 5 bullets 2 tiles 91
-tick 294 x 117 y 80 vx 0 vy -150 ground false fuel 5 bullets 2 tiles 91
-tick 295 x 117 y 78 vx 0 vy -120 ground false fuel 5 bullets 2 tiles 91
-tick 296 x 117 y 76 vx 0 vy -90 ground false fuel 5 bullets 2 tiles 91
-tick 297 x 117 y 72 vx 0 vy -240 ground false fuel 4 bullets 3 tiles 91
-tick 298 x 117 y 69 vx 0 vy -210 ground false fuel 4 bullets 2 tiles 91
-tick 299 x 117 y 66 vx 0 vy -180 ground false fuel 4 bullets 2 tiles 91
-tick 300 x 117 y 64 vx 0 vy -150 ground false fuel 4 bullets 2 tiles 91
-tick 301 x 117 y 64 vx 0 vy -240 ground false fuel 4 bullets 2 tiles 90
-tick 302 x 117 y 60 vx 0 vy -210 ground false fuel 4 bullets 2 tiles 90
-tick 303 x 117 y 56 vx 0 vy -240 ground false fuel 3 bullets 3 tiles 90
-tick 304 x 117 y 53 vx 0 vy -210 ground false fuel 3 bullets 2 tiles 90
-tick 305 x 117 y 50 vx 0 vy -180 ground false fuel 3 bullets 2 tiles 90
-tick 306 x 117 y 48 vx 0 vy -150 ground false fuel 3 bullets 2 tiles 90
-tick 307 x 117 y 46 vx 0 vy -120 ground false fuel 3 bullets 2 tiles 90
-tick 308 x 117 y 44 vx 0 vy -90 ground false fuel 3 bullets 2 tiles 90
-tick 309 x 117 y 40 vx 0 vy -240 ground false fuel 2 bullets 3 tiles 90
-tick 310 x 117 y 36 vx 0 vy -210 ground false fuel 2 bullets 2 tiles 90
-tick 311 x 117 y 34 vx 0 vy -180 ground false fuel 2 bullets 2 tiles 90
-tick 312 x 117 y 31 vx 0 vy -150 ground false fuel 2 bullets 2 tiles 90
-tick 313 x 117 y 29 vx 0 vy -120 ground false fuel 2 bullets 2 tiles 90
-tick 314 x 117 y 27 vx 0 vy -90 ground false fuel 2 bullets 2 tiles 90
-tick 315 x 117 y 23 vx 0 vy -240 ground false fuel 1 bullets 3 tiles 90
-tick 316 x 117 y 20 vx 0 vy -210 ground false fuel 1 bullets 2 tiles 90
-tick 317 x 117 y 17 vx 0 vy -180 ground false fuel 1 bullets 2 tiles 90
-tick 318 x 117 y 15 vx 0 vy -150 ground false fuel 1 bullets 2 tiles 90
-tick 319 x 117 y 13 vx 0 vy -120 ground false fuel 1 bullets 2 tiles 90
-tick 320 x 117 y 11 vx 0 vy -90 ground false fuel 1 bullets 2 tiles 90
-tick 321 x 117 y 7 vx -21.666666666666668 vy -240 ground false fuel 0 bullets 3 tiles 90
-tick 322 x 116 y 3 vx -43.333333333333336 vy -210 ground false fuel 0 bullets 2 tiles 90
-tick 323 x 115 y 1 vx -65 vy -180 ground false fuel 0 bullets 2 tiles 90
-tick 324 x 114 y -2 vx -86.66666666666667 vy -150 ground false fuel 0 bullets 2 tiles 90
-tick 325 x 112 y -4 vx -108.33333333333334 vy -120 ground false fuel 0 bullets 2 tiles 90
-tick 326 x 110 y -6 vx -130 vy -90 ground false fuel 0 bullets 2 tiles 90
-tick 327 x 107 y -6 vx -151.66666666666666 vy -60 ground false fuel 0 bullets 2 tiles 90
-tick 328 x 104 y -7 vx -173.33333333333331 vy -45 ground false fuel 0 bullets 1 tiles 90
-tick 329 x 101 y -8 vx -180 vy -30 ground false fuel 0 bullets 1 tiles 90
-tick 330 x 98 y -8 vx -180 vy -15 ground false fuel 0 bullets 1 tiles 90
-tick 331 x 95 y -8 vx -180 vy 0 ground false fuel 0 bullets 1 tiles 90
-tick 332 x 92 y -8 vx -180 vy 15 ground false fuel 0 bullets 1 tiles 90
-tick 333 x 89 y -7 vx -180 vy 30 ground false fuel 0 bullets 1 tiles 90
-tick 334 x 86 y -7 vx -180 vy 45 ground false fuel 0 bullets 0 tiles 90
-tick 335 x 83 y -5 vx -180 vy 60 ground false fuel 0 bullets 0 tiles 90
-tick 336 x 80 y -4 vx -180 vy 75 ground false fuel 0 bullets 0 tiles 90
-tick 337 x 77 y -3 vx -180 vy 90 ground false fuel 0 bullets 0 tiles 90
-tick 338 x 74 y -1 vx -180 vy 120 ground false fuel 0 bullets 0 tiles 90
-tick 339 x 71 y 2 vx -180 vy 150 ground false fuel 0 bullets 0 tiles 90
-tick 340 x 68 y 5 vx -180 vy 180 ground false fuel 0 bullets 0 tiles 90
-tick 341 x 65 y 8 vx -180 vy 210 ground false fuel 0 bullets 0 tiles 90
-tick 342 x 62 y 12 vx -180 vy 240 ground false fuel 0 bullets 0 tiles 90
-tick 343 x 59 y 17 vx -180 vy 270 ground false fuel 0 bullets 0 tiles 90
-tick 344 x 56 y 22 vx -180 vy 300 ground false fuel 0 bullets 0 tiles 90
-tick 345 x 53 y 27 vx -180 vy 320 ground false fuel 0 bullets 0 tiles 90
-tick 346 x 50 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 347 x 47 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 348 x 44 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 349 x 41 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 350 x 38 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 351 x 35 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 352 x 32 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 353 x 29 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 354 x 26 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 355 x 23 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 356 x 20 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 357 x 17 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 358 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 359 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 360 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 361 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 362 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 363 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 364 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 365 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 366 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 367 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 368 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 369 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 370 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 371 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 372 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 373 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 374 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 375 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 376 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 377 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 378 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 379 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 380 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 381 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 382 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 383 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 384 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 385 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 386 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 387 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 388 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 389 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 390 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 391 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 392 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 393 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 394 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 395 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 396 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 397 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 398 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 399 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 400 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 401 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 402 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 403 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 404 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 405 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 406 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 407 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 408 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 409 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 410 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 411 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 412 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 413 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 414 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 415 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 416 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 417 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 418 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 419 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 420 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 421 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 422 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 423 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 424 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 425 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 426 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 427 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 428 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 429 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 430 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90
-tick 431 x 16 y 24 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90
-tick 432 x 16 y 21 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90
-tick 433 x 16 y 17 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90
-tick 434 x 16 y 14 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90
-tick 435 x 16 y 10 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90
-tick 436 x 16 y 7 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90
-tick 437 x 16 y 4 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 90
-tick 438 x 16 y 2 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 90
-tick 439 x 16 y 0 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 90
-tick 440 x 16 y -2 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 90
-tick 441 x 16 y -3 vx 0 vy -60 ground false fuel 8 bullets 0 tiles 90
-tick 442 x 16 y -3 vx 0 vy -30 ground false fuel 8 bullets 0 tiles 90
-tick 443 x 16 y -3 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 90
-tick 444 x 16 y -3 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 90
-tick 445 x 16 y -2 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 90
-tick 446 x 16 y 0 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 90
-tick 447 x 16 y -4 vx 0 vy -240 ground false fuel 7 bullets 1 tiles 90
-tick 448 x 16 y -8 vx 0 vy -210 ground false fuel 7 bullets 1 tiles 90
-tick 449 x 16 y -11 vx 0 vy -180 ground false fuel 7 bullets 1 tiles 90
-tick 450 x 16 y -13 vx 0 vy -150 ground false fuel 7 bullets 1 tiles 90
-tick 451 x 16 y -15 vx 0 vy -120 ground false fuel 7 bullets 0 tiles 89
-tick 452 x 16 y -17 vx 0 vy -90 ground false fuel 7 bullets 0 tiles 89
-tick 453 x 16 y -18 vx 0 vy -60 ground false fuel 7 bullets 0 tiles 89
-tick 454 x 16 y -18 vx 0 vy -30 ground false fuel 7 bullets 0 tiles 89
-tick 455 x 16 y -18 vx 0 vy 0 ground false fuel 7 bullets 0 tiles 89
-tick 456 x 16 y -18 vx 0 vy 30 ground false fuel 7 bullets 0 tiles 89
-tick 457 x 16 y -17 vx 0 vy 60 ground false fuel 7 bullets 0 tiles 89
-tick 458 x 16 y -15 vx 0 vy 90 ground false fuel 7 bullets 0 tiles 89
-tick 459 x 16 y -13 vx 0 vy 120 ground false fuel 7 bullets 0 tiles 89
-tick 460 x 16 y -11 vx 0 vy 150 ground false fuel 7 bullets 0 tiles 89
-tick 461 x 16 y -8 vx 0 vy 180 ground false fuel 7 bullets 0 tiles 89
-tick 462 x 16 y -4 vx 0 vy 210 ground false fuel 7 bullets 0 tiles 89
-tick 463 x 16 y 0 vx 0 vy 240 ground false fuel 7 bullets 0 tiles 89
-tick 464 x 16 y 4 vx 0 vy 270 ground false fuel 7 bullets 0 tiles 89
-tick 465 x 16 y 9 vx 0 vy 300 ground false fuel 7 bullets 0 tiles 89
-tick 466 x 16 y 14 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 467 x 16 y 20 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 468 x 16 y 25 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 469 x 16 y 30 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 470 x 16 y 36 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 471 x 16 y 41 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 472 x 16 y 46 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 473 x 16 y 52 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 474 x 16 y 57 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 475 x 16 y 62 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 476 x 16 y 68 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 477 x 16 y 73 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 478 x 16 y 78 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 479 x 16 y 84 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 480 x 16 y 89 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89
-tick 481 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 482 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 483 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 484 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 485 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 486 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 487 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 488 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 489 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 490 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 491 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 492 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 493 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 494 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 495 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 496 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 497 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 498 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 499 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 500 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 501 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 502 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 503 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 504 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 505 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 506 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 507 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 508 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 509 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 510 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 511 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 512 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 513 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 514 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 515 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 516 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 517 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 518 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 519 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 520 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 521 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 522 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 523 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 524 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 525 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 526 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 527 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 528 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 529 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 530 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 531 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 532 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 533 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 534 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 535 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 536 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 537 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 538 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 539 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 540 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 541 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 542 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 543 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 544 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 545 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 546 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 547 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 548 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 549 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 550 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 551 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 552 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 553 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 554 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 555 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 556 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 557 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 558 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 559 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 560 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 561 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 562 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 563 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 564 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 565 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 566 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 567 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 568 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 569 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 570 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 571 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 572 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 573 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 574 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 575 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 576 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 577 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 578 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 579 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 580 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 581 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 582 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 583 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 584 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 585 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 586 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 587 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 588 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 589 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 590 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 591 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 592 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 593 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 594 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 595 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 596 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 597 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 598 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 599 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
-tick 600 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89
+tick 0 x 98 y 0 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 1 x 98 y 0 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 2 x 98 y 2 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 3 x 98 y 3 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 4 x 98 y 5 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 5 x 98 y 7 vx 0 vy 150 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 6 x 98 y 11 vx 0 vy 180 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 7 x 98 y 14 vx 0 vy 210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 8 x 98 y 18 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 9 x 98 y 22 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 10 x 98 y 28 vx 0 vy 300 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 11 x 98 y 33 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 12 x 98 y 38 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 13 x 98 y 43 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 14 x 98 y 49 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 15 x 98 y 54 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 16 x 98 y 59 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 17 x 98 y 65 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 18 x 98 y 70 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 19 x 98 y 75 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 20 x 98 y 81 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 21 x 98 y 86 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 22 x 98 y 91 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 23 x 98 y 97 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 24 x 98 y 102 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 25 x 98 y 107 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 26 x 98 y 113 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 27 x 98 y 118 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 28 x 98 y 123 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 29 x 98 y 129 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 30 x 98 y 134 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 31 x 98 y 139 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 32 x 98 y 145 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 33 x 98 y 150 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 34 x 98 y 155 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 35 x 98 y 161 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 36 x 98 y 166 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 37 x 98 y 171 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 38 x 98 y 177 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 39 x 98 y 182 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 40 x 98 y 187 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 41 x 98 y 193 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 42 x 98 y 198 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 43 x 98 y 203 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 44 x 98 y 209 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 45 x 98 y 214 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 46 x 98 y 219 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 47 x 98 y 225 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 48 x 98 y 230 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 49 x 98 y 235 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 50 x 98 y 241 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 51 x 98 y 246 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 52 x 98 y 251 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 53 x 98 y 257 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 54 x 98 y 262 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 55 x 98 y 267 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 56 x 98 y 273 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 57 x 98 y 278 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 58 x 98 y 283 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 59 x 98 y 289 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 60 x 98 y 294 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 61 x 98 y 299 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 62 x 98 y 305 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 63 x 98 y 310 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 64 x 98 y 315 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 65 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 66 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 67 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 68 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 69 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 70 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 71 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 72 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 73 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 74 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 75 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 76 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 77 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 78 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 79 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 80 x 98 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 81 x 97 y 316 vx -33.333333333333336 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 82 x 96 y 316 vx -66.66666666666667 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 83 x 95 y 316 vx -100 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 84 x 92 y 316 vx -133.33333333333334 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 85 x 90 y 316 vx -166.66666666666669 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 86 x 87 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 87 x 84 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 88 x 81 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 89 x 78 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 90 x 75 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 91 x 72 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 92 x 69 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 93 x 66 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 94 x 63 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 95 x 60 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 96 x 57 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 97 x 54 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 98 x 51 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 99 x 48 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 100 x 45 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 101 x 42 y 316 vx -146.66666666666666 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 102 x 40 y 316 vx -113.33333333333331 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 103 x 39 y 316 vx -79.99999999999997 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 104 x 38 y 316 vx -46.666666666666636 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 105 x 38 y 316 vx -13.3333333333333 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 106 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 107 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 108 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 109 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 110 x 38 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 93 cam 0.000
+tick 111 x 38 y 312 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 112 x 38 y 309 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 113 x 38 y 305 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 114 x 38 y 301 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 115 x 38 y 296 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 116 x 38 y 291 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 117 x 38 y 286 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 118 x 38 y 281 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 119 x 38 y 277 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 120 x 38 y 272 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 121 x 38 y 268 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 122 x 38 y 265 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 123 x 38 y 262 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 124 x 38 y 259 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 125 x 38 y 257 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 126 x 38 y 256 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 93 cam 0.000
+tick 127 x 38 y 256 vx 0 vy -240 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 128 x 38 y 252 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 129 x 38 y 250 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 130 x 38 y 247 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 131 x 38 y 245 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 132 x 38 y 243 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 133 x 38 y 243 vx 0 vy -60 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 134 x 38 y 242 vx 0 vy -30 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 135 x 38 y 242 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 136 x 38 y 242 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 137 x 38 y 244 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 138 x 38 y 245 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 139 x 38 y 247 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 140 x 38 y 249 vx 0 vy 150 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 141 x 38 y 253 vx 0 vy 180 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 142 x 38 y 256 vx 0 vy 210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 143 x 38 y 260 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 144 x 38 y 264 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 145 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 146 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 147 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 148 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 149 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 150 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 151 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 152 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 153 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 154 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 155 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 156 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 157 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 158 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 159 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 160 x 38 y 268 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 161 x 38 y 264 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 162 x 38 y 261 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 163 x 38 y 257 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 164 x 38 y 254 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 165 x 38 y 250 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 166 x 38 y 247 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 167 x 38 y 244 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 168 x 38 y 242 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 169 x 38 y 240 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 170 x 38 y 238 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 171 x 38 y 234 vx 0 vy -240 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 172 x 38 y 230 vx 0 vy -210 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 173 x 38 y 228 vx 0 vy -180 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 174 x 38 y 225 vx 0 vy -150 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 175 x 38 y 223 vx 0 vy -120 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 176 x 38 y 221 vx 0 vy -90 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 177 x 38 y 217 vx 0 vy -240 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 178 x 38 y 214 vx 0 vy -210 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 179 x 38 y 211 vx 0 vy -180 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 180 x 38 y 209 vx 0 vy -150 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 181 x 38 y 207 vx 0 vy -120 ground false fuel 6 bullets 1 tiles 91 cam 0.000
+tick 182 x 38 y 205 vx 0 vy -90 ground false fuel 6 bullets 1 tiles 91 cam 0.000
+tick 183 x 38 y 201 vx 0 vy -240 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 184 x 38 y 197 vx 0 vy -210 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 185 x 38 y 195 vx 0 vy -180 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 186 x 38 y 192 vx 0 vy -150 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 187 x 38 y 189 vx 0 vy -120 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 188 x 38 y 186 vx 0 vy -90 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 189 x 38 y 181 vx 0 vy -240 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 190 x 38 y 176 vx 0 vy -210 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 191 x 38 y 171 vx 0 vy -180 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 192 x 38 y 168 vx 0 vy -150 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 193 x 38 y 164 vx 0 vy -120 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 194 x 38 y 161 vx 0 vy -90 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 195 x 38 y 156 vx 0 vy -240 ground false fuel 3 bullets 3 tiles 91 cam 0.000
+tick 196 x 38 y 153 vx 0 vy -210 ground false fuel 3 bullets 2 tiles 91 cam 0.000
+tick 197 x 38 y 150 vx 0 vy -180 ground false fuel 3 bullets 2 tiles 91 cam 0.000
+tick 198 x 38 y 147 vx 0 vy -150 ground false fuel 3 bullets 2 tiles 91 cam 0.000
+tick 199 x 38 y 145 vx 0 vy -120 ground false fuel 3 bullets 2 tiles 91 cam 0.000
+tick 200 x 38 y 144 vx 0 vy -90 ground false fuel 3 bullets 2 tiles 91 cam 0.000
+tick 201 x 38 y 140 vx 0 vy -240 ground false fuel 2 bullets 3 tiles 91 cam 0.000
+tick 202 x 38 y 136 vx 0 vy -210 ground false fuel 2 bullets 2 tiles 91 cam 0.000
+tick 203 x 38 y 133 vx 0 vy -180 ground false fuel 2 bullets 2 tiles 91 cam 0.000
+tick 204 x 38 y 131 vx 0 vy -150 ground false fuel 2 bullets 2 tiles 91 cam 0.000
+tick 205 x 38 y 129 vx 0 vy -120 ground false fuel 2 bullets 2 tiles 91 cam 0.000
+tick 206 x 36 y 127 vx 0 vy -90 ground false fuel 2 bullets 2 tiles 91 cam 0.000
+tick 207 x 36 y 123 vx 0 vy -240 ground false fuel 1 bullets 3 tiles 91 cam 0.000
+tick 208 x 36 y 119 vx 0 vy -210 ground false fuel 1 bullets 2 tiles 91 cam 0.000
+tick 209 x 36 y 117 vx 0 vy -180 ground false fuel 1 bullets 2 tiles 91 cam 0.000
+tick 210 x 36 y 114 vx 0 vy -150 ground false fuel 1 bullets 2 tiles 91 cam 0.000
+tick 211 x 36 y 112 vx 0 vy -120 ground false fuel 1 bullets 2 tiles 91 cam 0.000
+tick 212 x 36 y 110 vx 0 vy -90 ground false fuel 1 bullets 2 tiles 91 cam 0.000
+tick 213 x 36 y 106 vx 0 vy -240 ground false fuel 0 bullets 3 tiles 91 cam 0.000
+tick 214 x 36 y 103 vx 0 vy -210 ground false fuel 0 bullets 2 tiles 91 cam 0.000
+tick 215 x 36 y 100 vx 0 vy -180 ground false fuel 0 bullets 2 tiles 91 cam 0.000
+tick 216 x 36 y 98 vx 0 vy -150 ground false fuel 0 bullets 2 tiles 91 cam 0.000
+tick 217 x 36 y 96 vx 0 vy -120 ground false fuel 0 bullets 2 tiles 91 cam 0.000
+tick 218 x 36 y 94 vx 0 vy -90 ground false fuel 0 bullets 2 tiles 91 cam 0.000
+tick 219 x 36 y 93 vx 0 vy -60 ground false fuel 0 bullets 2 tiles 91 cam 0.000
+tick 220 x 36 y 92 vx 0 vy -45 ground false fuel 0 bullets 1 tiles 91 cam 0.000
+tick 221 x 36 y 92 vx 0 vy -30 ground false fuel 0 bullets 1 tiles 91 cam 0.000
+tick 222 x 36 y 92 vx 0 vy -15 ground false fuel 0 bullets 1 tiles 91 cam 0.000
+tick 223 x 36 y 92 vx 0 vy 0 ground false fuel 0 bullets 1 tiles 91 cam 0.000
+tick 224 x 36 y 92 vx 0 vy 15 ground false fuel 0 bullets 1 tiles 91 cam 0.000
+tick 225 x 36 y 92 vx 0 vy 30 ground false fuel 0 bullets 1 tiles 91 cam 0.000
+tick 226 x 36 y 93 vx 0 vy 45 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 227 x 36 y 94 vx 0 vy 60 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 228 x 36 y 95 vx 0 vy 75 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 229 x 36 y 97 vx 0 vy 90 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 230 x 36 y 99 vx 0 vy 120 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 231 x 36 y 101 vx 0 vy 150 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 232 x 36 y 104 vx 0 vy 180 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 233 x 36 y 108 vx 0 vy 210 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 234 x 36 y 112 vx 0 vy 240 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 235 x 36 y 116 vx 0 vy 270 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 236 x 36 y 121 vx 0 vy 300 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 237 x 36 y 127 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 238 x 36 y 132 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 239 x 36 y 137 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 240 x 36 y 143 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 241 x 36 y 148 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 242 x 36 y 153 vx 0 vy 320 ground false fuel 0 bullets 0 tiles 91 cam 0.000
+tick 243 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 244 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 245 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 246 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 247 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 248 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 249 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 250 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 251 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 252 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 253 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 254 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 255 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 256 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 257 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 258 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 259 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 260 x 36 y 156 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 261 x 37 y 156 vx 33.333333333333336 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 262 x 38 y 156 vx 66.66666666666667 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 263 x 39 y 156 vx 100 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 264 x 42 y 156 vx 133.33333333333334 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 265 x 44 y 156 vx 166.66666666666669 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 266 x 47 y 156 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 267 x 50 y 156 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 268 x 53 y 156 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 91 cam 0.000
+tick 269 x 56 y 152 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 270 x 59 y 149 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 271 x 62 y 145 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 272 x 65 y 142 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 273 x 68 y 138 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 274 x 71 y 135 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 275 x 74 y 132 vx 180 vy -180 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 276 x 77 y 130 vx 180 vy -150 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 277 x 80 y 128 vx 180 vy -120 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 278 x 83 y 126 vx 180 vy -90 ground false fuel 8 bullets 0 tiles 91 cam 0.000
+tick 279 x 86 y 122 vx 180 vy -240 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 280 x 89 y 118 vx 180 vy -210 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 281 x 92 y 116 vx 180 vy -180 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 282 x 95 y 113 vx 180 vy -150 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 283 x 98 y 111 vx 180 vy -120 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 284 x 101 y 109 vx 180 vy -90 ground false fuel 7 bullets 1 tiles 91 cam 0.000
+tick 285 x 104 y 105 vx 180 vy -240 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 286 x 107 y 102 vx 180 vy -210 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 287 x 110 y 99 vx 180 vy -180 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 288 x 113 y 97 vx 180 vy -150 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 289 x 116 y 95 vx 180 vy -120 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 290 x 116 y 93 vx 0 vy -90 ground false fuel 6 bullets 2 tiles 91 cam 0.000
+tick 291 x 116 y 89 vx 21.666666666666668 vy -240 ground false fuel 5 bullets 3 tiles 91 cam 0.000
+tick 292 x 117 y 85 vx 43.333333333333336 vy -210 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 293 x 117 y 83 vx 21.666666666666668 vy -180 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 294 x 117 y 80 vx 0 vy -150 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 295 x 117 y 78 vx 0 vy -120 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 296 x 117 y 76 vx 0 vy -90 ground false fuel 5 bullets 2 tiles 91 cam 0.000
+tick 297 x 117 y 72 vx 0 vy -240 ground false fuel 4 bullets 3 tiles 91 cam 0.000
+tick 298 x 117 y 69 vx 0 vy -210 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 299 x 117 y 66 vx 0 vy -180 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 300 x 117 y 64 vx 0 vy -150 ground false fuel 4 bullets 2 tiles 91 cam 0.000
+tick 301 x 117 y 64 vx 0 vy -240 ground false fuel 4 bullets 2 tiles 90 cam 0.000
+tick 302 x 117 y 60 vx 0 vy -210 ground false fuel 4 bullets 2 tiles 90 cam 0.000
+tick 303 x 117 y 56 vx 0 vy -240 ground false fuel 3 bullets 3 tiles 90 cam 0.000
+tick 304 x 117 y 53 vx 0 vy -210 ground false fuel 3 bullets 2 tiles 90 cam 0.000
+tick 305 x 117 y 50 vx 0 vy -180 ground false fuel 3 bullets 2 tiles 90 cam 0.000
+tick 306 x 117 y 48 vx 0 vy -150 ground false fuel 3 bullets 2 tiles 90 cam 0.000
+tick 307 x 117 y 46 vx 0 vy -120 ground false fuel 3 bullets 2 tiles 90 cam 0.000
+tick 308 x 117 y 44 vx 0 vy -90 ground false fuel 3 bullets 2 tiles 90 cam 0.000
+tick 309 x 117 y 40 vx 0 vy -240 ground false fuel 2 bullets 3 tiles 90 cam 0.000
+tick 310 x 117 y 36 vx 0 vy -210 ground false fuel 2 bullets 2 tiles 90 cam 0.000
+tick 311 x 117 y 34 vx 0 vy -180 ground false fuel 2 bullets 2 tiles 90 cam 0.000
+tick 312 x 117 y 31 vx 0 vy -150 ground false fuel 2 bullets 2 tiles 90 cam 0.000
+tick 313 x 117 y 29 vx 0 vy -120 ground false fuel 2 bullets 2 tiles 90 cam 0.000
+tick 314 x 117 y 27 vx 0 vy -90 ground false fuel 2 bullets 2 tiles 90 cam 0.000
+tick 315 x 117 y 23 vx 0 vy -240 ground false fuel 1 bullets 3 tiles 90 cam 0.000
+tick 316 x 117 y 20 vx 0 vy -210 ground false fuel 1 bullets 2 tiles 90 cam 0.000
+tick 317 x 117 y 17 vx 0 vy -180 ground false fuel 1 bullets 2 tiles 90 cam 0.000
+tick 318 x 117 y 15 vx 0 vy -150 ground false fuel 1 bullets 2 tiles 90 cam 0.000
+tick 319 x 117 y 13 vx 0 vy -120 ground false fuel 1 bullets 2 tiles 90 cam 0.000
+tick 320 x 117 y 11 vx 0 vy -90 ground false fuel 1 bullets 2 tiles 90 cam 0.000
+tick 321 x 117 y 7 vx -21.666666666666668 vy -240 ground false fuel 0 bullets 3 tiles 90 cam 0.000
+tick 322 x 116 y 3 vx -43.333333333333336 vy -210 ground false fuel 0 bullets 2 tiles 90 cam 0.000
+tick 323 x 115 y 1 vx -65 vy -180 ground false fuel 0 bullets 2 tiles 90 cam 0.000
+tick 324 x 114 y -2 vx -86.66666666666667 vy -150 ground false fuel 0 bullets 2 tiles 90 cam 0.000
+tick 325 x 112 y -4 vx -108.33333333333334 vy -120 ground false fuel 0 bullets 2 tiles 90 cam 0.000
+tick 326 x 110 y -6 vx -130 vy -90 ground false fuel 0 bullets 2 tiles 90 cam 0.000
+tick 327 x 107 y -6 vx -151.66666666666666 vy -60 ground false fuel 0 bullets 2 tiles 90 cam 0.000
+tick 328 x 104 y -7 vx -173.33333333333331 vy -45 ground false fuel 0 bullets 1 tiles 90 cam 0.000
+tick 329 x 101 y -8 vx -180 vy -30 ground false fuel 0 bullets 1 tiles 90 cam 0.000
+tick 330 x 98 y -8 vx -180 vy -15 ground false fuel 0 bullets 1 tiles 90 cam 0.000
+tick 331 x 95 y -8 vx -180 vy 0 ground false fuel 0 bullets 1 tiles 90 cam 0.000
+tick 332 x 92 y -8 vx -180 vy 15 ground false fuel 0 bullets 1 tiles 90 cam 0.000
+tick 333 x 89 y -7 vx -180 vy 30 ground false fuel 0 bullets 1 tiles 90 cam 0.000
+tick 334 x 86 y -7 vx -180 vy 45 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 335 x 83 y -5 vx -180 vy 60 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 336 x 80 y -4 vx -180 vy 75 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 337 x 77 y -3 vx -180 vy 90 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 338 x 74 y -1 vx -180 vy 120 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 339 x 71 y 2 vx -180 vy 150 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 340 x 68 y 5 vx -180 vy 180 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 341 x 65 y 8 vx -180 vy 210 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 342 x 62 y 12 vx -180 vy 240 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 343 x 59 y 17 vx -180 vy 270 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 344 x 56 y 22 vx -180 vy 300 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 345 x 53 y 27 vx -180 vy 320 ground false fuel 0 bullets 0 tiles 90 cam 0.000
+tick 346 x 50 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 347 x 47 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 348 x 44 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 349 x 41 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 350 x 38 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 351 x 35 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 352 x 32 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 353 x 29 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 354 x 26 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 355 x 23 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 356 x 20 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 357 x 17 y 28 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 358 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 359 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 360 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 361 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 362 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 363 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 364 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 365 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 366 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 367 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 368 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 369 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 370 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 371 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 372 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 373 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 374 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 375 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 376 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 377 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 378 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 379 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 380 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 381 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 382 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 383 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 384 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 385 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 386 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 387 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 388 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 389 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 390 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 391 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 392 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 393 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 394 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 395 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 396 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 397 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 398 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 399 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 400 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 401 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 402 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 403 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 404 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 405 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 406 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 407 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 408 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 409 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 410 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 411 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 412 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 413 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 414 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 415 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 416 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 417 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 418 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 419 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 420 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 421 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 422 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 423 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 424 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 425 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 426 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 427 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 428 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 429 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 430 x 16 y 28 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 90 cam 0.000
+tick 431 x 16 y 24 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 432 x 16 y 21 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 433 x 16 y 17 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 434 x 16 y 14 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 435 x 16 y 10 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 436 x 16 y 7 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 437 x 16 y 4 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 438 x 16 y 2 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 439 x 16 y 0 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 440 x 16 y -2 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 441 x 16 y -3 vx 0 vy -60 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 442 x 16 y -3 vx 0 vy -30 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 443 x 16 y -3 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 444 x 16 y -3 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 445 x 16 y -2 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 446 x 16 y 0 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 90 cam 0.000
+tick 447 x 16 y -4 vx 0 vy -240 ground false fuel 7 bullets 1 tiles 90 cam 0.000
+tick 448 x 16 y -8 vx 0 vy -210 ground false fuel 7 bullets 1 tiles 90 cam 0.000
+tick 449 x 16 y -11 vx 0 vy -180 ground false fuel 7 bullets 1 tiles 90 cam 0.000
+tick 450 x 16 y -13 vx 0 vy -150 ground false fuel 7 bullets 1 tiles 90 cam 0.000
+tick 451 x 16 y -15 vx 0 vy -120 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 452 x 16 y -17 vx 0 vy -90 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 453 x 16 y -18 vx 0 vy -60 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 454 x 16 y -18 vx 0 vy -30 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 455 x 16 y -18 vx 0 vy 0 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 456 x 16 y -18 vx 0 vy 30 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 457 x 16 y -17 vx 0 vy 60 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 458 x 16 y -15 vx 0 vy 90 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 459 x 16 y -13 vx 0 vy 120 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 460 x 16 y -11 vx 0 vy 150 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 461 x 16 y -8 vx 0 vy 180 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 462 x 16 y -4 vx 0 vy 210 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 463 x 16 y 0 vx 0 vy 240 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 464 x 16 y 4 vx 0 vy 270 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 465 x 16 y 9 vx 0 vy 300 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 466 x 16 y 14 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 467 x 16 y 20 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 468 x 16 y 25 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 469 x 16 y 30 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 470 x 16 y 36 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 471 x 16 y 41 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 472 x 16 y 46 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 473 x 16 y 52 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 474 x 16 y 57 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 475 x 16 y 62 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 476 x 16 y 68 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 477 x 16 y 73 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 478 x 16 y 78 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 479 x 16 y 84 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 480 x 16 y 89 vx 0 vy 320 ground false fuel 7 bullets 0 tiles 89 cam 0.000
+tick 481 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 482 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 483 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 484 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 485 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 486 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 487 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 488 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 489 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 490 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 491 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 492 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 493 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 494 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 495 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 496 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 497 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 498 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 499 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 500 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 501 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 502 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 503 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 504 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 505 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 506 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 507 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 508 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 509 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 510 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 511 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 512 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 513 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 514 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 515 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 516 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 517 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 518 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 519 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 520 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 521 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 522 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 523 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 524 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 525 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 526 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 527 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 528 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 529 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 530 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 531 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 532 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 533 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 534 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 535 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 536 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 537 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 538 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 539 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 540 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 541 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 542 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 543 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 544 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 545 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 546 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 547 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 548 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 549 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 550 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 551 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 552 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 553 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 554 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 555 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 556 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 557 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 558 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 559 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 560 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 561 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 562 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 563 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 564 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 565 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 566 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 567 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 568 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 569 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 570 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 571 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 572 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 573 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 574 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 575 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 576 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 577 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 578 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 579 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 580 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 581 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 582 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 583 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 584 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 585 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 586 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 587 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 588 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 589 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 590 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 591 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 592 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 593 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 594 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 595 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 596 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 597 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 598 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 599 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000
+tick 600 x 16 y 92 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 89 cam 0.000

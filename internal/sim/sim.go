@@ -34,6 +34,7 @@ type World struct {
 	Player Player
 	// Bullets are the player's shots in flight, oldest first.
 	Bullets []Bullet
+	Camera  Camera
 
 	// tuning is read every step; change it with SetTuning.
 	tuning tuning.Tuning
@@ -53,6 +54,7 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 		blocks: newBlockTable(t.Blocks),
 	}
 	w.blocks.apply(w.Map)
+	w.Camera.Y = w.cameraTarget()
 	return w
 }
 
@@ -62,6 +64,7 @@ func (w *World) Step(in Input) {
 	if w.Player.step(in, w.tuning, w.Map, w.blocks) {
 		w.spawnBullet()
 	}
+	w.stepCamera()
 	w.Tick++
 }
 
@@ -79,6 +82,23 @@ func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
 	if p.Height > m.Rows*m.TileSize || collide.Overlaps(w.Map, x, 0, p.Width, p.Height) {
 		return nil, fmt.Errorf("sim: no room to spawn a %dx%d player at the top centre (%d, 0)",
 			p.Width, p.Height, x)
+	}
+	return w, nil
+}
+
+// NewWorldInTower returns a world with the player standing on the floor at
+// the bottom centre of m, a tower built with level.BuildTower.
+func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
+	if err := newBlockTable(t.Blocks).check(m); err != nil {
+		return nil, err
+	}
+	p := t.Player
+	x := (m.Cols*m.TileSize - p.Width) / 2
+	y := (m.Rows-1)*m.TileSize - p.Height
+	w := NewWorld(t, m, x, y)
+	if b := w.Player.Body; y < 0 || collide.Overlaps(w.Map, x, y, p.Width, p.Height) || !b.OnGround(w.Map) {
+		return nil, fmt.Errorf("sim: no room to stand a %dx%d player on the bottom centre (%d, %d)",
+			p.Width, p.Height, x, y)
 	}
 	return w, nil
 }

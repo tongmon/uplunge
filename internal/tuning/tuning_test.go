@@ -22,6 +22,10 @@ const valid = `{"player": {
 }, "gun": {
 	"magazine": 8, "fireInterval": 0.1, "thrust": 240,
 	"bulletSpeed": 480, "bulletLife": 0.2, "bulletWidth": 4, "bulletHeight": 8
+}, "camera": {
+	"anchor": 0.667, "lookahead": 0.2, "remainPerSecond": 0.01
+}, "tower": {
+	"base": "Start", "pool": ["Shaft", "Blocks"], "length": 6
 }, "blocks": [
 	{"value": 1, "name": "solid", "color": "#707070"},
 	{"value": 3, "name": "drill", "drill": true, "color": "#C06040"}
@@ -42,6 +46,13 @@ func TestParse(t *testing.T) {
 		{"negative value", strings.Replace(valid, `"runSpeed": 180`, `"runSpeed": -180`, 1), "player.runSpeed must be positive"},
 		{"zero size", strings.Replace(valid, `"width": 12`, `"width": 0`, 1), "player.width must be positive"},
 		{"missing gun field", strings.Replace(valid, `"magazine": 8, `, ``, 1), "gun.magazine must be positive"},
+		{"anchor out of range", strings.Replace(valid, `"anchor": 0.667`, `"anchor": 1`, 1), "camera.anchor must be between 0 and 1"},
+		{"negative lookahead", strings.Replace(valid, `"lookahead": 0.2`, `"lookahead": -0.2`, 1), "camera.lookahead must not be negative"},
+		{"zero lookahead", strings.Replace(valid, `"lookahead": 0.2`, `"lookahead": 0`, 1), ""},
+		{"remain of 1", strings.Replace(valid, `"remainPerSecond": 0.01`, `"remainPerSecond": 1`, 1), "camera.remainPerSecond must be between 0 and 1"},
+		{"no tower base", strings.Replace(valid, `"base": "Start", `, ``, 1), "tower.base is missing"},
+		{"zero tower length", strings.Replace(valid, `"length": 6`, `"length": 0`, 1), "tower.length must be at least 1"},
+		{"empty pool name", strings.Replace(valid, `["Shaft", "Blocks"]`, `["Shaft", ""]`, 1), "tower.pool has an empty chunk name"},
 		{"block value out of range", strings.Replace(valid, `"value": 3`, `"value": 256`, 1), "blocks[1].value must be 1 to 255"},
 		{"block value twice", strings.Replace(valid, `"value": 3`, `"value": 1`, 1), "blocks[1].value 1 is defined twice"},
 		{"block name twice", strings.Replace(valid, `"name": "drill"`, `"name": "solid"`, 1), `blocks[1].name "solid" is defined twice`},

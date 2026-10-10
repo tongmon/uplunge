@@ -24,6 +24,10 @@ func baseTuning() tuning.Tuning {
 	}, Gun: tuning.Gun{
 		Magazine: 8, FireInterval: 0.1, Thrust: 240,
 		BulletSpeed: 480, BulletLife: 0.2, BulletWidth: 4, BulletHeight: 8,
+	}, Camera: tuning.Camera{
+		Anchor: 0.667, Lookahead: 0.2, RemainPerSecond: 0.01,
+	}, Tower: tuning.Tower{
+		Base: "Start", Pool: []string{"Shaft", "Blocks"}, Length: 6,
 	}, Blocks: []tuning.Block{
 		{Value: 1, Name: "solid", Color: "#707070"},
 		{Value: 2, Name: "one_way", OneWay: true, Color: "#a08060"},

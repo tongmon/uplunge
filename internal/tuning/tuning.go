@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"slices"
 	"strconv"
 )
 
@@ -18,7 +19,33 @@ import (
 type Tuning struct {
 	Player Player  `json:"player"`
 	Gun    Gun     `json:"gun"`
+	Camera Camera  `json:"camera"`
+	Tower  Tower   `json:"tower"`
 	Blocks []Block `json:"blocks"`
+}
+
+// Camera holds how the view follows the player up the tower.
+type Camera struct {
+	// Anchor is where the player's centre sits on screen, as a fraction of
+	// the view height from the top.
+	Anchor float64 `json:"anchor"`
+	// Lookahead shows this many seconds of upward travel ahead: the target
+	// moves up by -VY * Lookahead while the player rises.
+	Lookahead float64 `json:"lookahead"`
+	// RemainPerSecond is the fraction of the distance to the target still
+	// left after following for one second.
+	RemainPerSecond float64 `json:"remainPerSecond"`
+}
+
+// Tower holds how a run's tower is stacked from chunks. It is read once,
+// when a run starts.
+type Tower struct {
+	// Base is the bottom chunk, where the player starts.
+	Base string `json:"base"`
+	// Pool lists the chunks drawn at random above the base.
+	Pool []string `json:"pool"`
+	// Length is the number of chunks, the base included.
+	Length int `json:"length"`
 }
 
 // Player holds the player's size and movement numbers. Speeds are px/s,
@@ -165,6 +192,21 @@ func (t Tuning) validate() error {
 		if !(f.v > 0) {
 			return fmt.Errorf("%s must be positive, got %v", f.name, f.v)
 		}
+	}
+	c := t.Camera
+	switch {
+	case !(c.Anchor > 0 && c.Anchor < 1):
+		return fmt.Errorf("camera.anchor must be between 0 and 1, got %v", c.Anchor)
+	case !(c.Lookahead >= 0):
+		return fmt.Errorf("camera.lookahead must not be negative, got %v", c.Lookahead)
+	case !(c.RemainPerSecond > 0 && c.RemainPerSecond < 1):
+		return fmt.Errorf("camera.remainPerSecond must be between 0 and 1, got %v", c.RemainPerSecond)
+	case t.Tower.Base == "":
+		return fmt.Errorf("tower.base is missing")
+	case t.Tower.Length < 1:
+		return fmt.Errorf("tower.length must be at least 1, got %d", t.Tower.Length)
+	case slices.Contains(t.Tower.Pool, ""):
+		return fmt.Errorf("tower.pool has an empty chunk name")
 	}
 	return validateBlocks(t.Blocks)
 }

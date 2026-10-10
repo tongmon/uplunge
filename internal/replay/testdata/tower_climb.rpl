@@ -1,0 +1,16 @@
+uplunge-replay 1
+tower 1
+frames 200
+
+# Start on the floor at the bottom of tower 1. Step right into the gap
+# between the platforms above, jump, and fire up; drift right at the top and
+# land on a platform. The camera follows the climb and stays up.
+0 -
+4 R
+10 -
+30 B
+40 -
+44 B
+88 RB
+100 R
+112 -
