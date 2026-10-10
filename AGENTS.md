@@ -78,7 +78,8 @@ Module path: `github.com/tongmon/uplunge`. Create a package only when the first 
 | `internal/collide/` | Integer-pixel movement and AABB-vs-tile collision. | **no** |
 | `internal/level/` | Tile maps and the LDtk chunk loader. | **no** |
 | `internal/tuning/` | Tunable definitions and parsing. | **no** |
-| `internal/replay/` | Input recording format. | **no** |
+| `internal/replay/` | Input recording format, and setting up the world a run starts in. | **no** |
+| `internal/rng/` | Seeded random numbers (SplitMix64), stable across Go versions. | **no** |
 | `data/` | Tunables (JSON). | |
 | `assets/` | Art and LDtk chunks. | |
 | `tools/` | Developer scripts and tools. | |
@@ -97,7 +98,7 @@ Choose checks in proportion to the change:
 - **Logic changes:** unit tests or input-replay tests. For a bug fix, write a failing test first.
 - **Physics and feel tuning:** replay tests assert measurable outcomes (heights, distances, timings).
   - Whether it *feels* good needs the developer's playtest. Say so instead of claiming it.
-- **Replays:** record a run with `go run ./cmd/uplunge -record out/name.rpl`, copy it to `internal/replay/testdata/`, and run `go test ./internal/replay/ -update` to create its `.golden` trajectory. After an intended behavior change, rerun with `-update` and review the `.golden` diff in the PR. The replay tests use their own copies of the tuning and chunks in that `testdata/` folder, so editing `data/` or `assets/` does not break them.
+- **Replays:** record a run with `go run ./cmd/uplunge -record out/name.rpl` (a tower run; add `-seed N` for a fixed tower or `-chunk Name` for one chunk), copy it to `internal/replay/testdata/`, and run `go test ./internal/replay/ -update` to create its `.golden` trajectory. After an intended behavior change, rerun with `-update` and review the `.golden` diff in the PR. The replay tests use their own copies of the tuning and chunks in that `testdata/` folder, so editing `data/` or `assets/` does not break them.
 - **Visual and render changes:** capture PNGs at chosen ticks and inspect them. Drive the run with a replay so the frames are reproducible:
   - `go run ./cmd/uplunge -replay internal/replay/testdata/drop_run_jump.rpl -shots 0,30,120 -shots-dir out/shots`
   - The game saves `out/shots/tick_000030.png` etc. at the logical resolution (208×360, no debug text) and exits after the last tick. A window opens briefly while it runs.
