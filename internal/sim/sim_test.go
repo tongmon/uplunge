@@ -159,6 +159,22 @@ func TestHeldJumpRisesAboutThreeAndAHalfTiles(t *testing.T) {
 	}
 }
 
+func TestJumpHoldLastsJumpHoldTime(t *testing.T) {
+	p := testTuning().Player
+	w := standingWorld(t)
+	held := 0
+	for i := 0; i < Hz; i++ {
+		w.Step(Input{Button: true})
+		if w.Player.VY == -p.JumpSpeed {
+			held++
+		}
+	}
+	// The launch step counts as the first held step.
+	if want := int(p.JumpHoldTime * Hz); held != want {
+		t.Fatalf("VY stayed at -JumpSpeed for %d steps, want %d", held, want)
+	}
+}
+
 func TestTapJumpIsLower(t *testing.T) {
 	tap, held := jumpHeight(t, 1), jumpHeight(t, Hz)
 	t.Logf("tap jump height: %d px", tap)

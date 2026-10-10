@@ -25,7 +25,9 @@ type Input struct {
 type World struct {
 	// Tick counts the steps taken since the world was created.
 	Tick uint64
-	// Tuning is read every step, so replacing it takes effect on the next step.
+	// Tuning is read every step, so replacing it changes movement on the next
+	// step. The player's size is the exception: it is copied into the body by
+	// NewWorld and does not follow later changes.
 	Tuning tuning.Tuning
 	Map    *level.TileMap
 	Player Player

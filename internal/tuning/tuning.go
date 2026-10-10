@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 )
 
@@ -19,6 +20,7 @@ type Tuning struct {
 // accelerations px/s², and times seconds. Speeds are magnitudes; the
 // simulation applies the direction (y grows downward).
 type Player struct {
+	// Width and Height are the hitbox size, applied when the world is created.
 	Width  int `json:"width"`
 	Height int `json:"height"`
 
@@ -56,6 +58,9 @@ func Parse(data []byte) (Tuning, error) {
 	var t Tuning
 	if err := dec.Decode(&t); err != nil {
 		return Tuning{}, err
+	}
+	if err := dec.Decode(&struct{}{}); err != io.EOF {
+		return Tuning{}, fmt.Errorf("unexpected data after the tuning object")
 	}
 	if err := t.validate(); err != nil {
 		return Tuning{}, err

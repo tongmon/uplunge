@@ -25,6 +25,9 @@ func TestParse(t *testing.T) {
 		wantErr string
 	}{
 		{"valid", valid, ""},
+		{"trailing whitespace", valid + "\n\t \n", ""},
+		{"trailing garbage", valid + " garbage", "after the tuning object"},
+		{"second object", valid + valid, "after the tuning object"},
 		{"unknown field", strings.Replace(valid, `"gravity"`, `"gravty"`, 1), "unknown field"},
 		{"missing field", strings.Replace(valid, `"maxFall": 320,`, ``, 1), "player.maxFall must be positive"},
 		{"negative value", strings.Replace(valid, `"runSpeed": 180`, `"runSpeed": -180`, 1), "player.runSpeed must be positive"},

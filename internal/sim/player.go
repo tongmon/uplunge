@@ -1,6 +1,8 @@
 package sim
 
 import (
+	"math"
+
 	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/level"
 	"github.com/tongmon/uplunge/internal/tuning"
@@ -14,10 +16,11 @@ type Player struct {
 	// OnGround reports whether the player stood on a solid after the last step.
 	OnGround bool
 
-	// jumpHold is the time left during which holding the button keeps VY at
-	// -JumpSpeed.
-	jumpHold   float64
-	prevButton bool
+	// jumpHoldSteps is the number of steps left during which holding the
+	// button keeps VY at -JumpSpeed. Counting whole steps keeps the hold
+	// exactly JumpHoldTime long instead of drifting with float error.
+	jumpHoldSteps int
+	prevButton    bool
 }
 
 func newPlayer(p tuning.Player, x, y int) Player {
@@ -50,19 +53,20 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 		pl.VY = approach(pl.VY, p.MaxFall, p.Gravity*Dt)
 	}
 
-	// Jump: holding the button keeps the launch speed for up to JumpHoldTime;
-	// releasing early ends the hold and gives a lower jump.
-	if pl.jumpHold > 0 {
+	// Jump: holding the button keeps the launch speed for up to JumpHoldTime,
+	// counting the launch step; releasing early ends the hold and gives a
+	// lower jump.
+	if pressed && grounded {
+		// At least the launch step, however small JumpHoldTime is.
+		pl.jumpHoldSteps = max(1, int(math.Round(p.JumpHoldTime*Hz)))
+	}
+	if pl.jumpHoldSteps > 0 {
 		if in.Button {
 			pl.VY = min(pl.VY, -p.JumpSpeed)
-			pl.jumpHold -= Dt
+			pl.jumpHoldSteps--
 		} else {
-			pl.jumpHold = 0
+			pl.jumpHoldSteps = 0
 		}
-	}
-	if pressed && grounded {
-		pl.VY = -p.JumpSpeed
-		pl.jumpHold = p.JumpHoldTime
 	}
 
 	if b.MoveX(m, pl.VX*Dt) {
@@ -70,7 +74,7 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 	}
 	if b.MoveY(m, pl.VY*Dt) {
 		pl.VY = 0
-		pl.jumpHold = 0
+		pl.jumpHoldSteps = 0
 	}
 	pl.OnGround = collide.Overlaps(m, b.X, b.Y+1, b.W, b.H)
 }
