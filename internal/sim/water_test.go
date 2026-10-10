@@ -5,18 +5,42 @@ import (
 	"testing"
 )
 
-// waterTower returns a tower world (floorTower) with the water on and the
-// player standing on the bottom floor, so the camera rests at the map bottom.
+// waterTower returns a tower world (floorTower) with the water on and
+// already rising, and the player standing on the bottom floor, so the
+// camera rests at the map bottom.
 func waterTower(t *testing.T) *World {
+	t.Helper()
+	w := waitingTower(t)
+	w.Water.waiting = false
+	return w
+}
+
+// waitingTower is waterTower before the first jump, with the water waiting.
+func waitingTower(t *testing.T) *World {
 	t.Helper()
 	w, err := NewWorldInTower(testTuning(), floorTower())
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !w.Water.On {
-		t.Fatal("tower world has no water")
+	if !w.Water.On || !w.Water.waiting {
+		t.Fatal("tower world has no waiting water")
 	}
 	return w
+}
+
+func TestWaterWaitsForTheFirstJump(t *testing.T) {
+	w := waitingTower(t)
+	y := w.Water.Y
+	run(w, Input{}, 3*Hz)
+	run(w, Input{Right: true}, 10) // walking is not climbing
+	run(w, Input{Left: true}, 10)
+	if w.Water.Y != y || w.Player.HP != testTuning().Player.MaxHP {
+		t.Fatalf("water moved from %v to %v before the first jump", y, w.Water.Y)
+	}
+	w.Step(Input{Button: true})
+	if !(w.Water.Y < y) {
+		t.Fatal("water did not start rising with the first jump")
+	}
 }
 
 func near(a, b float64) bool { return math.Abs(a-b) < 1e-9 }
@@ -47,7 +71,7 @@ func TestWaterSpeed(t *testing.T) {
 		wantRise float64
 	}{
 		{"at the baseline", 0, c.Speed * Dt},
-		{"half the max lag behind", c.MaxLag / 2, 1.5 * c.Speed * Dt},
+		{"half the max lag behind", c.MaxLag / 2, (1 + (c.MaxMult-1)/2) * c.Speed * Dt},
 		{"at the max lag", c.MaxLag, c.MaxMult * c.Speed * Dt},
 		{"further behind is pulled up to the max lag", c.MaxLag + 500, c.MaxMult * c.Speed * Dt},
 		{"half the slow range above", -c.SlowRange / 2, 0.75 * c.Speed * Dt},
@@ -59,7 +83,7 @@ func TestWaterSpeed(t *testing.T) {
 			baseline := w.Camera.Bottom() - c.Baseline
 			w.Water.Y = baseline + tt.below
 			from := min(w.Water.Y, baseline+c.MaxLag)
-			w.stepWater()
+			w.stepWater(Input{})
 			if rise := from - w.Water.Y; !near(rise, tt.wantRise) {
 				t.Fatalf("rose %v px in a step, want %v", rise, tt.wantRise)
 			}
@@ -151,10 +175,11 @@ func TestWaterEndsTheRunAtZeroHP(t *testing.T) {
 }
 
 func TestWaterCatchesAStandingPlayer(t *testing.T) {
-	// Left standing on the bottom floor, the player is caught soon after the
-	// start: the water starts below the map and rises past the feet.
-	w := waterTower(t)
-	for i := 0; i < 3*Hz; i++ {
+	// Left standing on the bottom floor after a tap, the player is caught
+	// soon: the water starts below the map and rises past the feet.
+	w := waitingTower(t)
+	w.Step(Input{Button: true})
+	for i := 0; i < 5*Hz; i++ {
 		w.Step(Input{})
 		if w.Water.pauseSteps > 0 {
 			t.Logf("caught after %.2f s", float64(i+1)/Hz)
@@ -242,5 +267,28 @@ func TestRetreatKeepsTheValuesFromTheCatch(t *testing.T) {
 	if got := w.Water.Y - from; !near(got, testTuning().Water.Retreat) {
 		t.Fatalf("retreated %v px after a reload mid-retreat, want the %v px set at the catch",
 			got, testTuning().Water.Retreat)
+	}
+}
+
+func TestRetreatGoesPastTheMaxLag(t *testing.T) {
+	// The retreat is longer than the max lag; the water still goes the
+	// whole way down, and only after the pause is it pulled back up to the
+	// max lag, which is below the view.
+	c := testTuning().Water
+	if c.Retreat <= c.MaxLag {
+		t.Skip("the retreat fits inside the max lag")
+	}
+	w := waterTower(t)
+	catchPlayer(t, w)
+	from := w.Water.retreatFrom
+	run(w, Input{}, 29) // to the last step of the pause
+	if got := w.Water.Y - from; !near(got, c.Retreat) {
+		t.Fatalf("water went down %v px during the pause, want the whole %v", got, c.Retreat)
+	}
+	w.Step(Input{})
+	baseline := w.Camera.Bottom() - c.Baseline
+	if w.Water.Y > baseline+c.MaxLag || float64(w.Water.Surface()) < w.Camera.Bottom() {
+		t.Fatalf("water at %v after the pause, want it pulled up to the max lag %v, still below the view",
+			w.Water.Y, baseline+c.MaxLag)
 	}
 }

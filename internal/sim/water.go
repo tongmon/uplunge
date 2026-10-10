@@ -10,6 +10,10 @@ import "math"
 type Water struct {
 	// On is false in chunk mode, which has no water.
 	On bool
+	// waiting holds the water still until the run's first jump, so a run
+	// does not start under pressure (Celeste's lava likewise waits after a
+	// respawn until the player moves).
+	waiting bool
 	// Y is the surface height in world pixels, kept with its fraction so
 	// slow speeds add up; Surface is the whole pixel it collides and draws at.
 	Y float64
@@ -31,13 +35,17 @@ func (wt Water) Surface() int {
 
 // startWater puts the water StartBelow under the map's bottom edge.
 func (w *World) startWater() {
-	w.Water = Water{On: true, Y: float64(w.Map.Rows*w.Map.TileSize) + w.tuning.Water.StartBelow}
+	w.Water = Water{On: true, waiting: true, Y: float64(w.Map.Rows*w.Map.TileSize) + w.tuning.Water.StartBelow}
 }
 
-// stepWater moves the water for one step.
-func (w *World) stepWater() {
+// stepWater moves the water for one step. in is the step's input: the
+// first press of the button, the run's first jump, sets the water going.
+func (w *World) stepWater(in Input) {
 	wt, c := &w.Water, w.tuning.Water
-	if !wt.On {
+	if wt.waiting && in.Button {
+		wt.waiting = false
+	}
+	if !wt.On || wt.waiting {
 		return
 	}
 	if wt.pauseSteps > 0 {
@@ -49,7 +57,12 @@ func (w *World) stepWater() {
 		wt.Y = wt.retreatFrom + (wt.retreatTo-wt.retreatFrom)*cubeOut(t)
 	}
 	baseline := w.Camera.Bottom() - c.Baseline
-	wt.Y = min(wt.Y, baseline+c.MaxLag)
+	// While paused after a catch the water may sit further back than
+	// MaxLag, so a retreat longer than MaxLag still goes all the way; once
+	// the pause is over it is pulled back up.
+	if wt.pauseSteps == 0 {
+		wt.Y = min(wt.Y, baseline+c.MaxLag)
+	}
 	mult := 1.0
 	if wt.Y > baseline {
 		mult = 1 + (c.MaxMult-1)*min(1, (wt.Y-baseline)/c.MaxLag)

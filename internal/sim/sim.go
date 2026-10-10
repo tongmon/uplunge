@@ -78,7 +78,7 @@ func (w *World) Step(in Input) {
 	w.stepEnemies()
 	w.touchEnemies(prevBottom)
 	w.stepCamera()
-	w.stepWater()
+	w.stepWater(in)
 	w.touchWater()
 	w.Over = w.Player.HP <= 0
 }
