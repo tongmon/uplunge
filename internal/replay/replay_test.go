@@ -94,6 +94,7 @@ func TestReadErrors(t *testing.T) {
 		{"no chunk", "uplunge-replay 1\nframes 3\n", "chunk <name>"},
 		{"no frames", "uplunge-replay 1\nchunk A\n0 -\n", "frames <count>"},
 		{"negative frames", "uplunge-replay 1\nchunk A\nframes -1\n", "frames <count>"},
+		{"too many frames", "uplunge-replay 1\nchunk A\nframes 9223372036854775807\n", "at most"},
 		{"step not increasing", head + "3 R\n3 L\n", "must increase"},
 		{"step out of range", head + "10 R\n", "below 10"},
 		{"bad step", head + "x R\n", "must increase"},
@@ -120,7 +121,8 @@ func TestWriteRejectsBadChunkName(t *testing.T) {
 }
 
 // trace replays r against the testdata tuning and chunks, the same way the
-// game sets up a run, and records the player every 30 steps and at the end.
+// game sets up a run, and records the player before every step and at the end,
+// so a change of even one step in timing shows up.
 func trace(t *testing.T, r Replay) string {
 	t.Helper()
 	tun, err := tuning.Load("testdata/tuning.json")
@@ -145,10 +147,8 @@ func trace(t *testing.T, r Replay) string {
 		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t\n",
 			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround)
 	}
-	for i, in := range r.Inputs {
-		if i%30 == 0 {
-			line()
-		}
+	for _, in := range r.Inputs {
+		line()
 		w.Step(in)
 	}
 	line()
@@ -192,5 +192,26 @@ func TestGoldenReplays(t *testing.T) {
 				t.Fatalf("trajectory changed:\ngot\n%s\nwant\n%s", got, want)
 			}
 		})
+	}
+}
+
+func TestSaveKeepsOldFileOnError(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "run.rpl")
+	old := Replay{Chunk: "Start", Inputs: []sim.Input{right}}
+	if err := Save(path, old); err != nil {
+		t.Fatal(err)
+	}
+	if err := Save(path, Replay{Chunk: "two words"}); err == nil {
+		t.Fatal("Save with a bad chunk name succeeded")
+	}
+	got, err := Load(path)
+	if err != nil {
+		t.Fatalf("old replay unreadable after failed save: %v", err)
+	}
+	if got.Chunk != "Start" || len(got.Inputs) != 1 || got.Inputs[0] != right {
+		t.Fatalf("old replay changed after failed save: %+v", got)
+	}
+	if entries, _ := os.ReadDir(filepath.Dir(path)); len(entries) != 1 {
+		t.Fatalf("leftover files after failed save: %v", entries)
 	}
 }

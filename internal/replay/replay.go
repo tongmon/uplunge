@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -29,6 +30,10 @@ import (
 )
 
 const magic = "uplunge-replay 1"
+
+// MaxFrames caps the frame count read from a file (24 hours of play), so a
+// typo in a hand-written header cannot request gigabytes of memory.
+const MaxFrames = 24 * 60 * 60 * sim.Hz
 
 // Replay is a recorded run: where it started and the input for every step.
 type Replay struct {
@@ -40,8 +45,8 @@ type Replay struct {
 
 // Write encodes r.
 func Write(w io.Writer, r Replay) error {
-	if r.Chunk == "" || strings.ContainsAny(r.Chunk, " \t\r\n") {
-		return fmt.Errorf("replay: invalid chunk name %q", r.Chunk)
+	if err := r.validate(); err != nil {
+		return err
 	}
 	bw := bufio.NewWriter(w)
 	fmt.Fprintf(bw, "%s\nchunk %s\nframes %d\n", magic, r.Chunk, len(r.Inputs))
@@ -85,6 +90,9 @@ func Read(rd io.Reader) (Replay, error) {
 	n, err := strconv.Atoi(strings.TrimPrefix(s, "frames "))
 	if !strings.HasPrefix(s, "frames ") || err != nil || n < 0 {
 		return errorf("want \"frames <count>\", got %q", s)
+	}
+	if n > MaxFrames {
+		return errorf("frames %d is more than the supported %d; replays hold at most 24 hours", n, MaxFrames)
 	}
 	r := Replay{Chunk: name, Inputs: make([]sim.Input, n)}
 
@@ -174,15 +182,37 @@ func Load(path string) (Replay, error) {
 	return r, nil
 }
 
-// Save writes a replay file, replacing any existing one.
+// Save writes a replay file. It writes to a temporary file first and only
+// replaces path once that succeeds, so a failed save keeps the old file.
 func Save(path string, r Replay) error {
-	f, err := os.Create(path)
+	if err := r.validate(); err != nil {
+		return err
+	}
+	f, err := os.CreateTemp(filepath.Dir(path), filepath.Base(path)+".*.tmp")
 	if err != nil {
 		return fmt.Errorf("replay: %w", err)
 	}
-	if err := Write(f, r); err != nil {
-		f.Close()
-		return err
+	tmp := f.Name()
+	err = Write(f, r)
+	if cerr := f.Close(); err == nil {
+		err = cerr
 	}
-	return f.Close()
+	if err == nil {
+		err = os.Rename(tmp, path)
+	}
+	if err != nil {
+		os.Remove(tmp)
+		return fmt.Errorf("replay: %w", err)
+	}
+	return nil
+}
+
+func (r Replay) validate() error {
+	if r.Chunk == "" || strings.ContainsAny(r.Chunk, " \t\r\n") {
+		return fmt.Errorf("replay: invalid chunk name %q", r.Chunk)
+	}
+	if len(r.Inputs) > MaxFrames {
+		return fmt.Errorf("replay: %d frames is more than the supported %d", len(r.Inputs), MaxFrames)
+	}
+	return nil
 }
