@@ -17,6 +17,7 @@ func main() {
 	recordPath := flag.String("record", "", "save this run's inputs to this replay file on exit")
 	shots := flag.String("shots", "", "comma-separated ticks to save as PNGs, then exit (e.g. 0,30,120)")
 	shotsDir := flag.String("shots-dir", "out/shots", "directory for -shots PNGs")
+	reload := flag.Bool("reload", false, "reload the -tuning file while running whenever it changes")
 	flag.Parse()
 
 	var shotTicks []uint64
@@ -36,6 +37,7 @@ func main() {
 		RecordPath: *recordPath,
 		ShotTicks:  shotTicks,
 		ShotsDir:   *shotsDir,
+		Reload:     *reload,
 	}
 	if err := app.Run(cfg); err != nil {
 		log.Fatal(err)

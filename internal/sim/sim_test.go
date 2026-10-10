@@ -261,3 +261,75 @@ func TestNewWorldInChunk(t *testing.T) {
 		})
 	}
 }
+
+func TestSetTuningAppliesMovement(t *testing.T) {
+	w := standingWorld(t)
+	tun := testTuning()
+	tun.Player.RunSpeed = 90
+	if err := w.SetTuning(tun); err != nil {
+		t.Fatal(err)
+	}
+	run(w, Input{Right: true}, Hz/2)
+	if w.Player.VX != 90 {
+		t.Fatalf("VX = %v after the new tuning, want 90", w.Player.VX)
+	}
+	if w.Tuning().Player.RunSpeed != 90 {
+		t.Fatal("Tuning() does not report the new tuning")
+	}
+}
+
+func TestSetTuningResizesAroundFeet(t *testing.T) {
+	tests := []struct {
+		name         string
+		w, h         int
+		wantX, wantY int
+	}{
+		{"grow", 16, 24, 94, floorY - 24},
+		{"shrink", 8, 10, 98, floorY - 10},
+		{"odd difference", 15, 20, 95, floorY - 20},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			w := standingWorld(t) // 12x20 at x 96
+			tun := testTuning()
+			tun.Player.Width, tun.Player.Height = tt.w, tt.h
+			if err := w.SetTuning(tun); err != nil {
+				t.Fatal(err)
+			}
+			b := w.Player.Body
+			if b.X != tt.wantX || b.Y != tt.wantY || b.W != tt.w || b.H != tt.h {
+				t.Fatalf("body %dx%d at (%d, %d), want %dx%d at (%d, %d)",
+					b.W, b.H, b.X, b.Y, tt.w, tt.h, tt.wantX, tt.wantY)
+			}
+			w.Step(Input{})
+			if !w.Player.OnGround {
+				t.Fatal("resized player is no longer standing on the floor")
+			}
+		})
+	}
+}
+
+func TestSetTuningKeepsSizeWhenBlocked(t *testing.T) {
+	tun := testTuning()
+	m := testRoom(t)
+	// A ceiling whose underside is two tiles (32 px) above the floor.
+	for c := 1; c < 12; c++ {
+		m.Set(c, 8, level.Solid)
+	}
+	w := NewWorld(tun, m, 96, floorY-tun.Player.Height)
+	w.Step(Input{})
+
+	tall := testTuning()
+	tall.Player.Height = 40
+	tall.Player.RunSpeed = 90
+	if err := w.SetTuning(tall); err == nil {
+		t.Fatal("growing into the ceiling did not report an error")
+	}
+	if b := w.Player.Body; b.H != 20 || b.Y != floorY-20 {
+		t.Fatalf("body %dx%d at y %d, want the old 12x20 at y %d", b.W, b.H, b.Y, floorY-20)
+	}
+	if got := w.Tuning().Player; got.Height != 20 || got.RunSpeed != 90 {
+		t.Fatalf("tuning height %d run %v, want the kept height 20 and the new run speed 90",
+			got.Height, got.RunSpeed)
+	}
+}

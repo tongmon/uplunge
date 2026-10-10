@@ -45,7 +45,13 @@ type Config struct {
 	// ticks (ascending) and exits after the last one.
 	ShotTicks []uint64
 	ShotsDir  string
+	// Reload, if set, reloads TuningPath while the game runs whenever the file
+	// changes.
+	Reload bool
 }
+
+// reloadPollSteps is how often, in steps, Reload checks the tuning file.
+const reloadPollSteps = sim.Hz / 2
 
 // Run opens the window and blocks until the game exits.
 func Run(cfg Config) error {
@@ -90,6 +96,11 @@ func Run(cfg Config) error {
 	if g.world, err = sim.NewWorldInChunk(tun, m); err != nil {
 		return err
 	}
+	if cfg.Reload {
+		if g.watcher, err = tuning.NewWatcher(cfg.TuningPath); err != nil {
+			return err
+		}
+	}
 	if len(cfg.ShotTicks) > 0 {
 		last := cfg.ShotTicks[len(cfg.ShotTicks)-1]
 		if g.replaying && last > uint64(len(g.playback)) {
@@ -123,6 +134,10 @@ type game struct {
 	recorded  []sim.Input
 
 	shots *shooter
+
+	watcher       *tuning.Watcher
+	reloadWait    int
+	lastReloadErr string
 }
 
 // Update runs exactly one simulation step. Ebitengine calls it sim.Hz times
@@ -148,8 +163,41 @@ func (g *game) Update() error {
 	if g.recording {
 		g.recorded = append(g.recorded, in)
 	}
+	if g.watcher != nil {
+		g.pollTuning()
+	}
 	g.world.Step(in)
 	return nil
+}
+
+// pollTuning applies tuning file edits between steps. A file that fails to
+// load keeps the current values; the same error is logged only once.
+func (g *game) pollTuning() {
+	if g.reloadWait--; g.reloadWait > 0 {
+		return
+	}
+	g.reloadWait = reloadPollSteps
+
+	t, ok, err := g.watcher.Poll()
+	if err != nil {
+		if msg := err.Error(); msg != g.lastReloadErr {
+			log.Printf("tuning reload failed, keeping the current values: %v", err)
+			g.lastReloadErr = msg
+		}
+		return
+	}
+	if !ok {
+		return
+	}
+	g.lastReloadErr = ""
+	if err := g.world.SetTuning(t); err != nil {
+		log.Printf("tuning reloaded at tick %d, except: %v", g.world.Tick, err)
+	} else {
+		log.Printf("tuning reloaded at tick %d", g.world.Tick)
+	}
+	if g.recording {
+		log.Printf("warning: tuning changed during -record; the replay will not reproduce this run")
+	}
 }
 
 func (g *game) Draw(screen *ebiten.Image) {
