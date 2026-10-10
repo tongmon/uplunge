@@ -130,6 +130,9 @@ func TestFiringPressIsNotBuffered(t *testing.T) {
 	if w.Player.Fuel != testTuning().Gun.Magazine-1 {
 		t.Fatal("the press did not fire")
 	}
+	if w.Player.bufferSteps != 0 {
+		t.Fatalf("bufferSteps = %d right after the shot, want the press used up", w.Player.bufferSteps)
+	}
 	// The shot lifts the player a little; once back on the floor the player
 	// must stay there instead of jumping from the same press.
 	for i := 0; !w.Player.OnGround; i++ {
@@ -158,22 +161,22 @@ func TestEmptyPressIsBuffered(t *testing.T) {
 }
 
 func TestBulletFliesForBulletLife(t *testing.T) {
-	g := testTuning().Gun
 	w := tallWorld()
 	w.Step(Input{})
 	w.Step(Input{Button: true})
 	y0 := w.Bullets[0].Body.Y
-	life := 12 // BulletLife 0.2 s at 60 Hz
-	run(w, Input{}, life-1)
+	moves := 12 // BulletLife 0.2 s at 60 Hz
+	run(w, Input{}, moves)
 	if len(w.Bullets) != 1 {
-		t.Fatalf("bullet gone after %d steps, want it to last %d", life-1, life)
+		t.Fatalf("bullet gone after %d moves, want it seen at the end of its range", moves)
 	}
-	if got, want := w.Bullets[0].Body.Y-y0, int(g.BulletSpeed*Dt)*(life-1); got != want {
-		t.Fatalf("bullet fell %d px in %d steps, want %d", got, life-1, want)
+	// BulletSpeed * BulletLife = 480 px/s * 0.2 s.
+	if got := w.Bullets[0].Body.Y - y0; got != 96 {
+		t.Fatalf("bullet fell %d px in %d moves, want 96", got, moves)
 	}
 	w.Step(Input{})
 	if len(w.Bullets) != 0 {
-		t.Fatalf("bullet still flying after %d steps", life)
+		t.Fatal("bullet still flying past its range")
 	}
 }
 
@@ -251,5 +254,33 @@ func TestRefillOnTheLandingStep(t *testing.T) {
 	}
 	if w.Player.Fuel != testTuning().Gun.Magazine {
 		t.Fatalf("Fuel = %d on the landing step, want it refilled", w.Player.Fuel)
+	}
+}
+
+func TestPressDuringCooldownIsBuffered(t *testing.T) {
+	// A long FireInterval keeps the gun cooling down until the player lands
+	// again after the first shot.
+	tun := testTuning()
+	tun.Gun.FireInterval = 2
+	shoot := func(repressAt int) *World {
+		w := NewWorld(tun, testRoom(t), 96, 0)
+		w.Step(Input{Button: true}) // fires
+		for i := 1; i < 3*Hz && !w.Player.OnGround; i++ {
+			w.Step(Input{Button: i == repressAt})
+		}
+		return w
+	}
+	ref := shoot(-1)
+	if !ref.Player.OnGround {
+		t.Fatal("player did not land after the shot")
+	}
+	land := int(ref.Tick) - 1 // loop index of the landing step
+	w := shoot(land - 1)
+	if w.Player.Fuel != tun.Gun.Magazine {
+		t.Fatalf("Fuel = %d on landing, want refilled", w.Player.Fuel)
+	}
+	w.Step(Input{})
+	if w.Player.VY != -tun.Player.JumpSpeed {
+		t.Fatalf("VY = %v after landing, want the press made during the cooldown to jump", w.Player.VY)
 	}
 }

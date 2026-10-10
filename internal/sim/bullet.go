@@ -5,7 +5,7 @@ import "github.com/tongmon/uplunge/internal/collide"
 // Bullet is a player shot flying straight down.
 type Bullet struct {
 	Body collide.Body
-	// life is the number of steps left before the bullet runs out of range.
+	// life is the number of moves left before the bullet runs out of range.
 	life int
 }
 
@@ -25,16 +25,17 @@ func (w *World) spawnBullet() {
 	w.Bullets = append(w.Bullets, Bullet{Body: b, life: steps(g.BulletLife)})
 }
 
-// stepBullets moves every bullet and drops the ones that hit a solid or ran
-// out of range.
+// stepBullets moves every bullet and drops the ones that hit a solid. A
+// bullet that used up its last move the step before is dropped first, so it
+// covers its full range and is still seen at the end of it.
 func (w *World) stepBullets() {
 	speed := w.tuning.Gun.BulletSpeed
 	kept := w.Bullets[:0]
 	for _, b := range w.Bullets {
-		b.life--
 		if b.life <= 0 || b.Body.MoveY(w.Map, speed*Dt) {
 			continue
 		}
+		b.life--
 		kept = append(kept, b)
 	}
 	w.Bullets = kept
