@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -18,11 +19,10 @@ import (
 	"github.com/tongmon/uplunge/internal/tuning"
 )
 
-// Logical screen size in pixels: 13 tiles of 16 px across, fixed height so
-// every device sees the same amount of the tower.
+// Logical screen size in pixels: the simulation's view.
 const (
-	ScreenWidth  = 208
-	ScreenHeight = 360
+	ScreenWidth  = sim.ViewWidth
+	ScreenHeight = sim.ViewHeight
 )
 
 // Config holds startup options.
@@ -33,9 +33,12 @@ type Config struct {
 	TuningPath string
 	// ChunksPath is the LDtk project holding the level chunks.
 	ChunksPath string
-	// Chunk names the chunk to play in. Empty means the replay's chunk, or
-	// else the first chunk.
+	// Chunk, if set, plays from the top of this one chunk instead of
+	// climbing a tower.
 	Chunk string
+	// Seed, if set, is the seed of the tower to climb. Otherwise a new tower
+	// is stacked from the clock, and its seed is logged.
+	Seed *uint64
 	// ReplayPath, if set, plays back recorded inputs instead of reading the
 	// keyboard and exits when they run out.
 	ReplayPath string
@@ -68,33 +71,24 @@ func Run(cfg Config) error {
 	}
 
 	g := &game{recording: cfg.RecordPath != ""}
-	chunk := cfg.Chunk
-	var rec replay.Replay
-	if cfg.ReplayPath != "" {
-		if rec, err = replay.Load(cfg.ReplayPath); err != nil {
-			return err
-		}
-		if chunk != "" && chunk != rec.Chunk {
-			return fmt.Errorf("app: -chunk %q does not match the replay's chunk %q", chunk, rec.Chunk)
-		}
-		chunk = rec.Chunk
-		g.playback = rec.Inputs
-		g.replaying = true
-	}
-	if chunk == "" {
-		chunk = chunks[0].Name
-	}
-	m, err := level.FindChunk(chunks, chunk)
+	start, err := startOf(cfg)
 	if err != nil {
 		return err
 	}
+	if cfg.ReplayPath != "" {
+		g.playback = start.Inputs
+		g.replaying = true
+	} else if start.Tower && cfg.Seed == nil {
+		log.Printf("climbing tower %d (replay it with -seed %d)", start.Seed, start.Seed)
+	}
+	var m *level.TileMap
+	if g.world, m, err = replay.Start(start, tun, chunks); err != nil {
+		return err
+	}
 	if g.replaying {
-		for _, msg := range rec.Mismatches(tun.Fingerprint(), m.Fingerprint()) {
+		for _, msg := range start.Mismatches(tun.Fingerprint(), m.Fingerprint()) {
 			log.Printf("warning: %s: %s; playback may diverge", cfg.ReplayPath, msg)
 		}
-	}
-	if g.world, err = sim.NewWorldInChunk(tun, m); err != nil {
-		return err
 	}
 	if cfg.Reload {
 		if g.recording {
@@ -118,12 +112,41 @@ func Run(cfg Config) error {
 	ebiten.SetScreenFilterEnabled(false)
 	runErr := ebiten.RunGame(g)
 	if g.recording {
-		out := replay.Replay{Chunk: chunk, Tuning: tun.Fingerprint(), Map: m.Fingerprint(), Inputs: g.recorded}
+		out := replay.Replay{Tower: start.Tower, Seed: start.Seed, Chunk: start.Chunk,
+			Tuning: tun.Fingerprint(), Map: m.Fingerprint(), Inputs: g.recorded}
 		if err := replay.Save(cfg.RecordPath, out); err != nil {
 			return errors.Join(runErr, err)
 		}
 	}
 	return runErr
+}
+
+// startOf decides where the run starts: where the replay started, else the
+// -chunk chunk, else a tower with the -seed seed or one from the clock. For a
+// replay it also holds the inputs.
+func startOf(cfg Config) (replay.Replay, error) {
+	if cfg.ReplayPath != "" {
+		r, err := replay.Load(cfg.ReplayPath)
+		if err != nil {
+			return r, err
+		}
+		switch {
+		case cfg.Chunk != "" && (r.Tower || cfg.Chunk != r.Chunk):
+			return r, fmt.Errorf("app: -chunk %q does not match the replay, which starts in %s", cfg.Chunk, r.Where())
+		case cfg.Seed != nil && (!r.Tower || *cfg.Seed != r.Seed):
+			return r, fmt.Errorf("app: -seed %d does not match the replay, which starts in %s", *cfg.Seed, r.Where())
+		}
+		return r, nil
+	}
+	switch {
+	case cfg.Chunk != "" && cfg.Seed != nil:
+		return replay.Replay{}, fmt.Errorf("app: -seed picks a tower and -chunk a single chunk; give one")
+	case cfg.Chunk != "":
+		return replay.Replay{Chunk: cfg.Chunk}, nil
+	case cfg.Seed != nil:
+		return replay.Replay{Tower: true, Seed: *cfg.Seed}, nil
+	}
+	return replay.Replay{Tower: true, Seed: uint64(time.Now().UnixNano())}, nil
 }
 
 type game struct {
@@ -215,8 +238,9 @@ func reloadTuning(w *sim.World, path string) (applied bool, err error) {
 func (g *game) Draw(screen *ebiten.Image) {
 	render.World(screen, g.world)
 	p := g.world.Player
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("tick %d  fps %.0f\nx %d y %d\nvx %.0f vy %.0f\nfuel %d/%d",
-		g.world.Tick, ebiten.ActualFPS(), p.Body.X, p.Body.Y, p.VX, p.VY, p.Fuel, g.world.Tuning().Gun.Magazine))
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("tick %d  fps %.0f\nx %d y %d\nvx %.0f vy %.0f\nfuel %d/%d\ncam %.0f",
+		g.world.Tick, ebiten.ActualFPS(), p.Body.X, p.Body.Y, p.VX, p.VY, p.Fuel, g.world.Tuning().Gun.Magazine,
+		g.world.Camera.Y))
 }
 
 func (g *game) Layout(int, int) (int, int) {

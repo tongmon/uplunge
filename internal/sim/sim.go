@@ -6,7 +6,6 @@ package sim
 import (
 	"errors"
 	"fmt"
-	"slices"
 
 	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/level"
@@ -34,6 +33,7 @@ type World struct {
 	Player Player
 	// Bullets are the player's shots in flight, oldest first.
 	Bullets []Bullet
+	Camera  Camera
 
 	// tuning is read every step; change it with SetTuning.
 	tuning tuning.Tuning
@@ -45,7 +45,7 @@ type World struct {
 // (x, y). The world plays on its own copy of m, so breaking blocks leaves m
 // unchanged. Every tile value in m must have a block definition in t.
 func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
-	t.Blocks = slices.Clone(t.Blocks)
+	t = t.Clone()
 	w := &World{
 		tuning: t,
 		Map:    m.Clone(),
@@ -53,6 +53,7 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 		blocks: newBlockTable(t.Blocks),
 	}
 	w.blocks.apply(w.Map)
+	w.Camera.Y = w.cameraTarget()
 	return w
 }
 
@@ -62,6 +63,7 @@ func (w *World) Step(in Input) {
 	if w.Player.step(in, w.tuning, w.Map, w.blocks) {
 		w.spawnBullet()
 	}
+	w.stepCamera()
 	w.Tick++
 }
 
@@ -83,11 +85,26 @@ func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
 	return w, nil
 }
 
+// NewWorldInTower returns a world with the player standing on the floor at
+// the bottom centre of m, a tower built with level.BuildTower.
+func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
+	if err := newBlockTable(t.Blocks).check(m); err != nil {
+		return nil, err
+	}
+	p := t.Player
+	x := (m.Cols*m.TileSize - p.Width) / 2
+	y := (m.Rows-1)*m.TileSize - p.Height
+	w := NewWorld(t, m, x, y)
+	if b := w.Player.Body; y < 0 || collide.Overlaps(w.Map, x, y, p.Width, p.Height) || !b.OnGround(w.Map) {
+		return nil, fmt.Errorf("sim: no room to stand a %dx%d player on the bottom centre (%d, %d)",
+			p.Width, p.Height, x, y)
+	}
+	return w, nil
+}
+
 // Tuning returns a copy of the tuning the world currently steps with.
 func (w *World) Tuning() tuning.Tuning {
-	t := w.tuning
-	t.Blocks = slices.Clone(t.Blocks)
-	return t
+	return w.tuning.Clone()
 }
 
 // SetTuning replaces the tuning from the next step on. A new player size is
@@ -98,7 +115,7 @@ func (w *World) Tuning() tuning.Tuning {
 // is still applied, and calling SetTuning again later retries what was kept.
 func (w *World) SetTuning(t tuning.Tuning) error {
 	var errs []error
-	t.Blocks = slices.Clone(t.Blocks)
+	t = t.Clone()
 	b := &w.Player.Body
 	if err := w.setBlocks(t.Blocks); err != nil {
 		errs = append(errs, fmt.Errorf("sim: kept the block definitions: %w", err))

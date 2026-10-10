@@ -133,19 +133,15 @@ func trace(t *testing.T, r Replay) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	m, err := level.FindChunk(chunks, r.Chunk)
-	if err != nil {
-		t.Fatal(err)
-	}
-	w, err := sim.NewWorldInChunk(tun, m)
+	w, _, err := Start(r, tun, chunks)
 	if err != nil {
 		t.Fatal(err)
 	}
 	var b strings.Builder
 	line := func() {
 		p := w.Player
-		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d tiles %d\n",
-			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround, p.Fuel, len(w.Bullets), countTiles(w.Map))
+		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d tiles %d cam %.3f\n",
+			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround, p.Fuel, len(w.Bullets), countTiles(w.Map), w.Camera.Y)
 	}
 	for _, in := range r.Inputs {
 		line()
@@ -292,4 +288,68 @@ func countTiles(m *level.TileMap) int {
 		}
 	}
 	return n
+}
+
+func TestTowerHeader(t *testing.T) {
+	r := Replay{Tower: true, Seed: 18446744073709551615, Inputs: []sim.Input{right}}
+	var buf bytes.Buffer
+	if err := Write(&buf, r); err != nil {
+		t.Fatal(err)
+	}
+	want := "uplunge-replay 1\ntower 18446744073709551615\nframes 1\n0 R\n"
+	if got := buf.String(); got != want {
+		t.Fatalf("got\n%s\nwant\n%s", got, want)
+	}
+	got, err := Read(&buf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !got.Tower || got.Seed != r.Seed || got.Chunk != "" {
+		t.Fatalf("read back %+v, want tower %d", got, r.Seed)
+	}
+}
+
+func TestTowerHeaderErrors(t *testing.T) {
+	for _, src := range []string{
+		"uplunge-replay 1\ntower\nframes 0\n",
+		"uplunge-replay 1\ntower -1\nframes 0\n",
+		"uplunge-replay 1\ntower 18446744073709551616\nframes 0\n",
+		"uplunge-replay 1\ntower x\nframes 0\n",
+	} {
+		if _, err := Read(strings.NewReader(src)); err == nil || !strings.Contains(err.Error(), "tower <seed>") {
+			t.Errorf("Read(%q) error = %v, want one about the tower seed", src, err)
+		}
+	}
+	if err := Write(&bytes.Buffer{}, Replay{Tower: true, Chunk: "Start"}); err == nil {
+		t.Error("Write of a tower run with a chunk succeeded, want an error")
+	}
+}
+
+func TestStart(t *testing.T) {
+	tun, err := tuning.Load("testdata/tuning.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	chunks, err := level.LoadLDtk("testdata/chunks.ldtk")
+	if err != nil {
+		t.Fatal(err)
+	}
+	a, ma, err := Start(Replay{Tower: true, Seed: 5}, tun, chunks)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, mb, _ := Start(Replay{Tower: true, Seed: 5}, tun, chunks)
+	_, mc, _ := Start(Replay{Tower: true, Seed: 6}, tun, chunks)
+	if ma.Fingerprint() != mb.Fingerprint() {
+		t.Fatal("the same seed built different towers")
+	}
+	if ma.Fingerprint() == mc.Fingerprint() {
+		t.Fatal("seeds 5 and 6 built the same tower")
+	}
+	if b := a.Player.Body; b.Y+b.H != (ma.Rows-1)*ma.TileSize {
+		t.Fatalf("tower run starts with feet at %d, want on the bottom floor at %d", b.Y+b.H, (ma.Rows-1)*ma.TileSize)
+	}
+	if _, _, err := Start(Replay{Chunk: "Nope"}, tun, chunks); err == nil {
+		t.Fatal("unknown chunk gave no error")
+	}
 }
