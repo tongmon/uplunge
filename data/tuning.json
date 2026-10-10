@@ -93,7 +93,7 @@
   "tower": {
     "base": "Start",
     "pool": ["Shaft", "Ladder", "Steps", "Zigzag", "DrillGate", "Floaters", "SpikerHall", "SoftFloor", "Chimney"],
-    "length": 24
+    "length": 13
   },
   "lab": {
     "rows": 300,
