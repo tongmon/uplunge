@@ -91,11 +91,15 @@ type Water struct {
 	PauseTime   float64 `json:"pauseTime"`
 }
 
-// Feel holds the effects that sell impacts. FreezeTime is simulation: the
-// world stands still for it after a stomp or a drill break. The rest only
-// changes how the world is drawn. Times are seconds.
+// Feel holds the effects that sell impacts. The freezes are simulation:
+// the world stands still for StompFreeze after a stomp, HitFreeze after a
+// bullet hits an enemy, and DrillFreeze after the head breaks a block; when
+// several happen in one step, the longest wins. The rest only changes how
+// the world is drawn. Times are seconds.
 type Feel struct {
-	FreezeTime float64 `json:"freezeTime"`
+	StompFreeze float64 `json:"stompFreeze"`
+	HitFreeze   float64 `json:"hitFreeze"`
+	DrillFreeze float64 `json:"drillFreeze"`
 
 	// Firing shakes the view along the shot for ShakeTime. Every
 	// ShakeInterval the offset flips side, ShakeScale px per second of shake
@@ -340,7 +344,9 @@ func (t Tuning) validate() error {
 		{"water.retreat", t.Water.Retreat},
 		{"water.retreatTime", t.Water.RetreatTime},
 		{"water.pauseTime", t.Water.PauseTime},
-		{"feel.freezeTime", t.Feel.FreezeTime},
+		{"feel.stompFreeze", t.Feel.StompFreeze},
+		{"feel.hitFreeze", t.Feel.HitFreeze},
+		{"feel.drillFreeze", t.Feel.DrillFreeze},
 		{"feel.shakeTime", t.Feel.ShakeTime},
 		{"feel.shakeInterval", t.Feel.ShakeInterval},
 		{"feel.shakeScale", t.Feel.ShakeScale},

@@ -7,10 +7,15 @@ import (
 )
 
 // stompWorld drops the player onto a still Floater and returns the world
-// right after the stomp step.
+// right after the stomp step. Its stomp freezes for 3 steps, long enough for
+// the tests of input during a freeze.
 func stompWorld(t *testing.T) *World {
 	t.Helper()
-	w := stillEnemyWorld(t, "Floater", 104, 1006, 98, 1000-20-40)
+	tun := stillTuning()
+	tun.Feel.StompFreeze = 0.05
+	m := level.NewTileMap(13, 200, tile)
+	m.Spawns = []level.Spawn{{Name: "Floater", X: 104, Y: 1006}}
+	w := NewWorld(tun, m, 98, 1000-20-40)
 	for i := 0; i < Hz && !w.Events.Stomped; i++ {
 		w.Step(Input{})
 	}
@@ -23,7 +28,7 @@ func stompWorld(t *testing.T) *World {
 func TestStompFreezesTheWorld(t *testing.T) {
 	w := stompWorld(t)
 	p, tick := w.Player, w.Tick
-	for i := 0; i < 3; i++ { // FreezeTime 0.05 s at 60 Hz
+	for i := 0; i < 3; i++ { // StompFreeze set to 0.05 s by stompWorld
 		w.Step(Input{Right: true})
 		if !w.Events.Frozen || w.Player != p {
 			t.Fatalf("frozen step %d: Frozen=%v, player changed=%v", i+1, w.Events.Frozen, w.Player != p)
@@ -188,7 +193,9 @@ func TestFreezeHoldsTheWholeWorld(t *testing.T) {
 		{Name: "Floater", X: 104, Y: 1006},
 		{Name: "Floater", X: 40, Y: 900}, // keeps flying, but not in a freeze
 	}
-	w := NewWorld(testTuning(), m, 98, 1000-20-40)
+	tun := testTuning()
+	tun.Feel.StompFreeze = 0.05 // three steps to watch
+	w := NewWorld(tun, m, 98, 1000-20-40)
 	w.Water = Water{On: true, Y: 1200}
 	w.Player.Fuel = 1
 	for i := 0; i < Hz && !w.Events.Stomped; i++ {
@@ -206,5 +213,70 @@ func TestFreezeHoldsTheWholeWorld(t *testing.T) {
 	if len(w.Enemies) != len(enemies) || w.Enemies[0] != enemies[0] || len(w.Bullets) != len(bullets) ||
 		w.Water != water || w.Camera != camera {
 		t.Fatal("enemies, bullets, water, or camera moved during the freeze")
+	}
+}
+
+// frozenAfter counts the frozen steps that follow the world's last step.
+func frozenAfter(w *World) int {
+	n := 0
+	for i := 0; i < Hz; i++ {
+		w.Step(Input{})
+		if !w.Events.Frozen {
+			return n
+		}
+		n++
+	}
+	return n
+}
+
+func TestFreezeLengths(t *testing.T) {
+	// Default tuning: one frame for a stomp and a bullet hit (Downwell),
+	// three for a drill break (Celeste).
+	w := stillEnemyWorld(t, "Floater", 104, 1006, 98, 1000-20-40)
+	for i := 0; i < Hz && !w.Events.Stomped; i++ {
+		w.Step(Input{})
+	}
+	if n := frozenAfter(w); n != 1 {
+		t.Fatalf("stomp froze %d steps, want 1", n)
+	}
+
+	w = stillEnemyWorld(t, "Spiker", 104, 1000+20+30, 98, 1000)
+	w.Step(Input{Button: true})
+	for i := 0; i < 10 && !w.Events.Hit; i++ {
+		w.Step(Input{})
+	}
+	if !w.Events.Hit {
+		t.Fatal("no bullet hit")
+	}
+	if n := frozenAfter(w); n != 1 {
+		t.Fatalf("bullet hit froze %d steps, want 1", n)
+	}
+
+	w = roomWithRow(t, 8, drill, 96)
+	for i := 0; i < 20 && !w.Events.Drilled; i++ {
+		w.Step(Input{Button: true})
+	}
+	if n := frozenAfter(w); n != 3 {
+		t.Fatalf("drill break froze %d steps, want 3", n)
+	}
+}
+
+func TestFreezeFor(t *testing.T) {
+	f := testTuning().Feel
+	for _, tt := range []struct {
+		ev   Events
+		want int
+	}{
+		{Events{}, 0},
+		{Events{Landed: true, Refilled: true}, 0},
+		{Events{Stomped: true}, 1},
+		{Events{Hit: true}, 1},
+		{Events{Stomped: true, Hit: true}, 1},
+		{Events{Drilled: true}, 3},
+		{Events{Stomped: true, Drilled: true}, 3},
+	} {
+		if got := freezeFor(tt.ev, f); got != tt.want {
+			t.Errorf("freezeFor(%+v) = %d, want %d", tt.ev, got, tt.want)
+		}
 	}
 }

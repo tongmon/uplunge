@@ -59,7 +59,9 @@
     "pauseTime": 0.5
   },
   "feel": {
-    "freezeTime": 0.05,
+    "stompFreeze": 0.0167,
+    "hitFreeze": 0.0167,
+    "drillFreeze": 0.05,
 
     "shakeTime": 0.2,
     "shakeInterval": 0.04,
