@@ -89,7 +89,7 @@ type Water struct {
 	PauseTime   float64 `json:"pauseTime"`
 }
 
-// MaxValue caps every positive number, so a typo such as 1e308 cannot
+// MaxValue caps every number in the tuning, so a typo such as 1e308 cannot
 // overflow the simulation's arithmetic.
 const MaxValue = 1e6
 
@@ -312,6 +312,8 @@ func (t Tuning) validate() error {
 		return fmt.Errorf("camera.anchor must be between 0 and 1, got %v", c.Anchor)
 	case !(c.Lookahead >= 0):
 		return fmt.Errorf("camera.lookahead must not be negative, got %v", c.Lookahead)
+	case c.Lookahead > MaxValue:
+		return fmt.Errorf("camera.lookahead must be at most %g, got %v", float64(MaxValue), c.Lookahead)
 	case !(c.RemainPerSecond > 0 && c.RemainPerSecond <= MaxCameraRemain):
 		return fmt.Errorf("camera.remainPerSecond must be above 0 and at most %v, got %v", MaxCameraRemain, c.RemainPerSecond)
 	case t.Tower.Base == "":
@@ -338,10 +340,16 @@ func validateEnemies(enemies []Enemy) error {
 			return fmt.Errorf("%s.name %q is defined twice", where, e.Name)
 		case e.Width <= 0 || e.Height <= 0:
 			return fmt.Errorf("%s size must be positive, got %dx%d", where, e.Width, e.Height)
+		case e.Width > MaxValue || e.Height > MaxValue:
+			return fmt.Errorf("%s size must be at most %g, got %dx%d", where, float64(MaxValue), e.Width, e.Height)
 		case e.HP <= 0:
 			return fmt.Errorf("%s.hp must be positive, got %d", where, e.HP)
+		case e.HP > MaxValue:
+			return fmt.Errorf("%s.hp must be at most %g, got %d", where, float64(MaxValue), e.HP)
 		case !(e.Speed >= 0):
 			return fmt.Errorf("%s.speed must not be negative, got %v", where, e.Speed)
+		case e.Speed > MaxValue:
+			return fmt.Errorf("%s.speed must be at most %g, got %v", where, float64(MaxValue), e.Speed)
 		case !isHexColor(e.Color):
 			return fmt.Errorf("%s.color must be #rrggbb, got %q", where, e.Color)
 		}
