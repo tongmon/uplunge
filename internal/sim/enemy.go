@@ -67,46 +67,85 @@ func (w *World) stepEnemies() {
 	}
 }
 
-// shootEnemy damages the first enemy the box at (x, y) of size w×h overlaps
-// and reports whether there was one. An enemy with no HP left dies.
-func (w *World) shootEnemy(x, y, bw, bh int) bool {
-	for i := range w.Enemies {
-		e := &w.Enemies[i]
-		if overlaps(e.Body, collide.Body{X: x, Y: y, W: bw, H: bh}) {
-			if e.HP--; e.HP <= 0 {
-				w.Enemies = append(w.Enemies[:i], w.Enemies[i+1:]...)
-			}
-			return true
+// shootEnemy damages the topmost enemy the box overlaps, the first one a
+// bullet falling through the box meets, and reports whether there was one.
+// An enemy with no HP left dies.
+func (w *World) shootEnemy(box collide.Body) bool {
+	hit := -1
+	for i, e := range w.Enemies {
+		if overlaps(e.Body, box) && (hit < 0 || e.Body.Y < w.Enemies[hit].Body.Y) {
+			hit = i
 		}
 	}
-	return false
+	if hit < 0 {
+		return false
+	}
+	if w.Enemies[hit].HP--; w.Enemies[hit].HP <= 0 {
+		w.Enemies = append(w.Enemies[:hit], w.Enemies[hit+1:]...)
+	}
+	return true
 }
 
-// touchEnemies resolves the player touching enemies after everyone moved.
-// Landing on a stompable enemy from above (feet at or above its top before
-// this step) stomps it; any other touch hurts, unless the player is immune.
-// At most one enemy is stomped or hurts per step.
+// enemyInWall reports the first enemy that overlaps a solid tile.
+func (w *World) enemyInWall() error {
+	for _, e := range w.Enemies {
+		if b := e.Body; collide.Overlaps(w.Map, b.X, b.Y, b.W, b.H) {
+			return fmt.Errorf("sim: %s at (%d, %d) overlaps a solid tile", e.Def.Name, b.X, b.Y)
+		}
+	}
+	return nil
+}
+
+// touchEnemies resolves the player touching enemies after everyone moved,
+// the same whatever order the enemies are in. Landing on stompable enemies
+// from above (feet at or above their top before this step) stomps all of
+// them, and a step with a stomp hurts no one: the safe top stays safe even
+// when the player also clips a dangerous enemy. Otherwise touching an enemy
+// hurts, unless the player is immune, and knocks the player away from the
+// nearest one touched.
 func (w *World) touchEnemies(prevBottom int) {
 	pl := &w.Player
-	for i := range w.Enemies {
-		e := &w.Enemies[i]
+	kept, stomped := w.Enemies[:0], false
+	for _, e := range w.Enemies {
+		if overlaps(pl.Body, e.Body) && e.Def.Stompable && prevBottom <= e.Body.Y {
+			stomped = true
+			continue
+		}
+		kept = append(kept, e)
+	}
+	w.Enemies = kept
+	if stomped {
+		pl.stomp(w.tuning)
+		return
+	}
+	if pl.invulnSteps > 0 {
+		return
+	}
+	pc := pl.Body.X*2 + pl.Body.W // twice the centre, to stay in integers
+	nearest, dist := -1, 0
+	for i, e := range w.Enemies {
 		if !overlaps(pl.Body, e.Body) {
 			continue
 		}
-		if e.Def.Stompable && prevBottom <= e.Body.Y {
-			w.Enemies = append(w.Enemies[:i], w.Enemies[i+1:]...)
-			pl.stomp(w.tuning)
-			return
-		}
-		if pl.invulnSteps == 0 {
-			dir := 1
-			if pl.Body.X*2+pl.Body.W < e.Body.X*2+e.Body.W {
-				dir = -1
-			}
-			pl.hurt(w.tuning, dir)
-			return
+		if d := abs(pc - (e.Body.X*2 + e.Body.W)); nearest < 0 || d < dist {
+			nearest, dist = i, d
 		}
 	}
+	if nearest < 0 {
+		return
+	}
+	dir := 1
+	if e := w.Enemies[nearest].Body; pc < e.X*2+e.W {
+		dir = -1
+	}
+	pl.hurt(w.tuning, dir)
+}
+
+func abs(n int) int {
+	if n < 0 {
+		return -n
+	}
+	return n
 }
 
 // overlaps reports whether two boxes share any pixel.

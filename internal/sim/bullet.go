@@ -24,7 +24,7 @@ func (w *World) spawnBullet() {
 		w.blocks.breakIn(w.Map, b.X, b.Y, b.W, b.H, byBullet)
 		return
 	}
-	if w.shootEnemy(b.X, b.Y, b.W, b.H) {
+	if w.shootEnemy(b) {
 		return
 	}
 	w.Bullets = append(w.Bullets, Bullet{Body: b, life: steps(g.BulletLife)})
@@ -43,11 +43,16 @@ func (w *World) stepBullets() {
 		if b.life <= 0 {
 			continue
 		}
-		if bb := &b.Body; bb.MoveYThrough(w.Map, speed*Dt) {
-			w.blocks.breakIn(w.Map, bb.X, bb.Y+bb.H, bb.W, 1, byBullet)
+		bb := &b.Body
+		from := bb.Y
+		hitTile := bb.MoveYThrough(w.Map, speed*Dt)
+		// An enemy anywhere on the way, which ends at any tile hit, is met
+		// before the tile.
+		if w.shootEnemy(collide.Body{X: bb.X, Y: from, W: bb.W, H: bb.Y + bb.H - from}) {
 			continue
 		}
-		if w.shootEnemy(b.Body.X, b.Body.Y, b.Body.W, b.Body.H) {
+		if hitTile {
+			w.blocks.breakIn(w.Map, bb.X, bb.Y+bb.H, bb.W, 1, byBullet)
 			continue
 		}
 		b.life--

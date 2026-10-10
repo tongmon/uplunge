@@ -184,14 +184,26 @@ func (g *game) begin(start replay.Replay, t tuning.Tuning) error {
 }
 
 // restart begins the next run after the last one ended: a new tower unless
-// the seed is fixed, the same chunk in chunk mode, and the current tuning.
-func (g *game) restart() error {
+// the seed is fixed, the same chunk in chunk mode, and the current tuning,
+// re-read first under -reload so an edit saved just before is not missed.
+// If the next run cannot start, such as after a reload dropped an enemy the
+// chunks use, it says why and stays on the ended run.
+func (g *game) restart() {
+	if g.reloadPath != "" {
+		g.reloadWait = 0
+		g.pollTuning()
+	}
 	next := replay.Replay{Tower: g.start.Tower, Seed: g.start.Seed, Chunk: g.start.Chunk}
 	if g.newSeeds {
 		next.Seed = uint64(time.Now().UnixNano())
+	}
+	if err := g.begin(next, g.world.Tuning()); err != nil {
+		log.Printf("cannot start the next run: %v", err)
+		return
+	}
+	if g.newSeeds {
 		log.Printf("climbing tower %d (replay it with -seed %d)", next.Seed, next.Seed)
 	}
-	return g.begin(next, g.world.Tuning())
 }
 
 // Update runs exactly one simulation step. Ebitengine calls it sim.Hz times
@@ -206,7 +218,8 @@ func (g *game) Update() error {
 		}
 	}
 	if g.world.Over && !g.replaying && input.Restart() {
-		return g.restart()
+		g.restart()
+		return nil
 	}
 	var in sim.Input
 	if g.replaying {

@@ -95,6 +95,9 @@ func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
 		return nil, fmt.Errorf("sim: no room to spawn a %dx%d player at the top centre (%d, 0)",
 			p.Width, p.Height, x)
 	}
+	if err := w.enemyInWall(); err != nil {
+		return nil, err
+	}
 	return w, nil
 }
 
@@ -111,6 +114,9 @@ func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
 	if b := w.Player.Body; y < 0 || collide.Overlaps(w.Map, x, y, p.Width, p.Height) || !b.OnGround(w.Map) {
 		return nil, fmt.Errorf("sim: no room to stand a %dx%d player on the bottom centre (%d, %d)",
 			p.Width, p.Height, x, y)
+	}
+	if err := w.enemyInWall(); err != nil {
+		return nil, err
 	}
 	return w, nil
 }
@@ -165,6 +171,10 @@ func (w *World) setBlocks(blocks []tuning.Block) error {
 	if b := w.Player.Body; collide.Overlaps(w.Map, b.X, b.Y, b.W, b.H) {
 		w.blocks.apply(w.Map)
 		return fmt.Errorf("a tile the player is inside would become solid")
+	}
+	if err := w.enemyInWall(); err != nil {
+		w.blocks.apply(w.Map)
+		return fmt.Errorf("a tile an enemy is inside would become solid")
 	}
 	w.blocks = bt
 	return nil

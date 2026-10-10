@@ -62,8 +62,10 @@ func (pl *Player) Invulnerable() bool {
 // stomp bounces the player off an enemy it landed on and refills the
 // magazine.
 func (pl *Player) stomp(t tuning.Tuning) {
+	// A stomp comes after the step's move, so the bounce drives the next
+	// StompHoldTime of steps (a jump's launch step moves in the same step).
 	pl.VY = -t.Player.StompSpeed
-	pl.bounceSteps = steps(t.Player.StompHoldTime) - 1
+	pl.bounceSteps = steps(t.Player.StompHoldTime)
 	pl.jumpHoldSteps = 0
 	pl.coyoteSteps = 0
 	pl.Fuel = t.Gun.Magazine
