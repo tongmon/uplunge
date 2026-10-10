@@ -2,7 +2,12 @@
 // Ebitengine.
 package level
 
-import "fmt"
+import (
+	"crypto/sha256"
+	"encoding/binary"
+	"encoding/hex"
+	"fmt"
+)
 
 // Tile is the collision kind of one grid cell.
 type Tile uint8
@@ -54,4 +59,19 @@ func (m *TileMap) Set(col, row int, t Tile) {
 
 func (m *TileMap) inBounds(col, row int) bool {
 	return col >= 0 && col < m.Cols && row >= 0 && row < m.Rows
+}
+
+// Fingerprint returns a short hash of the size and tiles, so a replay can
+// tell whether it is played back on the map it was recorded on.
+func (m *TileMap) Fingerprint() string {
+	h := sha256.New()
+	var buf [8]byte
+	for _, v := range []int{m.Cols, m.Rows, m.TileSize} {
+		binary.LittleEndian.PutUint64(buf[:], uint64(v))
+		h.Write(buf[:])
+	}
+	for _, t := range m.tiles {
+		h.Write([]byte{byte(t)})
+	}
+	return hex.EncodeToString(h.Sum(nil)[:8])
 }

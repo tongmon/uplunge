@@ -215,3 +215,68 @@ func TestSaveKeepsOldFileOnError(t *testing.T) {
 		t.Fatalf("leftover files after failed save: %v", entries)
 	}
 }
+
+func TestFingerprintsRoundTrip(t *testing.T) {
+	r := Replay{Chunk: "Start", Tuning: "aaaa", Map: "bbbb", Inputs: []sim.Input{right}}
+	var buf bytes.Buffer
+	if err := Write(&buf, r); err != nil {
+		t.Fatal(err)
+	}
+	want := "uplunge-replay 1\nchunk Start\ntuning aaaa\nmap bbbb\nframes 1\n0 R\n"
+	if buf.String() != want {
+		t.Fatalf("got\n%s\nwant\n%s", buf.String(), want)
+	}
+	got, err := Read(&buf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.Tuning != "aaaa" || got.Map != "bbbb" {
+		t.Fatalf("fingerprints = %q, %q; want aaaa, bbbb", got.Tuning, got.Map)
+	}
+}
+
+func TestReadFingerprintErrors(t *testing.T) {
+	tests := []struct{ name, src, wantErr string }{
+		{"empty tuning", "uplunge-replay 1\nchunk A\ntuning \nframes 1\n", "frames <count>"},
+		{"spaced map", "uplunge-replay 1\nchunk A\nmap a b\nframes 1\n", "map <fingerprint>"},
+		{"map before tuning", "uplunge-replay 1\nchunk A\nmap b\ntuning a\nframes 1\n", "frames <count>"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := Read(strings.NewReader(tt.src))
+			if err == nil || !strings.Contains(err.Error(), tt.wantErr) {
+				t.Fatalf("error = %v, want it to contain %q", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestMismatches(t *testing.T) {
+	tests := []struct {
+		name          string
+		tuning, mapFP string
+		want          []string
+	}{
+		{"both match", "t1", "m1", nil},
+		{"tuning changed", "t2", "m1", []string{"tuning differs"}},
+		{"map changed", "t1", "m2", []string{`chunk "Start" differs`}},
+		{"both changed", "t2", "m2", []string{"tuning differs", `chunk "Start" differs`}},
+	}
+	r := Replay{Chunk: "Start", Tuning: "t1", Map: "m1"}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := r.Mismatches(tt.tuning, tt.mapFP)
+			if len(got) != len(tt.want) {
+				t.Fatalf("got %q, want %d messages", got, len(tt.want))
+			}
+			for i := range got {
+				if !strings.Contains(got[i], tt.want[i]) {
+					t.Errorf("message %d = %q, want it to contain %q", i, got[i], tt.want[i])
+				}
+			}
+		})
+	}
+	if got := (Replay{Chunk: "Start"}).Mismatches("t", "m"); got != nil {
+		t.Errorf("hand-written replay without fingerprints warned: %q", got)
+	}
+}

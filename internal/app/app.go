@@ -5,6 +5,7 @@ package app
 import (
 	"errors"
 	"fmt"
+	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -58,16 +59,16 @@ func Run(cfg Config) error {
 
 	g := &game{recording: cfg.RecordPath != ""}
 	chunk := cfg.Chunk
+	var rec replay.Replay
 	if cfg.ReplayPath != "" {
-		r, err := replay.Load(cfg.ReplayPath)
-		if err != nil {
+		if rec, err = replay.Load(cfg.ReplayPath); err != nil {
 			return err
 		}
-		if chunk != "" && chunk != r.Chunk {
-			return fmt.Errorf("app: -chunk %q does not match the replay's chunk %q", chunk, r.Chunk)
+		if chunk != "" && chunk != rec.Chunk {
+			return fmt.Errorf("app: -chunk %q does not match the replay's chunk %q", chunk, rec.Chunk)
 		}
-		chunk = r.Chunk
-		g.playback = r.Inputs
+		chunk = rec.Chunk
+		g.playback = rec.Inputs
 		g.replaying = true
 	}
 	if chunk == "" {
@@ -76,6 +77,11 @@ func Run(cfg Config) error {
 	m, err := level.FindChunk(chunks, chunk)
 	if err != nil {
 		return err
+	}
+	if g.replaying {
+		for _, msg := range rec.Mismatches(tun.Fingerprint(), m.Fingerprint()) {
+			log.Printf("warning: %s: %s; playback may diverge", cfg.ReplayPath, msg)
+		}
 	}
 	if g.world, err = sim.NewWorldInChunk(tun, m); err != nil {
 		return err
@@ -87,7 +93,8 @@ func Run(cfg Config) error {
 	ebiten.SetScreenFilterEnabled(false)
 	runErr := ebiten.RunGame(g)
 	if g.recording {
-		if err := replay.Save(cfg.RecordPath, replay.Replay{Chunk: chunk, Inputs: g.recorded}); err != nil {
+		out := replay.Replay{Chunk: chunk, Tuning: tun.Fingerprint(), Map: m.Fingerprint(), Inputs: g.recorded}
+		if err := replay.Save(cfg.RecordPath, out); err != nil {
 			return errors.Join(runErr, err)
 		}
 	}

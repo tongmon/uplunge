@@ -6,10 +6,15 @@
 //
 //	uplunge-replay 1
 //	chunk Start
+//	tuning 3f2a9c0d1e4b5a67
+//	map 8c1d0e2f3a4b5c6d
 //	frames 240
 //	0 -
 //	30 R
 //	40 RB
+//
+// The tuning and map lines are optional fingerprints of what the run was
+// recorded with; playback warns when they no longer match.
 //
 // After the header, each line is a step index and the input from that step
 // on, written only when the input changes. Inputs are any of L, R, B (left,
@@ -39,6 +44,10 @@ const MaxFrames = 24 * 60 * 60 * sim.Hz
 type Replay struct {
 	// Chunk is the name of the chunk the run started in.
 	Chunk string
+	// Tuning and Map are fingerprints of the tuning and chunk map the run was
+	// recorded with (tuning.Tuning.Fingerprint, level.TileMap.Fingerprint).
+	// Empty means unknown, as in hand-written replays.
+	Tuning, Map string
 	// Inputs holds one input per step.
 	Inputs []sim.Input
 }
@@ -49,7 +58,14 @@ func Write(w io.Writer, r Replay) error {
 		return err
 	}
 	bw := bufio.NewWriter(w)
-	fmt.Fprintf(bw, "%s\nchunk %s\nframes %d\n", magic, r.Chunk, len(r.Inputs))
+	fmt.Fprintf(bw, "%s\nchunk %s\n", magic, r.Chunk)
+	if r.Tuning != "" {
+		fmt.Fprintf(bw, "tuning %s\n", r.Tuning)
+	}
+	if r.Map != "" {
+		fmt.Fprintf(bw, "map %s\n", r.Map)
+	}
+	fmt.Fprintf(bw, "frames %d\n", len(r.Inputs))
 	var prev sim.Input
 	for i, in := range r.Inputs {
 		if i == 0 || in != prev {
@@ -86,7 +102,21 @@ func Read(rd io.Reader) (Replay, error) {
 	if !ok || name == "" {
 		return errorf("want \"chunk <name>\", got %q", s)
 	}
+	var tuningFP, mapFP string
 	s, _ = next()
+	for _, opt := range []struct {
+		key string
+		dst *string
+	}{{"tuning", &tuningFP}, {"map", &mapFP}} {
+		v, ok := strings.CutPrefix(s, opt.key+" ")
+		if !ok {
+			continue
+		}
+		if *opt.dst = strings.TrimSpace(v); *opt.dst == "" || strings.ContainsAny(*opt.dst, " \t") {
+			return errorf("want \"%s <fingerprint>\", got %q", opt.key, s)
+		}
+		s, _ = next()
+	}
 	n, err := strconv.Atoi(strings.TrimPrefix(s, "frames "))
 	if !strings.HasPrefix(s, "frames ") || err != nil || n < 0 {
 		return errorf("want \"frames <count>\", got %q", s)
@@ -94,7 +124,7 @@ func Read(rd io.Reader) (Replay, error) {
 	if n > MaxFrames {
 		return errorf("frames %d is more than the supported %d; replays hold at most 24 hours", n, MaxFrames)
 	}
-	r := Replay{Chunk: name, Inputs: make([]sim.Input, n)}
+	r := Replay{Chunk: name, Tuning: tuningFP, Map: mapFP, Inputs: make([]sim.Input, n)}
 
 	// cur is the input in effect from step "from" on; prev is the last step read.
 	var cur sim.Input
@@ -211,8 +241,27 @@ func (r Replay) validate() error {
 	if r.Chunk == "" || strings.ContainsAny(r.Chunk, " \t\r\n") {
 		return fmt.Errorf("replay: invalid chunk name %q", r.Chunk)
 	}
+	for _, fp := range []string{r.Tuning, r.Map} {
+		if strings.ContainsAny(fp, " \t\r\n") {
+			return fmt.Errorf("replay: invalid fingerprint %q", fp)
+		}
+	}
 	if len(r.Inputs) > MaxFrames {
 		return fmt.Errorf("replay: %d frames is more than the supported %d", len(r.Inputs), MaxFrames)
 	}
 	return nil
+}
+
+// Mismatches describes each recorded fingerprint that differs from the
+// tuning and map the replay is about to play with. Unknown fingerprints are
+// skipped. Playback still works on a mismatch, but may diverge.
+func (r Replay) Mismatches(tuningFP, mapFP string) []string {
+	var out []string
+	if r.Tuning != "" && r.Tuning != tuningFP {
+		out = append(out, fmt.Sprintf("tuning differs from the recording (recorded %s, now %s)", r.Tuning, tuningFP))
+	}
+	if r.Map != "" && r.Map != mapFP {
+		out = append(out, fmt.Sprintf("chunk %q differs from the recording (recorded %s, now %s)", r.Chunk, r.Map, mapFP))
+	}
+	return out
 }
