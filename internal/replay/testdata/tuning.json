@@ -15,7 +15,11 @@
 
     "runSpeed": 180,
     "runAccel": 2000,
-    "airAccelMult": 0.65
+    "airAccelMult": 0.65,
+
+    "oneWayAssist": 80,
+    "cornerCorrection": 4,
+    "drillBounce": 240
   },
   "gun": {
     "magazine": 8,
@@ -26,5 +30,12 @@
     "bulletLife": 0.2,
     "bulletWidth": 4,
     "bulletHeight": 8
-  }
+  },
+  "blocks": [
+    { "value": 1, "name": "solid", "color": "#707070" },
+    { "value": 2, "name": "one_way", "oneWay": true, "color": "#a08060" },
+    { "value": 3, "name": "drill", "drill": true, "color": "#c06040" },
+    { "value": 4, "name": "soft", "drill": true, "bullet": true, "color": "#b0a040" },
+    { "value": 5, "name": "bullet_only", "bullet": true, "color": "#4080c0" }
+  ]
 }

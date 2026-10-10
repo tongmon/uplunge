@@ -51,3 +51,46 @@ func TestTileMapFingerprint(t *testing.T) {
 		}
 	}
 }
+
+func TestShapes(t *testing.T) {
+	m := NewTileMap(4, 1, 16)
+	m.Set(1, 0, Solid)
+	m.Set(2, 0, 2)
+	m.Set(3, 0, 3)
+	m.SetShape(2, ShapeOneWay)
+	m.SetShape(Empty, ShapeSolid) // ignored
+	want := []Shape{ShapeEmpty, ShapeSolid, ShapeOneWay, ShapeSolid}
+	for c, s := range want {
+		if got := m.ShapeAt(c, 0); got != s {
+			t.Errorf("ShapeAt(%d, 0) = %v, want %v", c, got, s)
+		}
+	}
+	if got := m.ShapeAt(-1, 0); got != ShapeEmpty {
+		t.Errorf("ShapeAt outside = %v, want ShapeEmpty", got)
+	}
+}
+
+func TestCloneIsIndependent(t *testing.T) {
+	m := NewTileMap(2, 1, 16)
+	m.Set(0, 0, Solid)
+	c := m.Clone()
+	c.Set(0, 0, Empty)
+	c.SetShape(Solid, ShapeOneWay)
+	if m.At(0, 0) != Solid || m.ShapeAt(0, 0) != ShapeSolid {
+		t.Fatal("changing the clone changed the original")
+	}
+	if m.Fingerprint() == c.Fingerprint() {
+		t.Fatal("clone with a different tile has the same fingerprint")
+	}
+}
+
+func TestValues(t *testing.T) {
+	m, err := ParseRows(16, "#.3", "53.")
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := m.Values()
+	if len(got) != 3 || got[0] != Solid || got[1] != 3 || got[2] != 5 {
+		t.Fatalf("Values() = %v, want [1 3 5]", got)
+	}
+}

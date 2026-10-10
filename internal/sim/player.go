@@ -47,10 +47,13 @@ func newPlayer(t tuning.Tuning, x, y int) Player {
 }
 
 // step advances the player by one step and reports whether it fired a shot.
-func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap) (shot bool) {
+// The head breaks drill blocks in m as defined by bt.
+func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTable) (shot bool) {
 	p, g := t.Player, t.Gun
 	b := &pl.Body
-	grounded := collide.Overlaps(m, b.X, b.Y+1, b.W, b.H)
+	// Only a player that is not rising stands on something, as in Celeste;
+	// otherwise rising through a one-way platform would land on its top edge.
+	grounded := pl.VY >= 0 && b.OnGround(m)
 	pressed := in.Button && !pl.prevButton
 	pl.prevButton = in.Button
 
@@ -146,16 +149,47 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap) (shot bool) 
 	if b.MoveX(m, pl.VX*Dt) {
 		pl.VX = 0
 	}
-	if b.MoveY(m, pl.VY*Dt) {
+	if b.MoveY(m, pl.VY*Dt) && !(pl.VY < 0 && pl.clearCeiling(p, m, bt)) {
 		pl.VY = 0
 		pl.jumpHoldSteps = 0
 	}
-	pl.OnGround = collide.Overlaps(m, b.X, b.Y+1, b.W, b.H)
+	// Rising through a one-way platform gets a push, so a jump that only
+	// just reaches one still ends on top.
+	if !grounded && pl.VY <= 0 && collide.OverlapsShape(m, b.X, b.Y, b.W, b.H, level.ShapeOneWay) {
+		b.MoveY(m, -p.OneWayAssist*Dt)
+	}
+	pl.OnGround = pl.VY >= 0 && b.OnGround(m)
 	// Landing refills the magazine on the step it happens.
 	if pl.OnGround {
 		pl.Fuel = g.Magazine
 	}
 	return shot
+}
+
+// clearCeiling handles the head hitting something while rising and reports
+// whether the player may keep rising. The head first breaks the drill blocks
+// right above it, which bounces the player up when that clears the way.
+// Otherwise a ceiling corner within CornerCorrection pixels is slipped past
+// by moving sideways, trying the side the player is moving toward.
+func (pl *Player) clearCeiling(p tuning.Player, m *level.TileMap, bt *blockTable) bool {
+	b := &pl.Body
+	if bt.breakIn(m, b.X, b.Y-1, b.W, 1, byDrill) && !collide.Overlaps(m, b.X, b.Y-1, b.W, b.H) {
+		pl.VY = min(pl.VY, -p.DrillBounce)
+		return true
+	}
+	for _, dir := range []int{-1, 1} {
+		if (dir < 0 && pl.VX > 0) || (dir > 0 && pl.VX < 0) {
+			continue
+		}
+		for k := 1; k <= p.CornerCorrection; k++ {
+			if !collide.Overlaps(m, b.X+dir*k, b.Y-1, b.W, b.H) {
+				b.X += dir * k
+				b.Y--
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // steps converts a tuned time to whole steps, at least one.

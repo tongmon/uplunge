@@ -80,7 +80,7 @@ func TestParseLDtkErrors(t *testing.T) {
 		{"wrong grid size", ldtkJSON(collisionJSON(8, "", validRows...)), "8 px tiles, want 16"},
 		{"layer offset", ldtkJSON(collisionJSON(16, `"__pxTotalOffsetX": 16, "__pxTotalOffsetY": 0,`, validRows...)), "offset (16, 0)"},
 		{"cell count mismatch", ldtkJSON(strings.Replace(valid, `"__cHei": 2`, `"__cHei": 3`, 1)), "has 26 cells, want 39"},
-		{"unknown value", ldtkJSON(strings.Replace(valid, `"intGridCsv": [1, 0`, `"intGridCsv": [1, 7`, 1)), "unknown \"Collision\" value 7 at (1, 0)"},
+		{"value out of range", ldtkJSON(strings.Replace(valid, `"intGridCsv": [1, 0`, `"intGridCsv": [1, 256`, 1)), "value 256 at (1, 0) is outside 0..255"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

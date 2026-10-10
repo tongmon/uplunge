@@ -7,8 +7,9 @@ import (
 	"strings"
 )
 
-// CollisionLayer is the IntGrid layer every chunk must have. Its values map to
-// tiles: 0 is Empty and 1 is Solid.
+// CollisionLayer is the IntGrid layer every chunk must have. Its values are
+// the tiles: 0 is Empty, 1 is Solid, and the block definitions in the tuning
+// give every other value its meaning.
 const CollisionLayer = "Collision"
 
 // Chunk authoring rules (docs/design.md section 7): 16 px tiles, 13 tiles
@@ -43,6 +44,21 @@ type ldtkProject struct {
 	ExternalLevels bool              `json:"externalLevels"`
 	Levels         []ldtkLevel       `json:"levels"`
 	Worlds         []json.RawMessage `json:"worlds"`
+	Defs           struct {
+		Layers []ldtkLayerDef `json:"layers"`
+	} `json:"defs"`
+}
+
+type ldtkLayerDef struct {
+	Identifier    string         `json:"identifier"`
+	IntGridValues []IntGridValue `json:"intGridValues"`
+}
+
+// IntGridValue is one value an LDtk IntGrid layer defines, with the name the
+// editor shows for it.
+type IntGridValue struct {
+	Value int    `json:"value"`
+	Name  string `json:"identifier"`
 }
 
 type ldtkLevel struct {
@@ -125,15 +141,31 @@ func parseLevel(lv ldtkLevel) (*TileMap, error) {
 	m := NewTileMap(layer.Cols, layer.Rows, layer.GridSize)
 	for i, v := range layer.IntGridCSV {
 		col, row := i%layer.Cols, i/layer.Cols
-		switch v {
-		case 0:
-		case 1:
-			m.Set(col, row, Solid)
-		default:
-			return nil, fmt.Errorf("unknown %q value %d at (%d, %d)", CollisionLayer, v, col, row)
+		if v < 0 || v > 255 {
+			return nil, fmt.Errorf("%q value %d at (%d, %d) is outside 0..255", CollisionLayer, v, col, row)
 		}
+		m.Set(col, row, Tile(v))
 	}
 	return m, nil
+}
+
+// CollisionValues returns the values the project defines for its Collision
+// layer, so they can be checked against the block definitions.
+func CollisionValues(path string) ([]IntGridValue, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("level: %w", err)
+	}
+	var p ldtkProject
+	if err := json.Unmarshal(data, &p); err != nil {
+		return nil, fmt.Errorf("level: %s: %w", path, err)
+	}
+	for _, l := range p.Defs.Layers {
+		if l.Identifier == CollisionLayer {
+			return l.IntGridValues, nil
+		}
+	}
+	return nil, fmt.Errorf("level: %s: no %q layer definition", path, CollisionLayer)
 }
 
 // FindChunk returns the map of the chunk called name.

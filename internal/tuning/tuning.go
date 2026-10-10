@@ -10,13 +10,15 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 )
 
 // Tuning is the full set of tunables. Every value is a prototype hypothesis
 // until the developer confirms it in docs/design.md.
 type Tuning struct {
-	Player Player `json:"player"`
-	Gun    Gun    `json:"gun"`
+	Player Player  `json:"player"`
+	Gun    Gun     `json:"gun"`
+	Blocks []Block `json:"blocks"`
 }
 
 // Player holds the player's size and movement numbers. Speeds are px/s,
@@ -46,6 +48,38 @@ type Player struct {
 	RunAccel float64 `json:"runAccel"`
 	// AirAccelMult scales RunAccel while airborne.
 	AirAccelMult float64 `json:"airAccelMult"`
+
+	// OneWayAssist is the extra upward speed while rising through a one-way
+	// platform, so a jump that barely reaches it still gets on top.
+	OneWayAssist float64 `json:"oneWayAssist"`
+	// CornerCorrection is how many pixels sideways the head may slide past
+	// a ceiling corner instead of bumping into it.
+	CornerCorrection int `json:"cornerCorrection"`
+	// DrillBounce caps the upward speed after the head breaks a block:
+	// VY = min(VY, -DrillBounce).
+	DrillBounce float64 `json:"drillBounce"`
+}
+
+// Block defines one non-empty value of the chunks' Collision layer.
+type Block struct {
+	// Value is the Collision IntGrid value, 1 to 255.
+	Value int `json:"value"`
+	// Name matches the value's identifier in the LDtk project.
+	Name string `json:"name"`
+	// OneWay blocks are platforms passable from below; the rest are solid.
+	OneWay bool `json:"oneWay,omitempty"`
+	// Drill blocks break when the player's head hits them from below, and
+	// Bullet blocks break when a bullet hits them.
+	Drill  bool `json:"drill,omitempty"`
+	Bullet bool `json:"bullet,omitempty"`
+	// Color is the grey-box draw color, "#rrggbb".
+	Color string `json:"color"`
+}
+
+// RGB returns Color as bytes. Parse has already checked its format.
+func (b Block) RGB() (r, g, bl uint8) {
+	v, _ := strconv.ParseUint(b.Color[1:], 16, 32)
+	return uint8(v >> 16), uint8(v >> 8), uint8(v)
 }
 
 // Gun holds the gunjet: firing downward in the air pushes the player up.
@@ -116,6 +150,9 @@ func (t Tuning) validate() error {
 		{"player.runSpeed", p.RunSpeed},
 		{"player.runAccel", p.RunAccel},
 		{"player.airAccelMult", p.AirAccelMult},
+		{"player.oneWayAssist", p.OneWayAssist},
+		{"player.cornerCorrection", float64(p.CornerCorrection)},
+		{"player.drillBounce", p.DrillBounce},
 		{"gun.magazine", float64(g.Magazine)},
 		{"gun.fireInterval", g.FireInterval},
 		{"gun.thrust", g.Thrust},
@@ -129,7 +166,36 @@ func (t Tuning) validate() error {
 			return fmt.Errorf("%s must be positive, got %v", f.name, f.v)
 		}
 	}
+	return validateBlocks(t.Blocks)
+}
+
+func validateBlocks(blocks []Block) error {
+	values, names := map[int]bool{}, map[string]bool{}
+	for i, b := range blocks {
+		where := fmt.Sprintf("blocks[%d]", i)
+		switch {
+		case b.Value < 1 || b.Value > 255:
+			return fmt.Errorf("%s.value must be 1 to 255, got %d", where, b.Value)
+		case values[b.Value]:
+			return fmt.Errorf("%s.value %d is defined twice", where, b.Value)
+		case b.Name == "":
+			return fmt.Errorf("%s.name is missing", where)
+		case names[b.Name]:
+			return fmt.Errorf("%s.name %q is defined twice", where, b.Name)
+		case !isHexColor(b.Color):
+			return fmt.Errorf("%s.color must be #rrggbb, got %q", where, b.Color)
+		}
+		values[b.Value], names[b.Name] = true, true
+	}
 	return nil
+}
+
+func isHexColor(s string) bool {
+	if len(s) != 7 || s[0] != '#' {
+		return false
+	}
+	_, err := strconv.ParseUint(s[1:], 16, 32)
+	return err == nil
 }
 
 // Fingerprint returns a short hash of the values, so a replay can tell
