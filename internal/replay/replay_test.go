@@ -140,9 +140,9 @@ func trace(t *testing.T, r Replay) string {
 	var b strings.Builder
 	line := func() {
 		p := w.Player
-		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d tiles %d cam %.3f hp %d enemies %d over %t\n",
+		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d tiles %d cam %.3f hp %d enemies %d over %t water %s\n",
 			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround, p.Fuel, len(w.Bullets), countTiles(w.Map), w.Camera.Y,
-			p.HP, len(w.Enemies), w.Over)
+			p.HP, len(w.Enemies), w.Over, water(w))
 	}
 	for _, in := range r.Inputs {
 		line()
@@ -353,4 +353,12 @@ func TestStart(t *testing.T) {
 	if _, _, err := Start(Replay{Chunk: "Nope"}, tun, chunks); err == nil {
 		t.Fatal("unknown chunk gave no error")
 	}
+}
+
+// water formats the water surface for a trace, or "off" without water.
+func water(w *sim.World) string {
+	if !w.Water.On {
+		return "off"
+	}
+	return fmt.Sprintf("%.3f", w.Water.Y)
 }

@@ -288,6 +288,9 @@ func (g *game) Draw(screen *ebiten.Image) {
 	msg := fmt.Sprintf("tick %d  fps %.0f\nx %d y %d\nvx %.0f vy %.0f\nfuel %d/%d  hp %d/%d\ncam %.0f",
 		g.world.Tick, ebiten.ActualFPS(), p.Body.X, p.Body.Y, p.VX, p.VY,
 		p.Fuel, t.Gun.Magazine, p.HP, t.Player.MaxHP, g.world.Camera.Y)
+	if wt := g.world.Water; wt.On {
+		msg += fmt.Sprintf("  water %+.0f", wt.Y-float64(p.Body.Y+p.Body.H))
+	}
 	if g.world.Over {
 		msg += "\n\nRUN OVER - press R"
 	}

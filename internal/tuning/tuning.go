@@ -20,6 +20,7 @@ type Tuning struct {
 	Player Player  `json:"player"`
 	Gun    Gun     `json:"gun"`
 	Camera Camera  `json:"camera"`
+	Water  Water   `json:"water"`
 	Tower  Tower   `json:"tower"`
 	Blocks []Block `json:"blocks"`
 	// Enemies defines every enemy kind, by the name chunks place it with.
@@ -60,6 +61,37 @@ type Camera struct {
 	// left after following for one second.
 	RemainPerSecond float64 `json:"remainPerSecond"`
 }
+
+// Water holds the rising water and its fall safety net. Distances are px,
+// speeds px/s, times seconds.
+type Water struct {
+	// Speed is the base rising speed.
+	Speed float64 `json:"speed"`
+	// Baseline is how far above the bottom of the view the water aims to be.
+	Baseline float64 `json:"baseline"`
+	// MaxLag is the furthest the water falls behind below the baseline.
+	// Over that distance its speed grows from 1 to MaxMult times Speed.
+	MaxLag  float64 `json:"maxLag"`
+	MaxMult float64 `json:"maxMult"`
+	// Above the baseline, the speed drops from 1 to MinMult times Speed
+	// over SlowRange.
+	SlowRange float64 `json:"slowRange"`
+	MinMult   float64 `json:"minMult"`
+	// StartBelow is how far under the map's bottom edge the water starts.
+	StartBelow float64 `json:"startBelow"`
+
+	// Catching the player launches it up at Bounce, eases the water down by
+	// Retreat over RetreatTime, and stops it rising for PauseTime from the
+	// catch.
+	Bounce      float64 `json:"bounce"`
+	Retreat     float64 `json:"retreat"`
+	RetreatTime float64 `json:"retreatTime"`
+	PauseTime   float64 `json:"pauseTime"`
+}
+
+// MaxValue caps every number in the tuning, so a typo such as 1e308 cannot
+// overflow the simulation's arithmetic.
+const MaxValue = 1e6
 
 // MaxCameraRemain caps Camera.RemainPerSecond. Closer to 1, a step of
 // following moves the camera by less than float precision and it stops.
@@ -241,6 +273,17 @@ func (t Tuning) validate() error {
 		{"player.knockbackX", p.KnockbackX},
 		{"player.knockbackY", p.KnockbackY},
 		{"player.invulnTime", p.InvulnTime},
+		{"water.speed", t.Water.Speed},
+		{"water.baseline", t.Water.Baseline},
+		{"water.maxLag", t.Water.MaxLag},
+		{"water.maxMult", t.Water.MaxMult},
+		{"water.slowRange", t.Water.SlowRange},
+		{"water.minMult", t.Water.MinMult},
+		{"water.startBelow", t.Water.StartBelow},
+		{"water.bounce", t.Water.Bounce},
+		{"water.retreat", t.Water.Retreat},
+		{"water.retreatTime", t.Water.RetreatTime},
+		{"water.pauseTime", t.Water.PauseTime},
 		{"gun.magazine", float64(g.Magazine)},
 		{"gun.fireInterval", g.FireInterval},
 		{"gun.thrust", g.Thrust},
@@ -253,6 +296,15 @@ func (t Tuning) validate() error {
 		if !(f.v > 0) {
 			return fmt.Errorf("%s must be positive, got %v", f.name, f.v)
 		}
+		if f.v > MaxValue {
+			return fmt.Errorf("%s must be at most %g, got %v", f.name, float64(MaxValue), f.v)
+		}
+	}
+	if t.Water.PauseTime < t.Water.RetreatTime {
+		// The pause holds the rise while the water retreats; rising during
+		// the retreat would be undone by it every step.
+		return fmt.Errorf("water.pauseTime must be at least water.retreatTime (%v), got %v",
+			t.Water.RetreatTime, t.Water.PauseTime)
 	}
 	c := t.Camera
 	switch {
@@ -260,6 +312,8 @@ func (t Tuning) validate() error {
 		return fmt.Errorf("camera.anchor must be between 0 and 1, got %v", c.Anchor)
 	case !(c.Lookahead >= 0):
 		return fmt.Errorf("camera.lookahead must not be negative, got %v", c.Lookahead)
+	case c.Lookahead > MaxValue:
+		return fmt.Errorf("camera.lookahead must be at most %g, got %v", float64(MaxValue), c.Lookahead)
 	case !(c.RemainPerSecond > 0 && c.RemainPerSecond <= MaxCameraRemain):
 		return fmt.Errorf("camera.remainPerSecond must be above 0 and at most %v, got %v", MaxCameraRemain, c.RemainPerSecond)
 	case t.Tower.Base == "":
@@ -286,10 +340,16 @@ func validateEnemies(enemies []Enemy) error {
 			return fmt.Errorf("%s.name %q is defined twice", where, e.Name)
 		case e.Width <= 0 || e.Height <= 0:
 			return fmt.Errorf("%s size must be positive, got %dx%d", where, e.Width, e.Height)
+		case e.Width > MaxValue || e.Height > MaxValue:
+			return fmt.Errorf("%s size must be at most %g, got %dx%d", where, float64(MaxValue), e.Width, e.Height)
 		case e.HP <= 0:
 			return fmt.Errorf("%s.hp must be positive, got %d", where, e.HP)
+		case e.HP > MaxValue:
+			return fmt.Errorf("%s.hp must be at most %g, got %d", where, float64(MaxValue), e.HP)
 		case !(e.Speed >= 0):
 			return fmt.Errorf("%s.speed must not be negative, got %v", where, e.Speed)
+		case e.Speed > MaxValue:
+			return fmt.Errorf("%s.speed must be at most %g, got %v", where, float64(MaxValue), e.Speed)
 		case !isHexColor(e.Color):
 			return fmt.Errorf("%s.color must be #rrggbb, got %q", where, e.Color)
 		}

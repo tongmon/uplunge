@@ -1,0 +1,11 @@
+uplunge-replay 1
+tower 1
+frames 560
+
+# Stand on the floor at the bottom of tower 1: the water waits. Hop once
+# to set it going, then stand still. The water rises from below the map,
+# catches the player, launches it, retreats, and comes back; every catch
+# costs 1 HP until the run ends.
+0 -
+60 B
+62 -

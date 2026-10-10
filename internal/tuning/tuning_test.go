@@ -26,6 +26,9 @@ const valid = `{"player": {
 	"bulletSpeed": 480, "bulletLife": 0.2, "bulletWidth": 4, "bulletHeight": 8
 }, "camera": {
 	"anchor": 0.667, "lookahead": 0.2, "remainPerSecond": 0.01
+}, "water": {
+	"speed": 30, "baseline": 24, "maxLag": 48, "maxMult": 3, "slowRange": 64, "minMult": 0.5,
+	"startBelow": 32, "bounce": 400, "retreat": 96, "retreatTime": 0.4, "pauseTime": 0.5
 }, "tower": {
 	"base": "Start", "pool": ["Shaft", "Blocks"], "length": 6
 }, "blocks": [
@@ -60,12 +63,19 @@ func TestParse(t *testing.T) {
 		{"zero tower length", strings.Replace(valid, `"length": 6`, `"length": 0`, 1), "tower.length must be 1 to 1000"},
 		{"huge tower length", strings.Replace(valid, `"length": 6`, `"length": 2147483647`, 1), "tower.length must be 1 to 1000"},
 		{"empty pool name", strings.Replace(valid, `["Shaft", "Blocks"]`, `["Shaft", ""]`, 1), "tower.pool has an empty chunk name"},
+		{"retreat longer than the pause", strings.Replace(valid, `"pauseTime": 0.5`, `"pauseTime": 0.3`, 1), "water.pauseTime must be at least water.retreatTime"},
+		{"huge value", strings.Replace(valid, `"speed": 30, `, `"speed": 1e308, `, 1), "water.speed must be at most 1e+06"},
+		{"huge lookahead", strings.Replace(valid, `"lookahead": 0.2`, `"lookahead": 1e308`, 1), "camera.lookahead must be at most 1e+06"},
+		{"huge enemy speed", strings.Replace(valid, `"stompable": true, "speed": 30`, `"stompable": true, "speed": 1e308`, 1), "enemies[0].speed must be at most 1e+06"},
+		{"huge enemy size", strings.Replace(valid, `"width": 14, "height": 14`, `"width": 2000000, "height": 14`, 1), "enemies[1] size must be at most 1e+06"},
+		{"huge enemy hp", strings.Replace(valid, `"hp": 3`, `"hp": 2000000`, 1), "enemies[1].hp must be at most 1e+06"},
+		{"missing water speed", strings.Replace(valid, `"speed": 30, `, ``, 1), "water.speed must be positive"},
 		{"missing max HP", strings.Replace(valid, `"maxHP": 4, `, ``, 1), "player.maxHP must be positive"},
 		{"enemy name twice", strings.Replace(valid, `"name": "Spiker"`, `"name": "Floater"`, 1), `enemies[1].name "Floater" is defined twice`},
 		{"enemy without name", strings.Replace(valid, `"name": "Spiker", `, ``, 1), "enemies[1].name is missing"},
 		{"enemy zero size", strings.Replace(valid, `"width": 14, "height": 14`, `"width": 0, "height": 14`, 1), "enemies[1] size must be positive"},
 		{"enemy zero hp", strings.Replace(valid, `"hp": 3`, `"hp": 0`, 1), "enemies[1].hp must be positive"},
-		{"enemy negative speed", strings.Replace(valid, `"speed": 30`, `"speed": -30`, 1), "enemies[0].speed must not be negative"},
+		{"enemy negative speed", strings.Replace(valid, `"stompable": true, "speed": 30`, `"stompable": true, "speed": -30`, 1), "enemies[0].speed must not be negative"},
 		{"enemy bad color", strings.Replace(valid, `"#c04060"`, `"red"`, 1), "enemies[1].color must be #rrggbb"},
 		{"block value out of range", strings.Replace(valid, `"value": 3`, `"value": 256`, 1), "blocks[1].value must be 1 to 255"},
 		{"block value twice", strings.Replace(valid, `"value": 3`, `"value": 1`, 1), "blocks[1].value 1 is defined twice"},
