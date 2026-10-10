@@ -59,8 +59,7 @@ func World(screen *ebiten.Image, w *sim.World, fx *Effects) {
 
 	m := w.Map
 	ts := float32(m.TileSize)
-	r0 := max(0, camY/m.TileSize)
-	r1 := min(m.Rows-1, (camY+sim.ViewHeight)/m.TileSize)
+	r0, r1 := visibleRows(camY, fx.ShakeY(), m.TileSize, m.Rows)
 	for r := r0; r <= r1; r++ {
 		for c := 0; c < m.Cols; c++ {
 			x, y, h := float32(c)*ts, float32(r)*ts+oy, ts
@@ -78,7 +77,9 @@ func World(screen *ebiten.Image, w *sim.World, fx *Effects) {
 		drawEnemy(screen, e, oy)
 	}
 
-	if !w.Player.Invulnerable() || (w.Tick/invulnBlinkSteps)%2 == 0 {
+	// Blink by the immunity left, which a freeze holds, so a frozen frame
+	// stays as it is.
+	if !w.Player.Invulnerable() || (w.Player.InvulnSteps()/invulnBlinkSteps)%2 == 0 {
 		drawPlayer(screen, w, fx, oy)
 	}
 
@@ -136,4 +137,19 @@ func drawPlayer(screen *ebiten.Image, w *sim.World, fx *Effects, oy float32) {
 // mix blends a toward b by t in [0, 1].
 func mix(a, b uint8, t float64) uint8 {
 	return uint8(math.Round(float64(a) + (float64(b)-float64(a))*t))
+}
+
+// visibleRows returns the first and last map rows on screen with the view's
+// top at world y camY and the picture moved down by shake.
+func visibleRows(camY, shake, tileSize, rows int) (r0, r1 int) {
+	top := camY - shake
+	return max(0, floorDiv(top, tileSize)), min(rows-1, floorDiv(top+sim.ViewHeight-1, tileSize))
+}
+
+func floorDiv(a, b int) int {
+	q := a / b
+	if a%b != 0 && a < 0 {
+		q--
+	}
+	return q
 }

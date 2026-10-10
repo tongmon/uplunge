@@ -127,3 +127,84 @@ func TestHurtAndCaughtEvents(t *testing.T) {
 		t.Fatalf("events %+v after an immune catch, want Caught without Hurt", ww.Events)
 	}
 }
+
+func TestRefillCountsEvenWhenAShotSpentFuelTheSameStep(t *testing.T) {
+	// A full magazine fires and the player is hurt in the same step: the
+	// fuel ends where it started, but the hurt refilled it.
+	m := level.NewTileMap(13, 200, tile)
+	m.Spawns = []level.Spawn{{Name: "Spiker", X: 104, Y: 1012}}
+	w := NewWorld(stillTuning(), m, 98, 1000)
+	w.Step(Input{Button: true})
+	if !w.Events.Shot || !w.Events.Hurt || !w.Events.Refilled {
+		t.Fatalf("events %+v, want Shot, Hurt, and Refilled", w.Events)
+	}
+}
+
+func TestRepressDuringAFreezeCounts(t *testing.T) {
+	// Holding the button into the freeze, letting go and pressing again
+	// during it, and holding on: the new press counts after the freeze.
+	w := stompWorld(t)
+	w.Player.prevButton = true // held before the stomp
+	w.Step(Input{Button: true})
+	w.Step(Input{})
+	w.Step(Input{Button: true})
+	if !w.Events.Frozen {
+		t.Fatal("the freeze ended early")
+	}
+	w.Step(Input{Button: true})
+	if !w.Events.Shot {
+		t.Fatalf("events %+v after a press made during the freeze, want a shot", w.Events)
+	}
+}
+
+func TestTapInsideAFreezeIsLost(t *testing.T) {
+	w := stompWorld(t)
+	w.Step(Input{Button: true})
+	w.Step(Input{})
+	w.Step(Input{})
+	w.Step(Input{})
+	if w.Events.Shot {
+		t.Fatal("a tap made and released inside the freeze fired")
+	}
+}
+
+func TestStartOnTheFloorIsNotALanding(t *testing.T) {
+	w, err := NewWorldInTower(testTuning(), floorTower())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !w.Player.OnGround {
+		t.Fatal("a player standing on the floor at the start is not on the ground")
+	}
+	w.Step(Input{})
+	if w.Events.Landed {
+		t.Fatal("standing still on the start floor reported a landing")
+	}
+}
+
+func TestFreezeHoldsTheWholeWorld(t *testing.T) {
+	m := level.NewTileMap(13, 200, tile)
+	m.Spawns = []level.Spawn{
+		{Name: "Floater", X: 104, Y: 1006},
+		{Name: "Floater", X: 40, Y: 900}, // keeps flying, but not in a freeze
+	}
+	w := NewWorld(testTuning(), m, 98, 1000-20-40)
+	w.Water = Water{On: true, Y: 1200}
+	w.Player.Fuel = 1
+	for i := 0; i < Hz && !w.Events.Stomped; i++ {
+		w.Step(Input{})
+	}
+	if !w.Events.Stomped {
+		t.Fatal("no stomp")
+	}
+	enemies := append([]Enemy(nil), w.Enemies...)
+	bullets := append([]Bullet(nil), w.Bullets...)
+	water, camera := w.Water, w.Camera
+	for i := 0; i < 3; i++ {
+		w.Step(Input{})
+	}
+	if len(w.Enemies) != len(enemies) || w.Enemies[0] != enemies[0] || len(w.Bullets) != len(bullets) ||
+		w.Water != water || w.Camera != camera {
+		t.Fatal("enemies, bullets, water, or camera moved during the freeze")
+	}
+}

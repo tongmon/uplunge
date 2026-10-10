@@ -65,6 +65,7 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 		blocks: newBlockTable(t.Blocks),
 	}
 	w.blocks.apply(w.Map)
+	w.Player.OnGround = w.Player.Body.OnGround(w.Map)
 	w.spawnEnemies(m)
 	w.Camera.Y = w.cameraTarget()
 	return w
@@ -80,9 +81,9 @@ func (w *World) Step(in Input) {
 	if w.freezeSteps > 0 {
 		w.freezeSteps--
 		w.Events.Frozen = true
+		w.Player.noteFrozenInput(in)
 		return
 	}
-	fuel := w.Player.Fuel
 	w.stepBullets()
 	prevBottom := w.Player.Body.Y + w.Player.Body.H
 	if w.Player.step(in, w.tuning, w.Map, w.blocks) {
@@ -96,7 +97,6 @@ func (w *World) Step(in Input) {
 	w.Over = w.Player.HP <= 0
 
 	w.Events = w.Player.events
-	w.Events.Refilled = w.Player.Fuel > fuel
 	if w.Events.Stomped || w.Events.Drilled {
 		w.freezeSteps = steps(w.tuning.Feel.FreezeTime)
 	}

@@ -89,7 +89,7 @@ func (w *World) touchWater() {
 		pl.invulnSteps = steps(w.tuning.Player.InvulnTime)
 	}
 	pl.events.Caught = true
-	pl.Fuel = w.tuning.Gun.Magazine
+	pl.refill(w.tuning.Gun.Magazine)
 	pl.VY = -c.Bounce
 	pl.jumpHoldSteps = 0
 	pl.bounceSteps = 0

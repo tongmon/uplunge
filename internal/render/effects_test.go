@@ -122,3 +122,21 @@ func TestFrozenStepsChangeNothing(t *testing.T) {
 		t.Fatal("effects changed during a freeze")
 	}
 }
+
+func TestVisibleRowsFollowTheShake(t *testing.T) {
+	// The camera at y 160 shows rows 10..32; shaken 4 px down, the picture
+	// moves down and the 4 px above it come from row 9.
+	for _, tt := range []struct {
+		camY, shake, r0, r1 int
+	}{
+		{160, 0, 10, 32},
+		{160, 4, 9, 32},
+		{160, -4, 10, 32},
+		{168, -4, 10, 33},
+	} {
+		r0, r1 := visibleRows(tt.camY, tt.shake, 16, 100)
+		if r0 != tt.r0 || r1 != tt.r1 {
+			t.Errorf("camY %d shake %d: rows %d..%d, want %d..%d", tt.camY, tt.shake, r0, r1, tt.r0, tt.r1)
+		}
+	}
+}
