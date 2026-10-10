@@ -8,7 +8,8 @@ import (
 	"github.com/tongmon/uplunge/internal/sim"
 )
 
-// Temporary keyboard layout until the M1 playtest settles the default keys.
+// Default keyboard layout, confirmed by the M1 playtest (docs/design.md
+// section 3). Rebinding comes with M5's settings.
 var (
 	leftKeys   = []ebiten.Key{ebiten.KeyArrowLeft, ebiten.KeyA}
 	rightKeys  = []ebiten.Key{ebiten.KeyArrowRight, ebiten.KeyD}
