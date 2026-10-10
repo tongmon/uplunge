@@ -115,11 +115,18 @@ type Feel struct {
 	DrillShakeTime  float64 `json:"drillShakeTime"`
 	DrillShakeScale float64 `json:"drillShakeScale"`
 
-	// A broken block bursts into debris: pieces thrown away from the hit at
-	// up to DebrisSpeed, falling at DebrisGravity, gone after DebrisLife.
-	DebrisSpeed   float64 `json:"debrisSpeed"`
-	DebrisGravity float64 `json:"debrisGravity"`
-	DebrisLife    float64 `json:"debrisLife"`
+	// A broken block bursts into 2×2 pieces DebrisSize px square, DebrisGap
+	// px apart at first. They fly away from the hit at DebrisSpeed (times
+	// DebrisBulletMult when a bullet broke it, times DebrisFarMult for the
+	// row away from the hit), fall at DebrisGravity, and are gone after
+	// DebrisLife.
+	DebrisSize       float64 `json:"debrisSize"`
+	DebrisGap        float64 `json:"debrisGap"`
+	DebrisSpeed      float64 `json:"debrisSpeed"`
+	DebrisBulletMult float64 `json:"debrisBulletMult"`
+	DebrisFarMult    float64 `json:"debrisFarMult"`
+	DebrisGravity    float64 `json:"debrisGravity"`
+	DebrisLife       float64 `json:"debrisLife"`
 
 	// A jump, a stomp, a drill break, or the water's launch stretches the
 	// drawn player to
@@ -364,7 +371,11 @@ func (t Tuning) validate() error {
 		{"feel.stompShakeScale", t.Feel.StompShakeScale},
 		{"feel.drillShakeTime", t.Feel.DrillShakeTime},
 		{"feel.drillShakeScale", t.Feel.DrillShakeScale},
+		{"feel.debrisSize", t.Feel.DebrisSize},
+		{"feel.debrisGap", t.Feel.DebrisGap},
 		{"feel.debrisSpeed", t.Feel.DebrisSpeed},
+		{"feel.debrisBulletMult", t.Feel.DebrisBulletMult},
+		{"feel.debrisFarMult", t.Feel.DebrisFarMult},
 		{"feel.debrisGravity", t.Feel.DebrisGravity},
 		{"feel.debrisLife", t.Feel.DebrisLife},
 		{"feel.jumpX", t.Feel.JumpX},

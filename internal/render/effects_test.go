@@ -245,7 +245,7 @@ func TestDebris(t *testing.T) {
 	}
 	// Pieces start inside their tile, apart from each other.
 	for i, p := range fx.Debris[:4] {
-		if p.X < 48 || p.X+pieceSize > 64 || p.Y < 80 || p.Y+pieceSize > 96 || p.Tile != 3 {
+		if p.X < 48 || p.X+p.Size > 64 || p.Y < 80 || p.Y+p.Size > 96 || p.Tile != 3 {
 			t.Fatalf("piece %d %+v starts outside its tile (3, 5)", i, p)
 		}
 	}
@@ -271,5 +271,19 @@ func TestDebris(t *testing.T) {
 	stepWith(&fx, w, sim.Events{})
 	if len(fx.Debris) != 0 {
 		t.Fatalf("%d pieces left after DebrisLife", len(fx.Debris))
+	}
+}
+
+func TestDebrisStartsApartInsideItsTile(t *testing.T) {
+	w := world(t)
+	f := w.Tuning().Feel
+	fx := NewEffects()
+	fx.burst(sim.BrokenCell{Col: 0, Row: 0, Tile: 3}, 16, f)
+	// Pieces at 3..7 and 9..13 on each axis: 2 px apart, centred.
+	want := [][2]float64{{3, 3}, {9, 3}, {3, 9}, {9, 9}}
+	for i, p := range fx.Debris {
+		if p.X != want[i][0] || p.Y != want[i][1] || p.Size != f.DebrisSize {
+			t.Fatalf("piece %d at (%v, %v) size %v, want (%v, %v) size %v", i, p.X, p.Y, p.Size, want[i][0], want[i][1], f.DebrisSize)
+		}
 	}
 }

@@ -36,18 +36,13 @@ type Effects struct {
 // Piece is one bit of a broken block, in world pixels.
 type Piece struct {
 	X, Y, VX, VY float64
+	// Size is the edge of the square piece.
+	Size float64
 	// Tile is the broken block's value, for its color.
 	Tile uint8
 	// Steps is how many steps it has left.
 	Steps int
 }
-
-// pieceSize is the edge of a debris piece; a tile breaks into 2×2 of them,
-// pieceGap px apart at first so the break reads even while frozen.
-const (
-	pieceSize = 4
-	pieceGap  = 2
-)
 
 // NewEffects returns effects at rest.
 func NewEffects() Effects {
@@ -126,29 +121,31 @@ func (fx *Effects) Step(w *sim.World) {
 	}
 }
 
-// burst breaks a tile into 2×2 pieces, a little apart, thrown away from the
-// hit: up for the head breaking it from below, down for a bullet from above,
-// and outward from the tile's middle. Speeds depend only on the piece's
-// place, so a replay bursts the same.
+// burst breaks a tile into 2×2 pieces, DebrisGap apart around the tile's
+// middle so the break reads even while frozen, thrown away from the hit: up
+// for the head breaking it from below, down for a bullet from above, and
+// outward from the middle. Speeds depend only on the piece's place, so a
+// replay bursts the same.
 func (fx *Effects) burst(c sim.BrokenCell, tileSize int, f tuning.Feel) {
-	half := float64(tileSize) / 2
-	x0, y0 := float64(c.Col*tileSize), float64(c.Row*tileSize)
+	size, gap := f.DebrisSize, f.DebrisGap
+	midX := float64(c.Col*tileSize) + float64(tileSize)/2
+	midY := float64(c.Row*tileSize) + float64(tileSize)/2
 	for i := 0; i < 4; i++ {
 		side, low := float64(i%2*2-1), i/2 == 1 // -1 left, 1 right; top or bottom row
-		x := x0 + half + side*(pieceGap/2) - pieceSize/2 + side*pieceSize/2
-		y := y0 + half - pieceSize/2 - (pieceSize/2 + pieceGap/2)
+		x := midX + side*gap/2 + (side-1)*size/2
+		y := midY - gap/2 - size
 		if low {
-			y += pieceSize + pieceGap
+			y = midY + gap/2
 		}
 		vy := -f.DebrisSpeed // the head breaks from below: pieces fly up
 		if c.ByBullet {
-			vy = f.DebrisSpeed / 2 // a bullet from above knocks them down
+			vy = f.DebrisSpeed * f.DebrisBulletMult // a bullet from above knocks them down
 		}
 		if low != c.ByBullet {
-			vy *= 0.6 // the far row flies less
+			vy *= f.DebrisFarMult // the row away from the hit flies less
 		}
 		fx.Debris = append(fx.Debris, Piece{
-			X: x, Y: y, VX: side * f.DebrisSpeed / 2, VY: vy,
+			X: x, Y: y, VX: side * f.DebrisSpeed / 2, VY: vy, Size: size,
 			Tile: uint8(c.Tile), Steps: max(1, int(math.Round(f.DebrisLife*sim.Hz))),
 		})
 	}

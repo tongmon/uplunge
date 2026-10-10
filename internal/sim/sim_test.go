@@ -32,7 +32,8 @@ func testTuning() tuning.Tuning {
 	}, Feel: tuning.Feel{
 		StompFreeze: 0.0167, HitFreeze: 0.0167, DrillFreeze: 0.05, ShakeTime: 0.2, ShakeInterval: 0.04, ShakeScale: 20,
 		StompShakeTime: 0.16, StompShakeScale: 12, DrillShakeTime: 0.2, DrillShakeScale: 15,
-		DebrisSpeed: 120, DebrisGravity: 900, DebrisLife: 0.5,
+		DebrisSize: 4, DebrisGap: 2, DebrisSpeed: 120, DebrisBulletMult: 0.5, DebrisFarMult: 0.6,
+		DebrisGravity: 900, DebrisLife: 0.5,
 		JumpX: 0.6, JumpY: 1.4, LandX: 1.6, LandY: 0.4, LandSpeed: 480, Recover: 1.75,
 		FullColor: "#ff9a3c", EmptyColor: "#3c78ff", FlashTime: 0.12,
 	}, Tower: tuning.Tower{

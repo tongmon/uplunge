@@ -105,7 +105,7 @@ func World(screen *ebiten.Image, w *sim.World, fx *Effects) {
 
 	for _, p := range fx.Debris {
 		vector.FillRect(screen, float32(math.Round(p.X)), float32(math.Round(p.Y))+oy,
-			pieceSize, pieceSize, colors[p.Tile], false)
+			float32(p.Size), float32(p.Size), colors[p.Tile], false)
 	}
 
 	if w.Water.On {

@@ -3,6 +3,7 @@ package sim
 import (
 	"testing"
 
+	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/level"
 )
 
@@ -321,5 +322,37 @@ func TestBrokenCellsAreCapped(t *testing.T) {
 	}
 	if ev.NBroken != MaxBroken || ev.Broken[MaxBroken-1].Col != MaxBroken-1 {
 		t.Fatalf("NBroken %d, last %+v, want the first %d kept", ev.NBroken, ev.Broken[MaxBroken-1], MaxBroken)
+	}
+}
+
+func TestManyBrokenCellsInOneStep(t *testing.T) {
+	// Ten bullets right above ten soft blocks break all ten in one step;
+	// the step reports the first MaxBroken, and the next step none.
+	w := tallWorld()
+	for c := 1; c <= 10; c++ {
+		w.Map.Set(c, 110, soft)
+		w.Bullets = append(w.Bullets, Bullet{
+			Body: collide.Body{X: c*tile + 6, Y: 110*tile - 9, W: 4, H: 8},
+			life: 5,
+		})
+	}
+	w.blocks.apply(w.Map)
+	w.Step(Input{})
+	for c := 1; c <= 10; c++ {
+		if w.Map.At(c, 110) != level.Empty {
+			t.Fatalf("soft block at column %d not broken", c)
+		}
+	}
+	if w.Events.NBroken != MaxBroken {
+		t.Fatalf("NBroken %d with 10 cells broken, want the cap %d", w.Events.NBroken, MaxBroken)
+	}
+	for i := 0; i < w.Events.NBroken; i++ {
+		if c := w.Events.Broken[i]; !c.ByBullet || c.Row != 110 {
+			t.Fatalf("broken cell %d %+v, want a bullet break in row 110", i, c)
+		}
+	}
+	w.Step(Input{})
+	if w.Events.NBroken != 0 {
+		t.Fatalf("the next step reports %d broken cells, want none", w.Events.NBroken)
 	}
 }
