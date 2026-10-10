@@ -21,6 +21,8 @@
 | 탄약 충전 | 착지, 밟기, 피격 시 전량 | `scrWallCol:80-89`, `scrEnemyStomped:17`, `scrTypicalDamage:10` |
 | 밟기 | 바운스 -2.5 (위로 약 16px, 점프 약 48px보다 낮음), 100 피해, 화면 흔들림 2px·10f | `scrEnemyStomped:6-17` |
 | 밟기 판정 | 적이 플레이어보다 아래에 있고, 공중에서 떨어지는 중이면 | `enmBabyObake_Collision_objPlayer_n:1-7` |
+| 짧은 멈칫 (`momentDelay`) | 게임 속도를 1스텝 동안 60→30fps로 (약 1프레임 멈칫), 이미 느릴 때는 겹치지 않음. 총알이 적에 맞을 때 (적이 경직 중이 아니면), 적이 죽을 때 (밟기 포함), 콤보 5 이상 종료 때. 블록 파괴에는 없음 | `momentDelay:1-12`, `scrTypicalBulletDamage:32-35`, `scrEnemyDeath:7`, `comboDone:3-6`, `objControlerN_Alarm_0:1` |
+| 피격 슬로 모션 | 1초 동안 40fps (2/3 속도) | `scrPDamage:21-26` |
 | 콤보 | 처치마다 +1, 착지 시 종료. 8 → 젬 100 / 15 → 최대 탄약 +1 / 25 → HP +1 | `comboDone`, `comboRewardText_Create_0` |
 | 젬하이 | 연속 획득 100개, 타이머 300f | `scrControlBeginstepCheck:66-76` |
 | HP | 4, 피격 후 무적 90f | `scrPlayerGlobalStat:45`, `scrPDamage:4-11` |

@@ -61,7 +61,7 @@
 | 물 속도 | 30px/s (화면 밖이면 최대 3배) | `water.speed`, `water.maxMult` | |
 | 물 안전망 튕김 | 400px/s | `water.bounce` | |
 | 카메라 위치·미리 보기·추적 | 0.667, 0.2초, 1% | `camera.anchor`, `camera.lookahead`, `camera.remainPerSecond` | |
-| 멈춤·흔들림·늘어남 | 0.05초, 0.2초 × 20px, (0.6, 1.4) / (1.6, 0.4) | `feel` | |
+| 멈춤·흔들림·늘어남 | 밟기·총알 명중 1프레임, 드릴 0.05초 / 발사 0.2초 × 20px / (0.6, 1.4), (1.6, 0.4) | `feel` | |
 | 판정 박스 크기 | 12×20 (Celeste 환산 16×22도 시험) | `player.width`, `player.height` | |
 | 기본 키 배치 | 위 조작 표 | 코드 (`internal/input`) | |
 | 남길 블록 종류 | 드릴 / 무른 / 총알 전용 모두 있음 | `-chunk Blocks`, 탑의 DrillGate·SoftFloor | |
