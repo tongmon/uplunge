@@ -21,6 +21,7 @@ type Tuning struct {
 	Gun    Gun     `json:"gun"`
 	Camera Camera  `json:"camera"`
 	Water  Water   `json:"water"`
+	Feel   Feel    `json:"feel"`
 	Tower  Tower   `json:"tower"`
 	Blocks []Block `json:"blocks"`
 	// Enemies defines every enemy kind, by the name chunks place it with.
@@ -87,6 +88,42 @@ type Water struct {
 	Retreat     float64 `json:"retreat"`
 	RetreatTime float64 `json:"retreatTime"`
 	PauseTime   float64 `json:"pauseTime"`
+}
+
+// Feel holds the effects that sell impacts. FreezeTime is simulation: the
+// world stands still for it after a stomp or a drill break. The rest only
+// changes how the world is drawn. Times are seconds.
+type Feel struct {
+	FreezeTime float64 `json:"freezeTime"`
+
+	// Firing shakes the view along the shot for ShakeTime. Every
+	// ShakeInterval the offset flips side, ShakeScale px per second of shake
+	// left, rounded up.
+	ShakeTime     float64 `json:"shakeTime"`
+	ShakeInterval float64 `json:"shakeInterval"`
+	ShakeScale    float64 `json:"shakeScale"`
+
+	// A jump stretches the drawn player to Jump{X,Y} times its size; a
+	// landing squashes it toward Land{X,Y}, fully at LandSpeed or faster.
+	// Both ease back to 1 at Recover per second.
+	JumpX     float64 `json:"jumpX"`
+	JumpY     float64 `json:"jumpY"`
+	LandX     float64 `json:"landX"`
+	LandY     float64 `json:"landY"`
+	LandSpeed float64 `json:"landSpeed"`
+	Recover   float64 `json:"recover"`
+
+	// The helmet lamp shows the fuel: FullColor with a full magazine,
+	// shading to EmptyColor at none. It flashes white for FlashTime on a
+	// refill.
+	FullColor  string  `json:"fullColor"`
+	EmptyColor string  `json:"emptyColor"`
+	FlashTime  float64 `json:"flashTime"`
+}
+
+// RGB parses a "#rrggbb" color that Parse has already checked.
+func RGB(color string) (r, g, b uint8) {
+	return Block{Color: color}.RGB()
 }
 
 // MaxValue caps every number in the tuning, so a typo such as 1e308 cannot
@@ -284,6 +321,17 @@ func (t Tuning) validate() error {
 		{"water.retreat", t.Water.Retreat},
 		{"water.retreatTime", t.Water.RetreatTime},
 		{"water.pauseTime", t.Water.PauseTime},
+		{"feel.freezeTime", t.Feel.FreezeTime},
+		{"feel.shakeTime", t.Feel.ShakeTime},
+		{"feel.shakeInterval", t.Feel.ShakeInterval},
+		{"feel.shakeScale", t.Feel.ShakeScale},
+		{"feel.jumpX", t.Feel.JumpX},
+		{"feel.jumpY", t.Feel.JumpY},
+		{"feel.landX", t.Feel.LandX},
+		{"feel.landY", t.Feel.LandY},
+		{"feel.landSpeed", t.Feel.LandSpeed},
+		{"feel.recover", t.Feel.Recover},
+		{"feel.flashTime", t.Feel.FlashTime},
 		{"gun.magazine", float64(g.Magazine)},
 		{"gun.fireInterval", g.FireInterval},
 		{"gun.thrust", g.Thrust},
@@ -305,6 +353,14 @@ func (t Tuning) validate() error {
 		// the retreat would be undone by it every step.
 		return fmt.Errorf("water.pauseTime must be at least water.retreatTime (%v), got %v",
 			t.Water.RetreatTime, t.Water.PauseTime)
+	}
+	for _, f := range []struct{ name, v string }{
+		{"feel.fullColor", t.Feel.FullColor},
+		{"feel.emptyColor", t.Feel.EmptyColor},
+	} {
+		if !isHexColor(f.v) {
+			return fmt.Errorf("%s must be #rrggbb, got %q", f.name, f.v)
+		}
 	}
 	c := t.Camera
 	switch {

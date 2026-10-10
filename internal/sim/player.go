@@ -44,6 +44,10 @@ type Player struct {
 	// the button stays down, so the press that starts a jump never fires.
 	firing     bool
 	prevButton bool
+	// frozenPress is a press made during a freeze and held since.
+	frozenPress bool
+	// events collects what the player did this step.
+	events Events
 }
 
 func newPlayer(t tuning.Tuning, x, y int) Player {
@@ -52,6 +56,30 @@ func newPlayer(t tuning.Tuning, x, y int) Player {
 		Fuel: t.Gun.Magazine,
 		HP:   t.Player.MaxHP,
 	}
+}
+
+// refill fills the magazine, reporting it as a refill when fuel was missing.
+func (pl *Player) refill(magazine int) {
+	if pl.Fuel < magazine {
+		pl.events.Refilled = true
+	}
+	pl.Fuel = magazine
+}
+
+// InvulnSteps is the number of steps left during which hits do nothing. It
+// does not count down during a freeze.
+func (pl *Player) InvulnSteps() int {
+	return pl.invulnSteps
+}
+
+// noteFrozenInput follows the button while the world is frozen, so a press
+// made during the freeze and still held when it ends counts as a press then.
+// One let go before the end is lost: the button is up when the world moves.
+func (pl *Player) noteFrozenInput(in Input) {
+	if in.Button && !pl.prevButton {
+		pl.frozenPress = true
+	}
+	pl.prevButton = in.Button
 }
 
 // Invulnerable reports whether hits do nothing right now.
@@ -68,7 +96,8 @@ func (pl *Player) stomp(t tuning.Tuning) {
 	pl.bounceSteps = steps(t.Player.StompHoldTime)
 	pl.jumpHoldSteps = 0
 	pl.coyoteSteps = 0
-	pl.Fuel = t.Gun.Magazine
+	pl.refill(t.Gun.Magazine)
+	pl.events.Stomped = true
 }
 
 // hurt takes 1 HP, refills the magazine, knocks the player up and away,
@@ -80,7 +109,8 @@ func (pl *Player) stomp(t tuning.Tuning) {
 func (pl *Player) hurt(t tuning.Tuning, dx, dy float64) {
 	p := t.Player
 	pl.HP = max(0, pl.HP-1)
-	pl.Fuel = t.Gun.Magazine
+	pl.events.Hurt = true
+	pl.refill(t.Gun.Magazine)
 	if dx != 0 {
 		pl.VX = p.KnockbackX * dx / math.Hypot(dx, dy)
 	}
@@ -96,10 +126,13 @@ func (pl *Player) hurt(t tuning.Tuning, dx, dy float64) {
 func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTable) (shot bool) {
 	p, g := t.Player, t.Gun
 	b := &pl.Body
+	pl.events = Events{}
+	wasOnGround := pl.OnGround
 	// Only a player that is not rising stands on something, as in Celeste;
 	// otherwise rising through a one-way platform would land on its top edge.
 	grounded := pl.VY >= 0 && b.OnGround(m)
-	pressed := in.Button && !pl.prevButton
+	pressed := in.Button && (!pl.prevButton || pl.frozenPress)
+	pl.frozenPress = false
 	pl.prevButton = in.Button
 
 	// Run.
@@ -160,6 +193,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 	jumped := false
 	if pl.bufferSteps > 0 && pl.coyoteSteps > 0 {
 		jumped = true
+		pl.events.Jumped = true
 		pl.VY = -p.JumpSpeed
 		// A buffered tap already released gets no hold, so a fresh press
 		// right after the launch cannot stretch it into a full jump.
@@ -194,6 +228,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 		pl.firing = true
 	}
 	if pl.firing && pl.Fuel > 0 && pl.fireCooldown == 0 {
+		pl.events.Shot = true
 		pl.VY = min(pl.VY, -g.Thrust)
 		pl.Fuel--
 		pl.fireCooldown = steps(g.FireInterval)
@@ -204,6 +239,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 	if b.MoveX(m, pl.VX*Dt) {
 		pl.VX = 0
 	}
+	fallSpeed := pl.VY
 	if b.MoveY(m, pl.VY*Dt) && !(pl.VY < 0 && pl.clearCeiling(p, m, bt)) {
 		pl.VY = 0
 		pl.jumpHoldSteps = 0
@@ -218,9 +254,13 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 		pl.bounceSteps = 0
 	}
 	pl.OnGround = pl.VY >= 0 && b.OnGround(m)
+	if pl.OnGround && !wasOnGround {
+		pl.events.Landed = true
+		pl.events.LandSpeed = max(0, fallSpeed)
+	}
 	// Landing refills the magazine on the step it happens.
 	if pl.OnGround {
-		pl.Fuel = g.Magazine
+		pl.refill(g.Magazine)
 	}
 	return shot
 }
@@ -232,7 +272,11 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 // by moving sideways, trying the side the player is moving toward.
 func (pl *Player) clearCeiling(p tuning.Player, m *level.TileMap, bt *blockTable) bool {
 	b := &pl.Body
-	if bt.breakIn(m, b.X, b.Y-1, b.W, 1, byDrill) && !collide.Overlaps(m, b.X, b.Y-1, b.W, b.H) {
+	broke := bt.breakIn(m, b.X, b.Y-1, b.W, 1, byDrill)
+	if broke {
+		pl.events.Drilled = true
+	}
+	if broke && !collide.Overlaps(m, b.X, b.Y-1, b.W, b.H) {
 		pl.VY = min(pl.VY, -p.DrillBounce)
 		return true
 	}

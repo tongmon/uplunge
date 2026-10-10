@@ -1,4 +1,4 @@
-tick 0 x 98 y 1884 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 375 cam 1560.000 hp 4 enemies 15 over false water 1952.000
+tick 0 x 98 y 1884 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 375 cam 1560.000 hp 4 enemies 15 over false water 1952.000
 tick 1 x 98 y 1884 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 375 cam 1560.000 hp 4 enemies 15 over false water 1952.000
 tick 2 x 98 y 1884 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 375 cam 1560.000 hp 4 enemies 15 over false water 1952.000
 tick 3 x 98 y 1884 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 375 cam 1560.000 hp 4 enemies 15 over false water 1952.000

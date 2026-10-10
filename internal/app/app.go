@@ -152,6 +152,7 @@ func startOf(cfg Config) (replay.Replay, error) {
 
 type game struct {
 	world *sim.World
+	fx    render.Effects
 	// start and startMap are where the current run started.
 	start    replay.Replay
 	startMap *level.TileMap
@@ -180,6 +181,7 @@ func (g *game) begin(start replay.Replay, t tuning.Tuning) error {
 		return err
 	}
 	g.world, g.start, g.startMap, g.recorded = w, start, m, nil
+	g.fx = render.NewEffects()
 	return nil
 }
 
@@ -237,6 +239,7 @@ func (g *game) Update() error {
 		g.pollTuning()
 	}
 	g.world.Step(in)
+	g.fx.Step(g.world)
 	return nil
 }
 
@@ -282,7 +285,7 @@ func reloadTuning(w *sim.World, path string) (applied bool, err error) {
 }
 
 func (g *game) Draw(screen *ebiten.Image) {
-	render.World(screen, g.world)
+	render.World(screen, g.world, &g.fx)
 	p := g.world.Player
 	t := g.world.Tuning()
 	msg := fmt.Sprintf("tick %d  fps %.0f\nx %d y %d\nvx %.0f vy %.0f\nfuel %d/%d  hp %d/%d\ncam %.0f",
