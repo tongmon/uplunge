@@ -30,6 +30,8 @@ type World struct {
 	Tick   uint64
 	Map    *level.TileMap
 	Player Player
+	// Bullets are the player's shots in flight, oldest first.
+	Bullets []Bullet
 
 	// tuning is read every step; change it with SetTuning.
 	tuning tuning.Tuning
@@ -41,13 +43,16 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 	return &World{
 		tuning: t,
 		Map:    m,
-		Player: newPlayer(t.Player, x, y),
+		Player: newPlayer(t, x, y),
 	}
 }
 
 // Step advances the world by exactly one fixed timestep of Dt seconds.
 func (w *World) Step(in Input) {
-	w.Player.step(in, w.tuning.Player, w.Map)
+	w.stepBullets()
+	if w.Player.step(in, w.tuning, w.Map) {
+		w.spawnBullet()
+	}
 	w.Tick++
 }
 
@@ -83,6 +88,7 @@ func (w *World) SetTuning(t tuning.Tuning) error {
 			t.Player.Width, t.Player.Height = b.W, b.H
 		}
 	}
+	w.Player.Fuel = min(w.Player.Fuel, t.Gun.Magazine)
 	w.tuning = t
 	return err
 }

@@ -16,5 +16,15 @@
     "runSpeed": 180,
     "runAccel": 2000,
     "airAccelMult": 0.65
+  },
+  "gun": {
+    "magazine": 8,
+    "fireInterval": 0.1,
+    "thrust": 240,
+
+    "bulletSpeed": 480,
+    "bulletLife": 0.2,
+    "bulletWidth": 4,
+    "bulletHeight": 8
   }
 }

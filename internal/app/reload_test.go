@@ -20,6 +20,9 @@ func baseTuning() tuning.Tuning {
 		CoyoteTime: 0.1, JumpBufferTime: 0.08,
 		ApexGravThreshold: 80, ApexGravMult: 0.5,
 		RunSpeed: 180, RunAccel: 2000, AirAccelMult: 0.65,
+	}, Gun: tuning.Gun{
+		Magazine: 8, FireInterval: 0.1, Thrust: 240,
+		BulletSpeed: 480, BulletLife: 0.2, BulletWidth: 4, BulletHeight: 8,
 	}}
 }
 

@@ -8,13 +8,16 @@ import (
 	"github.com/tongmon/uplunge/internal/tuning"
 )
 
-// Player is the grey-box player: run, fall, and a variable-height jump.
+// Player is the grey-box player: run, fall, a variable-height jump, and the
+// gunjet that fires down to push the player up.
 type Player struct {
 	Body collide.Body
 	// VX and VY are the velocity in px/s. VY is negative going up.
 	VX, VY float64
 	// OnGround reports whether the player stood on a solid after the last step.
 	OnGround bool
+	// Fuel is the number of shots left in the magazine.
+	Fuel int
 
 	// The timers below count whole steps rather than seconds, so each lasts
 	// exactly its tuned time instead of drifting with float error.
@@ -28,14 +31,24 @@ type Player struct {
 	// bufferSteps is the number of steps left in which an earlier press still
 	// starts a jump once one is allowed.
 	bufferSteps int
-	prevButton  bool
+	// fireCooldown is the number of steps left until the next shot.
+	fireCooldown int
+	// firing is set by a press in the air that did not jump and lasts while
+	// the button stays down, so the press that starts a jump never fires.
+	firing     bool
+	prevButton bool
 }
 
-func newPlayer(p tuning.Player, x, y int) Player {
-	return Player{Body: collide.Body{X: x, Y: y, W: p.Width, H: p.Height}}
+func newPlayer(t tuning.Tuning, x, y int) Player {
+	return Player{
+		Body: collide.Body{X: x, Y: y, W: t.Player.Width, H: t.Player.Height},
+		Fuel: t.Gun.Magazine,
+	}
 }
 
-func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
+// step advances the player by one step and reports whether it fired a shot.
+func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap) (shot bool) {
+	p, g := t.Player, t.Gun
 	b := &pl.Body
 	grounded := collide.Overlaps(m, b.X, b.Y+1, b.W, b.H)
 	pressed := in.Button && !pl.prevButton
@@ -86,7 +99,9 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 	if pressed {
 		pl.bufferSteps = steps(p.JumpBufferTime)
 	}
+	jumped := false
 	if pl.bufferSteps > 0 && pl.coyoteSteps > 0 {
+		jumped = true
 		pl.VY = -p.JumpSpeed
 		// A buffered tap already released gets no hold, so a fresh press
 		// right after the launch cannot stretch it into a full jump.
@@ -104,6 +119,30 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 		pl.coyoteSteps--
 	}
 
+	// Gunjet: standing on the ground ends the fire stream. A press in the
+	// air that did not jump starts the stream, and holding the button fires
+	// every FireInterval while fuel lasts. A shot uses up the press, so it
+	// cannot also jump on landing; a press that could not fire stays
+	// buffered.
+	if pl.fireCooldown > 0 {
+		pl.fireCooldown--
+	}
+	switch {
+	case grounded:
+		pl.firing = false
+	case !in.Button:
+		pl.firing = false
+	case pressed && !jumped:
+		pl.firing = true
+	}
+	if pl.firing && pl.Fuel > 0 && pl.fireCooldown == 0 {
+		pl.VY = min(pl.VY, -g.Thrust)
+		pl.Fuel--
+		pl.fireCooldown = steps(g.FireInterval)
+		pl.bufferSteps = 0
+		shot = true
+	}
+
 	if b.MoveX(m, pl.VX*Dt) {
 		pl.VX = 0
 	}
@@ -112,6 +151,11 @@ func (pl *Player) step(in Input, p tuning.Player, m *level.TileMap) {
 		pl.jumpHoldSteps = 0
 	}
 	pl.OnGround = collide.Overlaps(m, b.X, b.Y+1, b.W, b.H)
+	// Landing refills the magazine on the step it happens.
+	if pl.OnGround {
+		pl.Fuel = g.Magazine
+	}
+	return shot
 }
 
 // steps converts a tuned time to whole steps, at least one.

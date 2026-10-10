@@ -18,6 +18,9 @@ func testTuning() tuning.Tuning {
 		CoyoteTime: 0.1, JumpBufferTime: 0.08,
 		ApexGravThreshold: 80, ApexGravMult: 0.5,
 		RunSpeed: 180, RunAccel: 2000, AirAccelMult: 0.65,
+	}, Gun: tuning.Gun{
+		Magazine: 8, FireInterval: 0.1, Thrust: 240,
+		BulletSpeed: 480, BulletLife: 0.2, BulletWidth: 4, BulletHeight: 8,
 	}}
 }
 
@@ -189,6 +192,7 @@ func TestTapJumpIsLower(t *testing.T) {
 func TestNoJumpInAir(t *testing.T) {
 	w := NewWorld(testTuning(), testRoom(t), 96, 0)
 	w.Step(Input{})
+	w.Player.Fuel = 0 // so the press cannot fire either
 	w.Step(Input{Button: true})
 	if w.Player.VY < 0 {
 		t.Fatalf("VY = %v after pressing in the air, want no jump", w.Player.VY)
@@ -443,6 +447,7 @@ func TestJumpBuffer(t *testing.T) {
 	for j := 0; j <= n+1; j++ {
 		t.Run(fmt.Sprintf("tap %d steps early", j), func(t *testing.T) {
 			w := NewWorld(testTuning(), testRoom(t), 96, 0)
+			w.Player.Fuel = 0 // only a press that cannot fire is buffered
 			tapAt := land + 1 - j
 			for i := 1; i <= land+1; i++ {
 				w.Step(Input{Button: i == tapAt})
@@ -457,6 +462,7 @@ func TestJumpBuffer(t *testing.T) {
 
 func TestBufferedJumpIsUsedOnce(t *testing.T) {
 	w := NewWorld(testTuning(), testRoom(t), 96, 0)
+	w.Player.Fuel = 0 // only a press that cannot fire is buffered
 	land := landingStep(t)
 	for i := 1; i <= land+1; i++ {
 		w.Step(Input{Button: i == land})
@@ -489,6 +495,7 @@ func TestApexGravity(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			w := NewWorld(testTuning(), testRoom(t), 96, 64)
 			w.Player.VY = tt.vy
+			w.Player.Fuel = 0 // isolate gravity from the gunjet
 			w.Step(Input{Button: tt.button})
 			if w.Player.VY != tt.want {
 				t.Fatalf("VY = %v, want %v", w.Player.VY, tt.want)
@@ -501,6 +508,7 @@ func TestReleasedBufferedJumpCannotBeExtended(t *testing.T) {
 	p := testTuning().Player
 	land := landingStep(t)
 	w := NewWorld(testTuning(), testRoom(t), 96, 0)
+	w.Player.Fuel = 0 // only a press that cannot fire is buffered
 	// Tap and release before landing, so the buffered jump launches with the
 	// button up, then press again right after the launch.
 	for i := 1; i <= land+1; i++ {

@@ -16,6 +16,7 @@ import (
 // until the developer confirms it in docs/design.md.
 type Tuning struct {
 	Player Player `json:"player"`
+	Gun    Gun    `json:"gun"`
 }
 
 // Player holds the player's size and movement numbers. Speeds are px/s,
@@ -45,6 +46,24 @@ type Player struct {
 	RunAccel float64 `json:"runAccel"`
 	// AirAccelMult scales RunAccel while airborne.
 	AirAccelMult float64 `json:"airAccelMult"`
+}
+
+// Gun holds the gunjet: firing downward in the air pushes the player up.
+// Times are seconds and speeds px/s, as in Player.
+type Gun struct {
+	// Magazine is the fuel in shots. It refills on landing.
+	Magazine int `json:"magazine"`
+	// FireInterval is the time between shots while the button is held.
+	FireInterval float64 `json:"fireInterval"`
+	// Thrust caps the upward speed a shot leaves: VY = min(VY, -Thrust).
+	Thrust float64 `json:"thrust"`
+
+	// Bullets fly straight down at BulletSpeed for BulletLife seconds, or
+	// until they hit a solid.
+	BulletSpeed  float64 `json:"bulletSpeed"`
+	BulletLife   float64 `json:"bulletLife"`
+	BulletWidth  int     `json:"bulletWidth"`
+	BulletHeight int     `json:"bulletHeight"`
 }
 
 // Load reads and parses a tuning file.
@@ -79,7 +98,7 @@ func Parse(data []byte) (Tuning, error) {
 }
 
 func (t Tuning) validate() error {
-	p := t.Player
+	p, g := t.Player, t.Gun
 	positive := []struct {
 		name string
 		v    float64
@@ -97,6 +116,13 @@ func (t Tuning) validate() error {
 		{"player.runSpeed", p.RunSpeed},
 		{"player.runAccel", p.RunAccel},
 		{"player.airAccelMult", p.AirAccelMult},
+		{"gun.magazine", float64(g.Magazine)},
+		{"gun.fireInterval", g.FireInterval},
+		{"gun.thrust", g.Thrust},
+		{"gun.bulletSpeed", g.BulletSpeed},
+		{"gun.bulletLife", g.BulletLife},
+		{"gun.bulletWidth", float64(g.BulletWidth)},
+		{"gun.bulletHeight", float64(g.BulletHeight)},
 	}
 	for _, f := range positive {
 		if !(f.v > 0) {

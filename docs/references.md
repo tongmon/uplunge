@@ -17,6 +17,7 @@
 | 점프 | 4.4 px/f (약 48px), 버튼을 떼면 위쪽 속도 절반 | `scrPlayerInit:123`, `scrUpButtonFunctions:89-94` |
 | 탄약 | 8발, 시간 회복 없음 | `scrPlayerGlobalStat:10` |
 | 발사 | `if (ysp > recoil) ysp = recoil`. 기본 총은 반동 0이라 감속만 함 | `scrPlayerShootN:12-15` |
+| 기본 총 (머신건) | 발사 간격 7f, 총알 속도 8 px/f (480px/s) - 0~2 무작위, 12f 날아간 뒤 프레임마다 속도 × 0.8로 감속 | `bStatInitLevel1:16,34,44,46`, `bStatUpdate:21,26-27`, `bulletRanged_Create_0:11-15`, `bulletRanged_Step_0:9-12` |
 | 탄약 충전 | 착지, 밟기, 피격 시 전량 | `scrWallCol:80-89`, `scrEnemyStomped:17`, `scrTypicalDamage:10` |
 | 밟기 | 바운스 -2.5, 100 피해 | `scrEnemyStomped:6-17` |
 | 콤보 | 처치마다 +1, 착지 시 종료. 8 → 젬 100 / 15 → 최대 탄약 +1 / 25 → HP +1 | `comboDone`, `comboRewardText_Create_0` |
