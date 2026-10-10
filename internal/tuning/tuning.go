@@ -23,6 +23,7 @@ type Tuning struct {
 	Water  Water   `json:"water"`
 	Feel   Feel    `json:"feel"`
 	Tower  Tower   `json:"tower"`
+	Lab    Lab     `json:"lab"`
 	Blocks []Block `json:"blocks"`
 	// Enemies defines every enemy kind, by the name chunks place it with.
 	Enemies []Enemy `json:"enemies"`
@@ -126,6 +127,16 @@ func RGB(color string) (r, g, b uint8) {
 	return Block{Color: color}.RGB()
 }
 
+// Lab holds the lab runs (-lab) for trying out the spacing of enemies: an
+// open shaft Rows tall with Enemy placed every Spacing px, each moved up or
+// down by up to Jitter px. It is read once, when a run starts.
+type Lab struct {
+	Rows    int    `json:"rows"`
+	Enemy   string `json:"enemy"`
+	Spacing int    `json:"spacing"`
+	Jitter  int    `json:"jitter"`
+}
+
 // MaxValue caps every number in the tuning, so a typo such as 1e308 cannot
 // overflow the simulation's arithmetic.
 const MaxValue = 1e6
@@ -133,6 +144,9 @@ const MaxValue = 1e6
 // MaxCameraRemain caps Camera.RemainPerSecond. Closer to 1, a step of
 // following moves the camera by less than float precision and it stops.
 const MaxCameraRemain = 0.99
+
+// MaxLabRows caps Lab.Rows, as MaxTowerLength caps a tower.
+const MaxLabRows = 20000
 
 // MaxTowerLength matches level.MaxTowerLength, which this package cannot
 // import.
@@ -378,6 +392,14 @@ func (t Tuning) validate() error {
 		return fmt.Errorf("tower.length must be 1 to %d, got %d", MaxTowerLength, t.Tower.Length)
 	case slices.Contains(t.Tower.Pool, ""):
 		return fmt.Errorf("tower.pool has an empty chunk name")
+	case t.Lab.Rows < 4 || t.Lab.Rows > MaxLabRows:
+		return fmt.Errorf("lab.rows must be 4 to %d, got %d", MaxLabRows, t.Lab.Rows)
+	case t.Lab.Enemy == "":
+		return fmt.Errorf("lab.enemy is missing")
+	case t.Lab.Spacing <= 0 || t.Lab.Spacing > MaxValue:
+		return fmt.Errorf("lab.spacing must be 1 to %g, got %d", float64(MaxValue), t.Lab.Spacing)
+	case t.Lab.Jitter < 0 || 2*t.Lab.Jitter >= t.Lab.Spacing:
+		return fmt.Errorf("lab.jitter must be 0 to under half of lab.spacing, got %d", t.Lab.Jitter)
 	}
 	if err := validateBlocks(t.Blocks); err != nil {
 		return err

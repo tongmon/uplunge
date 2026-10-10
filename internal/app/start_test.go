@@ -20,6 +20,10 @@ func TestStartOf(t *testing.T) {
 	if err := replay.Save(chunkRpl, replay.Replay{Chunk: "Start", Inputs: in}); err != nil {
 		t.Fatal(err)
 	}
+	labRpl := filepath.Join(dir, "lab.rpl")
+	if err := replay.Save(labRpl, replay.Replay{Lab: true, Seed: 5, Inputs: in}); err != nil {
+		t.Fatal(err)
+	}
 	seed := func(v uint64) *uint64 { return &v }
 
 	tests := []struct {
@@ -31,7 +35,12 @@ func TestStartOf(t *testing.T) {
 		{"chunk", Config{Chunk: "Blocks"}, `chunk "Blocks"`, ""},
 		{"seed", Config{Seed: seed(3)}, "tower 3", ""},
 		{"new tower", Config{}, "", ""},
-		{"chunk and seed", Config{Chunk: "Blocks", Seed: seed(3)}, "", "give one"},
+		{"chunk and seed", Config{Chunk: "Blocks", Seed: seed(3)}, "", "takes no -seed or -lab"},
+		{"chunk and lab", Config{Chunk: "Blocks", Lab: true}, "", "takes no -seed or -lab"},
+		{"lab with seed", Config{Lab: true, Seed: seed(4)}, "lab 4", ""},
+		{"tower replay, lab", Config{ReplayPath: towerRpl, Lab: true}, "", "-lab does not match"},
+		{"lab replay", Config{ReplayPath: labRpl}, "lab 5", ""},
+		{"lab replay, lab", Config{ReplayPath: labRpl, Lab: true}, "lab 5", ""},
 		{"tower replay", Config{ReplayPath: towerRpl}, "tower 9", ""},
 		{"tower replay, same seed", Config{ReplayPath: towerRpl, Seed: seed(9)}, "tower 9", ""},
 		{"tower replay, other seed", Config{ReplayPath: towerRpl, Seed: seed(8)}, "", "-seed 8 does not match"},

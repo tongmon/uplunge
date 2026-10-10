@@ -39,6 +39,9 @@ type Config struct {
 	// Seed, if set, is the seed of the tower to climb. Otherwise a new tower
 	// is stacked from the clock, and its seed is logged.
 	Seed *uint64
+	// Lab, if set, climbs a lab shaft for trying out the enemy spacing
+	// (tuning "lab") instead of a tower. Seed places its enemies.
+	Lab bool
 	// ReplayPath, if set, plays back recorded inputs instead of reading the
 	// keyboard and exits when they run out.
 	ReplayPath string
@@ -75,12 +78,12 @@ func Run(cfg Config) error {
 	if err != nil {
 		return err
 	}
-	g.newSeeds = start.Tower && cfg.Seed == nil && cfg.ReplayPath == ""
+	g.newSeeds = (start.Tower || start.Lab) && cfg.Seed == nil && cfg.ReplayPath == ""
 	if cfg.ReplayPath != "" {
 		g.playback = start.Inputs
 		g.replaying = true
-	} else if start.Tower && cfg.Seed == nil {
-		log.Printf("climbing tower %d (replay it with -seed %d)", start.Seed, start.Seed)
+	} else if g.newSeeds {
+		log.Printf("climbing %s (replay it with -seed %d)", start.Where(), start.Seed)
 	}
 	if err := g.begin(start, tun); err != nil {
 		return err
@@ -113,7 +116,7 @@ func Run(cfg Config) error {
 	ebiten.SetScreenFilterEnabled(false)
 	runErr := ebiten.RunGame(g)
 	if g.recording {
-		out := replay.Replay{Tower: g.start.Tower, Seed: g.start.Seed, Chunk: g.start.Chunk,
+		out := replay.Replay{Tower: g.start.Tower, Lab: g.start.Lab, Seed: g.start.Seed, Chunk: g.start.Chunk,
 			Tuning: tun.Fingerprint(), Map: g.startMap.Fingerprint(), Inputs: g.recorded}
 		if err := replay.Save(cfg.RecordPath, out); err != nil {
 			return errors.Join(runErr, err)
@@ -134,20 +137,24 @@ func startOf(cfg Config) (replay.Replay, error) {
 		switch {
 		case cfg.Chunk != "" && (r.Tower || cfg.Chunk != r.Chunk):
 			return r, fmt.Errorf("app: -chunk %q does not match the replay, which starts in %s", cfg.Chunk, r.Where())
-		case cfg.Seed != nil && (!r.Tower || *cfg.Seed != r.Seed):
+		case cfg.Seed != nil && (!(r.Tower || r.Lab) || *cfg.Seed != r.Seed):
 			return r, fmt.Errorf("app: -seed %d does not match the replay, which starts in %s", *cfg.Seed, r.Where())
+		case cfg.Lab && !r.Lab:
+			return r, fmt.Errorf("app: -lab does not match the replay, which starts in %s", r.Where())
 		}
 		return r, nil
 	}
-	switch {
-	case cfg.Chunk != "" && cfg.Seed != nil:
-		return replay.Replay{}, fmt.Errorf("app: -seed picks a tower and -chunk a single chunk; give one")
-	case cfg.Chunk != "":
+	if cfg.Chunk != "" {
+		if cfg.Seed != nil || cfg.Lab {
+			return replay.Replay{}, fmt.Errorf("app: -chunk plays a single chunk; it takes no -seed or -lab")
+		}
 		return replay.Replay{Chunk: cfg.Chunk}, nil
-	case cfg.Seed != nil:
-		return replay.Replay{Tower: true, Seed: *cfg.Seed}, nil
 	}
-	return replay.Replay{Tower: true, Seed: uint64(time.Now().UnixNano())}, nil
+	seed := uint64(time.Now().UnixNano())
+	if cfg.Seed != nil {
+		seed = *cfg.Seed
+	}
+	return replay.Replay{Tower: !cfg.Lab, Lab: cfg.Lab, Seed: seed}, nil
 }
 
 type game struct {
@@ -160,6 +167,10 @@ type game struct {
 	// newSeeds makes each restart climb a new tower from the clock, unless
 	// -seed fixed it.
 	newSeeds bool
+	// rise and gap are the two sides of the core tuning ratio for the HUD:
+	// the current tuning's magazine rise, and the run's average enemy gap.
+	rise int
+	gap  float64
 
 	replaying bool
 	playback  []sim.Input
@@ -182,6 +193,7 @@ func (g *game) begin(start replay.Replay, t tuning.Tuning) error {
 	}
 	g.world, g.start, g.startMap, g.recorded = w, start, m, nil
 	g.fx = render.NewEffects()
+	g.rise, g.gap = sim.MagazineRise(t), sim.EnemyGap(t, m)
 	return nil
 }
 
@@ -195,7 +207,7 @@ func (g *game) restart() {
 		g.reloadWait = 0
 		g.pollTuning()
 	}
-	next := replay.Replay{Tower: g.start.Tower, Seed: g.start.Seed, Chunk: g.start.Chunk}
+	next := replay.Replay{Tower: g.start.Tower, Lab: g.start.Lab, Seed: g.start.Seed, Chunk: g.start.Chunk}
 	if g.newSeeds {
 		next.Seed = uint64(time.Now().UnixNano())
 	}
@@ -204,7 +216,7 @@ func (g *game) restart() {
 		return
 	}
 	if g.newSeeds {
-		log.Printf("climbing tower %d (replay it with -seed %d)", next.Seed, next.Seed)
+		log.Printf("climbing %s (replay it with -seed %d)", next.Where(), next.Seed)
 	}
 }
 
@@ -219,7 +231,7 @@ func (g *game) Update() error {
 			return ebiten.Termination
 		}
 	}
-	if g.world.Over && !g.replaying && input.Restart() {
+	if (g.world.Over || g.world.Cleared) && !g.replaying && input.Restart() {
 		g.restart()
 		return nil
 	}
@@ -262,6 +274,7 @@ func (g *game) pollTuning() {
 	}
 	g.lastReloadErr = ""
 	if applied {
+		g.rise = sim.MagazineRise(g.world.Tuning())
 		log.Printf("tuning reloaded at tick %d", g.world.Tick)
 	}
 }
@@ -294,8 +307,16 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if wt := g.world.Water; wt.On {
 		msg += fmt.Sprintf("  water %+.0f", wt.Y-float64(p.Body.Y+p.Body.H))
 	}
-	if g.world.Over {
+	if g.gap > 0 {
+		msg += fmt.Sprintf("\nratio %.2f = mag %d / gap %.0f", float64(g.rise)/g.gap, g.rise, g.gap)
+	} else {
+		msg += fmt.Sprintf("\nratio - (mag %d, no stompable enemies)", g.rise)
+	}
+	switch {
+	case g.world.Over:
 		msg += "\n\nRUN OVER - press R"
+	case g.world.Cleared:
+		msg += fmt.Sprintf("\n\nCLEAR in %.1f s with %d HP - press R", float64(g.world.ClearTick)/sim.Hz, p.HP)
 	}
 	ebitenutil.DebugPrint(screen, msg)
 }

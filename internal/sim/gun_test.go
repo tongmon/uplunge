@@ -284,3 +284,14 @@ func TestPressDuringCooldownIsBuffered(t *testing.T) {
 		t.Fatalf("VY = %v after landing, want the press made during the cooldown to jump", w.Player.VY)
 	}
 }
+
+func TestMagazineRiseMatchesTheMeasurement(t *testing.T) {
+	if got, want := MagazineRise(testTuning()), magazineRise(t, testTuning().Player.ApexGravMult); got != want {
+		t.Fatalf("MagazineRise = %d, want the measured %d", got, want)
+	}
+	tun := testTuning()
+	tun.Gun.Magazine = 4
+	if half := MagazineRise(tun); half >= MagazineRise(testTuning()) || half <= 0 {
+		t.Fatalf("a half magazine rose %d px, want less than a full one", half)
+	}
+}

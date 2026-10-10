@@ -52,6 +52,7 @@ func TestRestart(t *testing.T) {
 		{"new tower", replay.Replay{Tower: true, Seed: 1}, true, false},
 		{"fixed seed", replay.Replay{Tower: true, Seed: 1}, false, true},
 		{"chunk", replay.Replay{Chunk: "Enemies"}, false, true},
+		{"new lab", replay.Replay{Lab: true, Seed: 1}, true, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -65,7 +66,7 @@ func TestRestart(t *testing.T) {
 				t.Fatalf("after restart: over %v tick %d recorded %d, want a fresh run with an empty recording",
 					g.world.Over, g.world.Tick, len(g.recorded))
 			}
-			if g.start.Tower != tt.start.Tower || g.start.Chunk != tt.start.Chunk ||
+			if g.start.Tower != tt.start.Tower || g.start.Lab != tt.start.Lab || g.start.Chunk != tt.start.Chunk ||
 				(g.start.Seed == tt.start.Seed) != tt.sameSeed {
 				t.Fatalf("next run starts in %s, from %s with newSeeds %v", g.start.Where(), tt.start.Where(), tt.newSeeds)
 			}

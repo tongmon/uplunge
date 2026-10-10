@@ -40,6 +40,13 @@ type World struct {
 	// Over is set when the player runs out of HP. The world no longer
 	// changes after that, except for Tick.
 	Over bool
+	// Goal makes reaching the top of the map clear the run. Tower runs
+	// have it; single-chunk runs, which start at the top, do not.
+	Goal bool
+	// Cleared is set when the player reached the top with HP left, at tick
+	// ClearTick. Like Over, it stops the world.
+	Cleared   bool
+	ClearTick uint64
 	// Events reports what happened during the last step.
 	Events Events
 
@@ -75,7 +82,7 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 func (w *World) Step(in Input) {
 	w.Tick++
 	w.Events = Events{}
-	if w.Over {
+	if w.Over || w.Cleared {
 		return
 	}
 	if w.freezeSteps > 0 {
@@ -95,6 +102,9 @@ func (w *World) Step(in Input) {
 	w.stepWater(in)
 	w.touchWater()
 	w.Over = w.Player.HP <= 0
+	if w.Goal && !w.Over && w.Player.Body.Y <= 0 {
+		w.Cleared, w.ClearTick = true, w.Tick
+	}
 
 	w.Events = w.Player.events
 	if w.Events.Stomped || w.Events.Drilled {
@@ -142,6 +152,7 @@ func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
 		return nil, err
 	}
 	w.startWater()
+	w.Goal = true
 	return w, nil
 }
 

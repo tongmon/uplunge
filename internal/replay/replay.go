@@ -14,8 +14,9 @@
 //	40 RB
 //
 // The second line says where the run starts: "tower <seed>" for the bottom
-// of a tower stacked with that seed, or "chunk <name>" for the top of one
-// chunk. The tuning and map lines are optional fingerprints of what the run was
+// of a tower stacked with that seed, "lab <seed>" for the bottom of a lab
+// shaft (level.BuildLab) placed with that seed, or "chunk <name>" for the
+// top of one chunk. The tuning and map lines are optional fingerprints of what the run was
 // recorded with; playback warns when they no longer match.
 //
 // After the header, each line is a step index and the input from that step
@@ -47,9 +48,11 @@ const MaxFrames = 24 * 60 * 60 * sim.Hz
 
 // Replay is a recorded run: where it started and the input for every step.
 type Replay struct {
-	// Tower runs start at the bottom of a tower stacked with Seed. Other runs
-	// start at the top of the chunk called Chunk.
+	// Tower runs start at the bottom of a tower stacked with Seed, and lab
+	// runs at the bottom of a lab shaft placed with Seed. Other runs start
+	// at the top of the chunk called Chunk.
 	Tower bool
+	Lab   bool
 	Seed  uint64
 	Chunk string
 	// Tuning and Map are fingerprints of the tuning and starting map the run was
@@ -66,9 +69,12 @@ func Write(w io.Writer, r Replay) error {
 		return err
 	}
 	bw := bufio.NewWriter(w)
-	if r.Tower {
+	switch {
+	case r.Tower:
 		fmt.Fprintf(bw, "%s\ntower %d\n", magic, r.Seed)
-	} else {
+	case r.Lab:
+		fmt.Fprintf(bw, "%s\nlab %d\n", magic, r.Seed)
+	default:
 		fmt.Fprintf(bw, "%s\nchunk %s\n", magic, r.Chunk)
 	}
 	if r.Tuning != "" {
@@ -116,10 +122,16 @@ func Read(rd io.Reader) (Replay, error) {
 			return errorf("want \"tower <seed>\" with a seed of 0 to 2^64-1, got %q", s)
 		}
 		r.Tower, r.Seed = true, seed
+	} else if v, ok := strings.CutPrefix(s, "lab "); ok {
+		seed, err := strconv.ParseUint(strings.TrimSpace(v), 10, 64)
+		if err != nil {
+			return errorf("want \"lab <seed>\" with a seed of 0 to 2^64-1, got %q", s)
+		}
+		r.Lab, r.Seed = true, seed
 	} else {
 		name, ok := strings.CutPrefix(s, "chunk ")
 		if r.Chunk = strings.TrimSpace(name); !ok || r.Chunk == "" {
-			return errorf("want \"tower <seed>\" or \"chunk <name>\", got %q", s)
+			return errorf("want \"tower <seed>\", \"lab <seed>\", or \"chunk <name>\", got %q", s)
 		}
 	}
 	var tuningFP, mapFP string
@@ -259,9 +271,11 @@ func Save(path string, r Replay) error {
 
 func (r Replay) validate() error {
 	switch {
-	case r.Tower && r.Chunk != "":
-		return fmt.Errorf("replay: a tower run has no chunk, got %q", r.Chunk)
-	case !r.Tower && (r.Chunk == "" || strings.ContainsAny(r.Chunk, " \t\r\n")):
+	case r.Tower && r.Lab:
+		return fmt.Errorf("replay: a run is a tower or a lab, not both")
+	case (r.Tower || r.Lab) && r.Chunk != "":
+		return fmt.Errorf("replay: a tower or lab run has no chunk, got %q", r.Chunk)
+	case !r.Tower && !r.Lab && (r.Chunk == "" || strings.ContainsAny(r.Chunk, " \t\r\n")):
 		return fmt.Errorf("replay: invalid chunk name %q", r.Chunk)
 	}
 	for _, fp := range []string{r.Tuning, r.Map} {
@@ -291,17 +305,30 @@ func (r Replay) Mismatches(tuningFP, mapFP string) []string {
 
 // Where describes where the run starts, for messages.
 func (r Replay) Where() string {
-	if r.Tower {
+	switch {
+	case r.Tower:
 		return fmt.Sprintf("tower %d", r.Seed)
+	case r.Lab:
+		return fmt.Sprintf("lab %d", r.Seed)
 	}
 	return fmt.Sprintf("chunk %q", r.Chunk)
 }
 
 // Start sets up the world the run starts in, the same way for recording and
-// playback: the bottom of a tower stacked with r.Seed from t.Tower, or the
-// top of chunk r.Chunk. It also returns the starting map, whose fingerprint
+// playback: the bottom of a tower stacked with r.Seed from t.Tower, the
+// bottom of a lab shaft placed with r.Seed from t.Lab, or the top of chunk
+// r.Chunk. It also returns the starting map, whose fingerprint
 // a recording keeps.
 func Start(r Replay, t tuning.Tuning, chunks []level.Chunk) (*sim.World, *level.TileMap, error) {
+	if r.Lab {
+		l := t.Lab
+		m, err := level.BuildLab(l.Rows, l.Enemy, l.Spacing, l.Jitter, rng.New(r.Seed))
+		if err != nil {
+			return nil, nil, err
+		}
+		w, err := sim.NewWorldInTower(t, m)
+		return w, m, err
+	}
 	if !r.Tower {
 		m, err := level.FindChunk(chunks, r.Chunk)
 		if err != nil {

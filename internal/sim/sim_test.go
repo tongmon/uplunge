@@ -35,6 +35,8 @@ func testTuning() tuning.Tuning {
 		FullColor: "#ff9a3c", EmptyColor: "#3c78ff", FlashTime: 0.12,
 	}, Tower: tuning.Tower{
 		Base: "Start", Pool: []string{"Shaft", "Blocks"}, Length: 6,
+	}, Lab: tuning.Lab{
+		Rows: 300, Enemy: "Floater", Spacing: 96, Jitter: 16,
 	}, Blocks: []tuning.Block{
 		{Value: 1, Name: "solid", Color: "#707070"},
 		{Value: 2, Name: "one_way", OneWay: true, Color: "#a08060"},

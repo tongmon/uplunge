@@ -1,0 +1,11 @@
+uplunge-replay 1
+lab 1
+frames 300
+
+# Start on the floor of lab shaft 1 (a Floater every 96 px). Jump, release,
+# and fire up into the Floaters: the water starts with the jump.
+0 -
+20 B
+26 -
+30 B
+130 -

@@ -362,3 +362,44 @@ func water(w *sim.World) string {
 	}
 	return fmt.Sprintf("%.3f", w.Water.Y)
 }
+
+func TestLabHeader(t *testing.T) {
+	r := Replay{Lab: true, Seed: 7, Inputs: []sim.Input{right}}
+	var buf bytes.Buffer
+	if err := Write(&buf, r); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(buf.String(), "\nlab 7\n") {
+		t.Fatalf("header %q, want a lab line", buf.String())
+	}
+	got, err := Read(&buf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !got.Lab || got.Tower || got.Seed != 7 || got.Where() != "lab 7" {
+		t.Fatalf("read back %+v", got)
+	}
+	if err := Write(&bytes.Buffer{}, Replay{Tower: true, Lab: true}); err == nil {
+		t.Fatal("a run that is both a tower and a lab was written")
+	}
+	if _, err := Read(strings.NewReader("uplunge-replay 1\nlab x\nframes 0\n")); err == nil {
+		t.Fatal("a bad lab seed was read")
+	}
+}
+
+func TestStartLab(t *testing.T) {
+	tun, err := tuning.Load("testdata/tuning.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	w, m, err := Start(Replay{Lab: true, Seed: 3}, tun, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !w.Water.On || !w.Goal || len(w.Enemies) == 0 || m.Rows != tun.Lab.Rows {
+		t.Fatalf("lab run: water %v goal %v enemies %d rows %d", w.Water.On, w.Goal, len(w.Enemies), m.Rows)
+	}
+	if gap := sim.EnemyGap(tun, m); gap < float64(tun.Lab.Spacing)-2 || gap > float64(tun.Lab.Spacing)+2 {
+		t.Fatalf("lab enemy gap %v, want about the spacing %d", gap, tun.Lab.Spacing)
+	}
+}
