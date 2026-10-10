@@ -36,6 +36,7 @@ type World struct {
 	// Enemies are the live enemies, in spawn order.
 	Enemies []Enemy
 	Camera  Camera
+	Water   Water
 	// Over is set when the player runs out of HP. The world no longer
 	// changes after that, except for Tick.
 	Over bool
@@ -77,6 +78,8 @@ func (w *World) Step(in Input) {
 	w.stepEnemies()
 	w.touchEnemies(prevBottom)
 	w.stepCamera()
+	w.stepWater()
+	w.touchWater()
 	w.Over = w.Player.HP <= 0
 }
 
@@ -102,7 +105,8 @@ func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
 }
 
 // NewWorldInTower returns a world with the player standing on the floor at
-// the bottom centre of m, a tower built with level.BuildTower.
+// the bottom centre of m, a tower built with level.BuildTower, and the water
+// starting below it.
 func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
 	if err := checkLevel(t, m); err != nil {
 		return nil, err
@@ -118,6 +122,7 @@ func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
 	if err := w.enemyInWall(); err != nil {
 		return nil, err
 	}
+	w.startWater()
 	return w, nil
 }
 

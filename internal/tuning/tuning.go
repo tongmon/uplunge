@@ -20,6 +20,7 @@ type Tuning struct {
 	Player Player  `json:"player"`
 	Gun    Gun     `json:"gun"`
 	Camera Camera  `json:"camera"`
+	Water  Water   `json:"water"`
 	Tower  Tower   `json:"tower"`
 	Blocks []Block `json:"blocks"`
 	// Enemies defines every enemy kind, by the name chunks place it with.
@@ -59,6 +60,33 @@ type Camera struct {
 	// RemainPerSecond is the fraction of the distance to the target still
 	// left after following for one second.
 	RemainPerSecond float64 `json:"remainPerSecond"`
+}
+
+// Water holds the rising water and its fall safety net. Distances are px,
+// speeds px/s, times seconds.
+type Water struct {
+	// Speed is the base rising speed.
+	Speed float64 `json:"speed"`
+	// Baseline is how far above the bottom of the view the water aims to be.
+	Baseline float64 `json:"baseline"`
+	// MaxLag is the furthest the water falls behind below the baseline.
+	// Over that distance its speed grows from 1 to MaxMult times Speed.
+	MaxLag  float64 `json:"maxLag"`
+	MaxMult float64 `json:"maxMult"`
+	// Above the baseline, the speed drops from 1 to MinMult times Speed
+	// over SlowRange.
+	SlowRange float64 `json:"slowRange"`
+	MinMult   float64 `json:"minMult"`
+	// StartBelow is how far under the map's bottom edge the water starts.
+	StartBelow float64 `json:"startBelow"`
+
+	// Catching the player launches it up at Bounce, eases the water down by
+	// Retreat over RetreatTime, and stops it rising for PauseTime from the
+	// catch.
+	Bounce      float64 `json:"bounce"`
+	Retreat     float64 `json:"retreat"`
+	RetreatTime float64 `json:"retreatTime"`
+	PauseTime   float64 `json:"pauseTime"`
 }
 
 // MaxCameraRemain caps Camera.RemainPerSecond. Closer to 1, a step of
@@ -241,6 +269,17 @@ func (t Tuning) validate() error {
 		{"player.knockbackX", p.KnockbackX},
 		{"player.knockbackY", p.KnockbackY},
 		{"player.invulnTime", p.InvulnTime},
+		{"water.speed", t.Water.Speed},
+		{"water.baseline", t.Water.Baseline},
+		{"water.maxLag", t.Water.MaxLag},
+		{"water.maxMult", t.Water.MaxMult},
+		{"water.slowRange", t.Water.SlowRange},
+		{"water.minMult", t.Water.MinMult},
+		{"water.startBelow", t.Water.StartBelow},
+		{"water.bounce", t.Water.Bounce},
+		{"water.retreat", t.Water.Retreat},
+		{"water.retreatTime", t.Water.RetreatTime},
+		{"water.pauseTime", t.Water.PauseTime},
 		{"gun.magazine", float64(g.Magazine)},
 		{"gun.fireInterval", g.FireInterval},
 		{"gun.thrust", g.Thrust},

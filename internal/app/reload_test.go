@@ -28,6 +28,9 @@ func baseTuning() tuning.Tuning {
 		BulletSpeed: 480, BulletLife: 0.2, BulletWidth: 4, BulletHeight: 8,
 	}, Camera: tuning.Camera{
 		Anchor: 0.667, Lookahead: 0.2, RemainPerSecond: 0.01,
+	}, Water: tuning.Water{
+		Speed: 60, Baseline: 24, MaxLag: 192, MaxMult: 2, SlowRange: 64, MinMult: 0.5,
+		StartBelow: 32, Bounce: 400, Retreat: 96, RetreatTime: 0.4, PauseTime: 0.5,
 	}, Tower: tuning.Tower{
 		Base: "Start", Pool: []string{"Shaft", "Blocks"}, Length: 6,
 	}, Blocks: []tuning.Block{

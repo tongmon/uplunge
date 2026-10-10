@@ -44,6 +44,20 @@
     "lookahead": 0.2,
     "remainPerSecond": 0.01
   },
+  "water": {
+    "speed": 60,
+    "baseline": 24,
+    "maxLag": 192,
+    "maxMult": 2,
+    "slowRange": 64,
+    "minMult": 0.5,
+    "startBelow": 32,
+
+    "bounce": 400,
+    "retreat": 96,
+    "retreatTime": 0.4,
+    "pauseTime": 0.5
+  },
   "tower": {
     "base": "Start",
     "pool": ["Shaft", "Ladder"],

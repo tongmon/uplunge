@@ -18,7 +18,14 @@ var (
 	bulletColor     = color.Gray{Y: 0xff}
 	// dangerColor marks the sides of an enemy that hurt.
 	dangerColor = color.RGBA{R: 0xff, G: 0x30, B: 0x30, A: 0xff}
+	// The water keeps a color no zone uses (docs/design.md section 8). It is
+	// see-through so the player stays visible under the surface.
+	waterColor   = color.RGBA{R: 0x10, G: 0x50, B: 0xa0, A: 0xa0}
+	surfaceColor = color.RGBA{R: 0x80, G: 0xd0, B: 0xff, A: 0xff}
 )
+
+// surfaceThickness is the height of the bright line on the water surface.
+const surfaceThickness = 2
 
 // dangerEdge is the thickness of an enemy's marked dangerous sides.
 const dangerEdge = 2
@@ -74,6 +81,14 @@ func World(screen *ebiten.Image, w *sim.World) {
 	for _, bl := range w.Bullets {
 		b := bl.Body
 		vector.FillRect(screen, float32(b.X), float32(b.Y)+oy, float32(b.W), float32(b.H), bulletColor, false)
+	}
+
+	if w.Water.On {
+		top := float32(math.Round(w.Water.Y)) + oy
+		if top < sim.ViewHeight {
+			vector.FillRect(screen, 0, top, sim.ViewWidth, sim.ViewHeight-top, waterColor, false)
+			vector.FillRect(screen, 0, top, sim.ViewWidth, surfaceThickness, surfaceColor, false)
+		}
 	}
 }
 

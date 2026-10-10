@@ -26,6 +26,9 @@ const valid = `{"player": {
 	"bulletSpeed": 480, "bulletLife": 0.2, "bulletWidth": 4, "bulletHeight": 8
 }, "camera": {
 	"anchor": 0.667, "lookahead": 0.2, "remainPerSecond": 0.01
+}, "water": {
+	"speed": 60, "baseline": 24, "maxLag": 192, "maxMult": 2, "slowRange": 64, "minMult": 0.5,
+	"startBelow": 32, "bounce": 400, "retreat": 96, "retreatTime": 0.4, "pauseTime": 0.5
 }, "tower": {
 	"base": "Start", "pool": ["Shaft", "Blocks"], "length": 6
 }, "blocks": [
@@ -60,6 +63,7 @@ func TestParse(t *testing.T) {
 		{"zero tower length", strings.Replace(valid, `"length": 6`, `"length": 0`, 1), "tower.length must be 1 to 1000"},
 		{"huge tower length", strings.Replace(valid, `"length": 6`, `"length": 2147483647`, 1), "tower.length must be 1 to 1000"},
 		{"empty pool name", strings.Replace(valid, `["Shaft", "Blocks"]`, `["Shaft", ""]`, 1), "tower.pool has an empty chunk name"},
+		{"missing water speed", strings.Replace(valid, `"speed": 60, `, ``, 1), "water.speed must be positive"},
 		{"missing max HP", strings.Replace(valid, `"maxHP": 4, `, ``, 1), "player.maxHP must be positive"},
 		{"enemy name twice", strings.Replace(valid, `"name": "Spiker"`, `"name": "Floater"`, 1), `enemies[1].name "Floater" is defined twice`},
 		{"enemy without name", strings.Replace(valid, `"name": "Spiker", `, ``, 1), "enemies[1].name is missing"},

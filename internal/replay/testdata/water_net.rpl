@@ -1,0 +1,8 @@
+uplunge-replay 1
+tower 1
+frames 400
+
+# Stand still on the floor at the bottom of tower 1. The water rises from
+# below the map, catches the player, launches it, retreats, and comes back;
+# every catch costs 1 HP until the run ends.
+0 -
