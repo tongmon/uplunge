@@ -18,9 +18,16 @@ func testTuning() tuning.Tuning {
 		CoyoteTime: 0.1, JumpBufferTime: 0.08,
 		ApexGravThreshold: 80, ApexGravMult: 0.5,
 		RunSpeed: 180, RunAccel: 2000, AirAccelMult: 0.65,
+		OneWayAssist: 80, CornerCorrection: 4, DrillBounce: 240,
 	}, Gun: tuning.Gun{
 		Magazine: 8, FireInterval: 0.1, Thrust: 240,
 		BulletSpeed: 480, BulletLife: 0.2, BulletWidth: 4, BulletHeight: 8,
+	}, Blocks: []tuning.Block{
+		{Value: 1, Name: "solid", Color: "#707070"},
+		{Value: 2, Name: "one_way", OneWay: true, Color: "#a08060"},
+		{Value: 3, Name: "drill", Drill: true, Color: "#c06040"},
+		{Value: 4, Name: "soft", Drill: true, Bullet: true, Color: "#b0a040"},
+		{Value: 5, Name: "bullet_only", Bullet: true, Color: "#4080c0"},
 	}}
 }
 

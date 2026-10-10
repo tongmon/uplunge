@@ -210,3 +210,86 @@ func TestResizeBlocked(t *testing.T) {
 		t.Fatalf("blocked resize changed the body: %+v", b)
 	}
 }
+
+// oneWayRoom has a one-way platform (value 2) whose top edge is at y 48,
+// spanning x 16..63, over a floor at y 80.
+func oneWayRoom(t *testing.T) *level.TileMap {
+	t.Helper()
+	m, err := level.ParseRows(16,
+		"######",
+		"#....#",
+		"#....#",
+		"#222.#",
+		"#....#",
+		"######",
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	m.SetShape(2, level.ShapeOneWay)
+	return m
+}
+
+func TestOneWay(t *testing.T) {
+	const w, h = 10, 12
+	tests := []struct {
+		name    string
+		x, y    int
+		dy      float64
+		through bool
+		wantY   int
+		wantHit bool
+	}{
+		{"lands on the top edge", 20, 20, 100, false, 48 - h, true},
+		{"already resting does not move", 20, 48 - h, 5, false, 48 - h, true},
+		{"passes up through from below", 20, 60, -40, false, 20, false},
+		{"falls on from inside the tile", 20, 50, 100, false, 80 - h, true},
+		{"beside the platform falls to the floor", 64, 20, 100, false, 80 - h, true},
+		{"through ignores the platform", 20, 20, 100, true, 80 - h, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			m := oneWayRoom(t)
+			b := Body{X: tt.x, Y: tt.y, W: w, H: h}
+			var hit bool
+			if tt.through {
+				hit = b.MoveYThrough(m, tt.dy)
+			} else {
+				hit = b.MoveY(m, tt.dy)
+			}
+			if b.Y != tt.wantY || hit != tt.wantHit {
+				t.Fatalf("got y %d hit=%v, want y %d hit=%v", b.Y, hit, tt.wantY, tt.wantHit)
+			}
+		})
+	}
+}
+
+func TestOneWayIsNotSolidSideways(t *testing.T) {
+	m := oneWayRoom(t)
+	b := Body{X: 70, Y: 50, W: 10, H: 12}
+	if b.MoveX(m, -30); b.X != 40 {
+		t.Fatalf("X = %d after moving left into the one-way tile, want 40", b.X)
+	}
+}
+
+func TestOnGround(t *testing.T) {
+	m := oneWayRoom(t)
+	tests := []struct {
+		name string
+		x, y int
+		want bool
+	}{
+		{"on the one-way top", 20, 48 - 12, true},
+		{"one pixel above the one-way top", 20, 48 - 13, false},
+		{"inside the one-way tile", 20, 40, false},
+		{"on the floor", 64, 80 - 12, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			b := Body{X: tt.x, Y: tt.y, W: 10, H: 12}
+			if got := b.OnGround(m); got != tt.want {
+				t.Fatalf("OnGround = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

@@ -35,16 +35,50 @@ func (b *Body) MoveX(m *level.TileMap, dx float64) bool {
 	return false
 }
 
-// MoveY is MoveX for the vertical axis.
+// MoveY is MoveX for the vertical axis. Moving down, the body also lands on
+// the top edge of one-way platforms.
 func (b *Body) MoveY(m *level.TileMap, dy float64) bool {
+	return b.moveY(m, dy, true)
+}
+
+// MoveYThrough is MoveY that passes through one-way platforms.
+func (b *Body) MoveYThrough(m *level.TileMap, dy float64) bool {
+	return b.moveY(m, dy, false)
+}
+
+func (b *Body) moveY(m *level.TileMap, dy float64, oneWay bool) bool {
 	n := takeWhole(&b.remY, dy)
 	step := sign(n)
 	for ; n != 0; n -= step {
-		if Overlaps(m, b.X, b.Y+step, b.W, b.H) {
+		if Overlaps(m, b.X, b.Y+step, b.W, b.H) ||
+			(oneWay && step > 0 && onOneWayTop(m, b.X, b.Y, b.W, b.H)) {
 			b.remY = 0
 			return true
 		}
 		b.Y += step
+	}
+	return false
+}
+
+// OnGround reports whether the body stands on a solid or on the top edge of a
+// one-way platform.
+func (b *Body) OnGround(m *level.TileMap) bool {
+	return Overlaps(m, b.X, b.Y+1, b.W, b.H) || onOneWayTop(m, b.X, b.Y, b.W, b.H)
+}
+
+// onOneWayTop reports whether the bottom edge of the box at (x, y) rests
+// exactly on the top edge of a one-way tile, so moving down would cross it.
+func onOneWayTop(m *level.TileMap, x, y, w, h int) bool {
+	ts := m.TileSize
+	bottom := y + h
+	if w <= 0 || h <= 0 || floorMod(bottom, ts) != 0 {
+		return false
+	}
+	r := floorDiv(bottom, ts)
+	for c := floorDiv(x, ts); c <= floorDiv(x+w-1, ts); c++ {
+		if m.ShapeAt(c, r) == level.ShapeOneWay {
+			return true
+		}
 	}
 	return false
 }
@@ -65,22 +99,38 @@ func (b *Body) Resize(m *level.TileMap, w, h int) bool {
 }
 
 // Overlaps reports whether the box at (x, y) of size w×h overlaps any solid
-// tile. Boxes that only touch a tile's edge do not overlap it.
+// tile. Boxes that only touch a tile's edge do not overlap it. One-way
+// platforms never count.
 func Overlaps(m *level.TileMap, x, y, w, h int) bool {
+	return OverlapsShape(m, x, y, w, h, level.ShapeSolid)
+}
+
+// OverlapsShape is Overlaps for tiles of shape s.
+func OverlapsShape(m *level.TileMap, x, y, w, h int, s level.Shape) bool {
+	found := false
+	EachTile(m, x, y, w, h, func(c, r int) bool {
+		found = m.ShapeAt(c, r) == s
+		return !found
+	})
+	return found
+}
+
+// EachTile calls f with every grid cell the box at (x, y) of size w×h
+// overlaps, row by row from the top left, until f returns false.
+func EachTile(m *level.TileMap, x, y, w, h int, f func(col, row int) bool) {
 	if w <= 0 || h <= 0 {
-		return false
+		return
 	}
 	ts := m.TileSize
 	c0, c1 := floorDiv(x, ts), floorDiv(x+w-1, ts)
 	r0, r1 := floorDiv(y, ts), floorDiv(y+h-1, ts)
 	for r := r0; r <= r1; r++ {
 		for c := c0; c <= c1; c++ {
-			if m.At(c, r) == level.Solid {
-				return true
+			if !f(c, r) {
+				return
 			}
 		}
 	}
-	return false
 }
 
 // takeWhole adds d to *rem and removes and returns the nearest whole number of
@@ -101,6 +151,10 @@ func sign(n int) int {
 		return -1
 	}
 	return 0
+}
+
+func floorMod(a, b int) int {
+	return a - floorDiv(a, b)*b
 }
 
 func floorDiv(a, b int) int {

@@ -144,8 +144,8 @@ func trace(t *testing.T, r Replay) string {
 	var b strings.Builder
 	line := func() {
 		p := w.Player
-		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d\n",
-			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround, p.Fuel, len(w.Bullets))
+		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d tiles %d\n",
+			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround, p.Fuel, len(w.Bullets), countTiles(w.Map))
 	}
 	for _, in := range r.Inputs {
 		line()
@@ -279,4 +279,17 @@ func TestMismatches(t *testing.T) {
 	if got := (Replay{Chunk: "Start"}).Mismatches("t", "m"); got != nil {
 		t.Errorf("hand-written replay without fingerprints warned: %q", got)
 	}
+}
+
+// countTiles counts the non-empty cells, so broken blocks show in a trace.
+func countTiles(m *level.TileMap) int {
+	n := 0
+	for r := 0; r < m.Rows; r++ {
+		for c := 0; c < m.Cols; c++ {
+			if m.At(c, r) != level.Empty {
+				n++
+			}
+		}
+	}
+	return n
 }

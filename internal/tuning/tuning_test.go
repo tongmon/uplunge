@@ -17,11 +17,15 @@ const valid = `{"player": {
 	"jumpSpeed": 210, "jumpHoldTime": 0.2,
 	"coyoteTime": 0.1, "jumpBufferTime": 0.08,
 	"apexGravThreshold": 80, "apexGravMult": 0.5,
-	"runSpeed": 180, "runAccel": 2000, "airAccelMult": 0.65
+	"runSpeed": 180, "runAccel": 2000, "airAccelMult": 0.65,
+	"oneWayAssist": 80, "cornerCorrection": 4, "drillBounce": 240
 }, "gun": {
 	"magazine": 8, "fireInterval": 0.1, "thrust": 240,
 	"bulletSpeed": 480, "bulletLife": 0.2, "bulletWidth": 4, "bulletHeight": 8
-}}`
+}, "blocks": [
+	{"value": 1, "name": "solid", "color": "#707070"},
+	{"value": 3, "name": "drill", "drill": true, "color": "#C06040"}
+]}`
 
 func TestParse(t *testing.T) {
 	tests := []struct {
@@ -38,6 +42,12 @@ func TestParse(t *testing.T) {
 		{"negative value", strings.Replace(valid, `"runSpeed": 180`, `"runSpeed": -180`, 1), "player.runSpeed must be positive"},
 		{"zero size", strings.Replace(valid, `"width": 12`, `"width": 0`, 1), "player.width must be positive"},
 		{"missing gun field", strings.Replace(valid, `"magazine": 8, `, ``, 1), "gun.magazine must be positive"},
+		{"block value out of range", strings.Replace(valid, `"value": 3`, `"value": 256`, 1), "blocks[1].value must be 1 to 255"},
+		{"block value twice", strings.Replace(valid, `"value": 3`, `"value": 1`, 1), "blocks[1].value 1 is defined twice"},
+		{"block name twice", strings.Replace(valid, `"name": "drill"`, `"name": "solid"`, 1), `blocks[1].name "solid" is defined twice`},
+		{"block name missing", strings.Replace(valid, `"name": "drill", `, ``, 1), "blocks[1].name is missing"},
+		{"bad block color", strings.Replace(valid, `"#C06040"`, `"#C0604"`, 1), "blocks[1].color must be #rrggbb"},
+		{"unknown block field", strings.Replace(valid, `"drill": true`, `"dril": true`, 1), "unknown field"},
 		{"not json", `{`, "unexpected EOF"},
 	}
 	for _, tt := range tests {
@@ -79,5 +89,12 @@ func TestFingerprint(t *testing.T) {
 	}
 	if len(a.Fingerprint()) != 16 {
 		t.Errorf("fingerprint %q, want 16 hex digits", a.Fingerprint())
+	}
+}
+
+func TestBlockRGB(t *testing.T) {
+	r, g, b := Block{Color: "#C06040"}.RGB()
+	if r != 0xc0 || g != 0x60 || b != 0x40 {
+		t.Fatalf("RGB() = %x %x %x, want c0 60 40", r, g, b)
 	}
 }

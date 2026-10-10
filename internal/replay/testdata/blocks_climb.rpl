@@ -1,0 +1,31 @@
+uplunge-replay 1
+chunk Blocks
+frames 600
+
+# Drop to the floor and walk under the left platforms. Jump up through the
+# one-way platform; the head breaks the drill ceiling above it and the
+# player lands on the platform. Jump, then fire up through the broken drill
+# blocks and the ceiling gap (corner correction) onto the next platform.
+# Jump and fire up the middle; the head clips and breaks a soft block. Land
+# on the bullet-only shelf and shoot a hole in it to drop through.
+0 -
+80 L
+100 -
+110 B
+122 -
+160 B
+166 -
+170 B
+240 -
+260 R
+268 RB
+274 R
+278 RB
+292 B
+320 LB
+350 L
+372 -
+430 B
+436 -
+446 B
+452 -
