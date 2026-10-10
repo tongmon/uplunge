@@ -4,6 +4,7 @@ package app
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -28,32 +29,10 @@ type Config struct {
 	Scale int
 	// TuningPath is the tuning JSON file to load.
 	TuningPath string
-}
-
-// testRoom is a hand-written map used until LDtk chunks load.
-var testRoom = []string{
-	"#...........#",
-	"#...........#",
-	"#...........#",
-	"#...........#",
-	"#...........#",
-	"#...........#",
-	"#....###....#",
-	"#...........#",
-	"#...........#",
-	"#.###.......#",
-	"#...........#",
-	"#...........#",
-	"#.......###.#",
-	"#...........#",
-	"#...........#",
-	"#...###.....#",
-	"#...........#",
-	"#...........#",
-	"#........####",
-	"#...........#",
-	"#...........#",
-	"#############",
+	// ChunksPath is the LDtk project holding the level chunks.
+	ChunksPath string
+	// Chunk names the chunk to play in. Empty means the first chunk.
+	Chunk string
 }
 
 // Run opens the window and blocks until the game exits.
@@ -65,18 +44,37 @@ func Run(cfg Config) error {
 	if err != nil {
 		return err
 	}
-	m, err := level.ParseRows(16, testRoom...)
+	chunks, err := level.LoadLDtk(cfg.ChunksPath)
 	if err != nil {
 		return err
 	}
-	spawnX := 2 * m.TileSize
-	spawnY := (m.Rows-1)*m.TileSize - tun.Player.Height
+	m, err := pickChunk(chunks, cfg.Chunk)
+	if err != nil {
+		return err
+	}
+	// Drop the player in at the top centre of the chunk.
+	spawnX := (m.Cols*m.TileSize - tun.Player.Width) / 2
+	spawnY := 0
 
 	ebiten.SetWindowTitle("uplunge")
 	ebiten.SetWindowSize(ScreenWidth*cfg.Scale, ScreenHeight*cfg.Scale)
 	ebiten.SetTPS(sim.Hz)
 	ebiten.SetScreenFilterEnabled(false)
 	return ebiten.RunGame(&game{world: sim.NewWorld(tun, m, spawnX, spawnY)})
+}
+
+func pickChunk(chunks []level.Chunk, name string) (*level.TileMap, error) {
+	if name == "" {
+		return chunks[0].Map, nil
+	}
+	names := make([]string, len(chunks))
+	for i, c := range chunks {
+		if c.Name == name {
+			return c.Map, nil
+		}
+		names[i] = c.Name
+	}
+	return nil, fmt.Errorf("app: no chunk %q; have %s", name, strings.Join(names, ", "))
 }
 
 type game struct {
