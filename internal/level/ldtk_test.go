@@ -97,3 +97,15 @@ func TestShippedChunks(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestFindChunk(t *testing.T) {
+	a, b := NewTileMap(1, 1, 16), NewTileMap(1, 1, 16)
+	chunks := []Chunk{{"A", a}, {"B", b}}
+	if m, err := FindChunk(chunks, "B"); err != nil || m != b {
+		t.Fatalf("FindChunk(B) = %p, %v; want %p", m, err, b)
+	}
+	_, err := FindChunk(chunks, "C")
+	if err == nil || !strings.Contains(err.Error(), "have A, B") {
+		t.Fatalf("FindChunk(C) error = %v, want it to list the chunks", err)
+	}
+}

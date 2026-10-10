@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 )
 
 // CollisionLayer is the IntGrid layer every chunk must have. Its values map to
@@ -133,4 +134,16 @@ func parseLevel(lv ldtkLevel) (*TileMap, error) {
 		}
 	}
 	return m, nil
+}
+
+// FindChunk returns the map of the chunk called name.
+func FindChunk(chunks []Chunk, name string) (*TileMap, error) {
+	names := make([]string, len(chunks))
+	for i, c := range chunks {
+		if c.Name == name {
+			return c.Map, nil
+		}
+		names[i] = c.Name
+	}
+	return nil, fmt.Errorf("level: no chunk %q; have %s", name, strings.Join(names, ", "))
 }

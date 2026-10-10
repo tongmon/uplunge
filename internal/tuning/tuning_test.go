@@ -52,3 +52,26 @@ func TestParse(t *testing.T) {
 		})
 	}
 }
+
+func TestFingerprint(t *testing.T) {
+	a, err := Parse([]byte(valid))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Same values written differently.
+	b, err := Parse([]byte(strings.ReplaceAll(valid, ", ", ",\n  ")))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if a.Fingerprint() != b.Fingerprint() {
+		t.Error("same values give different fingerprints")
+	}
+	c := a
+	c.Player.JumpSpeed++
+	if a.Fingerprint() == c.Fingerprint() {
+		t.Error("changed value gives the same fingerprint")
+	}
+	if len(a.Fingerprint()) != 16 {
+		t.Errorf("fingerprint %q, want 16 hex digits", a.Fingerprint())
+	}
+}

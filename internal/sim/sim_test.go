@@ -227,3 +227,37 @@ func TestHeadBumpEndsJump(t *testing.T) {
 		t.Fatal("player still pinned to the ceiling, want the hold cancelled")
 	}
 }
+
+func TestNewWorldInChunk(t *testing.T) {
+	tests := []struct {
+		name         string
+		rows         []string
+		wantX, wantY int
+		wantErr      bool
+	}{
+		{"open top", []string{"#...........#", "#...........#", "#############"}, 98, 0, false},
+		{"solid at top centre", []string{"#.....#.....#", "#...........#", "#############"}, 0, 0, true},
+		{"too short for the player", []string{"#...........#"}, 0, 0, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			m, err := level.ParseRows(tile, tt.rows...)
+			if err != nil {
+				t.Fatal(err)
+			}
+			w, err := NewWorldInChunk(testTuning(), m)
+			if tt.wantErr {
+				if err == nil {
+					t.Fatalf("got player at (%d, %d), want an error", w.Player.Body.X, w.Player.Body.Y)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			if b := w.Player.Body; b.X != tt.wantX || b.Y != tt.wantY {
+				t.Fatalf("player at (%d, %d), want (%d, %d)", b.X, b.Y, tt.wantX, tt.wantY)
+			}
+		})
+	}
+}

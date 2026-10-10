@@ -97,6 +97,7 @@ Choose checks in proportion to the change:
 - **Logic changes:** unit tests or input-replay tests. For a bug fix, write a failing test first.
 - **Physics and feel tuning:** replay tests assert measurable outcomes (heights, distances, timings).
   - Whether it *feels* good needs the developer's playtest. Say so instead of claiming it.
+- **Replays:** record a run with `go run ./cmd/uplunge -record out/name.rpl`, copy it to `internal/replay/testdata/`, and run `go test ./internal/replay/ -update` to create its `.golden` trajectory. After an intended behavior change, rerun with `-update` and review the `.golden` diff in the PR. The replay tests use their own copies of the tuning and chunks in that `testdata/` folder, so editing `data/` or `assets/` does not break them.
 - **Visual and render changes:** run the game in debug mode so it captures PNGs at chosen frames and exits, then inspect the images.
 - **Level chunks:** `go test ./internal/level/` loads every shipped chunk and enforces the authoring rules. Once the reachability validator exists (M2), it must pass for every chunk too.
 - **Docs and config-only changes:** proofread and check links.

@@ -4,6 +4,8 @@ package tuning
 
 import (
 	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -90,4 +92,15 @@ func (t Tuning) validate() error {
 		}
 	}
 	return nil
+}
+
+// Fingerprint returns a short hash of the values, so a replay can tell
+// whether it is played back with the tuning it was recorded with.
+func (t Tuning) Fingerprint() string {
+	data, err := json.Marshal(t)
+	if err != nil {
+		panic(fmt.Sprintf("tuning: marshal: %v", err))
+	}
+	sum := sha256.Sum256(data)
+	return hex.EncodeToString(sum[:8])
 }

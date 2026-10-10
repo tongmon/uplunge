@@ -35,3 +35,19 @@ func TestTileMapSetOutOfBoundsPanics(t *testing.T) {
 	}()
 	NewTileMap(3, 2, 16).Set(3, 0, Solid)
 }
+
+func TestTileMapFingerprint(t *testing.T) {
+	a, _ := ParseRows(16, "#..", "..#")
+	b, _ := ParseRows(16, "#..", "..#")
+	if a.Fingerprint() != b.Fingerprint() {
+		t.Error("equal maps give different fingerprints")
+	}
+	changed, _ := ParseRows(16, "#..", ".##")
+	transposed, _ := ParseRows(16, "#.", "..", ".#")
+	bigger, _ := ParseRows(32, "#..", "..#")
+	for name, m := range map[string]*TileMap{"tile": changed, "shape": transposed, "tile size": bigger} {
+		if m.Fingerprint() == a.Fingerprint() {
+			t.Errorf("different %s gives the same fingerprint", name)
+		}
+	}
+}
