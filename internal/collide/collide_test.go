@@ -293,3 +293,30 @@ func TestOnGround(t *testing.T) {
 		})
 	}
 }
+
+func TestMoveYExact(t *testing.T) {
+	m := testRoom(t)
+	b := Body{X: 20, Y: 30, W: 10, H: 12}
+	b.MoveY(m, 0.4) // leave a remainder
+	if hit := b.MoveYExact(m, -5); hit || b.Y != 25 {
+		t.Fatalf("Y = %d hit = %v after moving up 5, want 25 and no hit", b.Y, hit)
+	}
+	// A free move dropped the remainder too: 0.2 alone does not add up.
+	if b.MoveY(m, 0.2); b.Y != 25 {
+		t.Fatalf("Y = %d after a 0.2 px move, want 25 with the remainder dropped", b.Y)
+	}
+	if hit := b.MoveYExact(m, -100); !hit || b.Y != 16 {
+		t.Fatalf("Y = %d hit = %v moving into the ceiling, want stopped at 16", b.Y, hit)
+	}
+	b.MoveY(m, 0.4)
+	b.MoveYExact(m, 0)
+	if b.MoveY(m, 0.2); b.Y != 16 {
+		t.Fatalf("Y = %d, want a move of 0 to drop the remainder as well", b.Y)
+	}
+	// Moving down, it lands on a one-way platform like MoveY.
+	ow := oneWayRoom(t)
+	d := Body{X: 20, Y: 20, W: 10, H: 12}
+	if hit := d.MoveYExact(ow, 100); !hit || d.Y != 48-12 {
+		t.Fatalf("Y = %d hit = %v moving down onto a one-way platform, want stopped at %d", d.Y, hit, 48-12)
+	}
+}

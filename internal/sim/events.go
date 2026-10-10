@@ -14,8 +14,10 @@ type Events struct {
 	LandSpeed float64
 	// Refilled is set when the magazine gained fuel, by any cause.
 	Refilled bool
-	// Stomped and Drilled freeze the following FreezeTime of steps.
+	// Stomped, Hit (a bullet hit an enemy), and Drilled each freeze the
+	// steps that follow, as the tuning's Feel says.
 	Stomped bool
+	Hit     bool
 	Drilled bool
 	// Hurt is set when the player lost HP; Caught when the water launched
 	// the player.

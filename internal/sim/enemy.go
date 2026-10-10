@@ -80,6 +80,7 @@ func (w *World) shootEnemy(box collide.Body) bool {
 	if hit < 0 {
 		return false
 	}
+	w.bulletHit = true
 	if w.Enemies[hit].HP--; w.Enemies[hit].HP <= 0 {
 		w.Enemies = append(w.Enemies[:hit], w.Enemies[hit+1:]...)
 	}
@@ -105,9 +106,12 @@ func (w *World) enemyInWall() error {
 // nearest one touched (nearest sideways, between centres).
 func (w *World) touchEnemies(prevBottom int) {
 	pl := &w.Player
-	kept, stomped := w.Enemies[:0], false
+	kept, stomped, top := w.Enemies[:0], false, 0
 	for _, e := range w.Enemies {
 		if overlaps(pl.Body, e.Body) && e.Def.Stompable && prevBottom <= e.Body.Y {
+			if !stomped || e.Body.Y < top {
+				top = e.Body.Y
+			}
 			stomped = true
 			continue
 		}
@@ -115,6 +119,11 @@ func (w *World) touchEnemies(prevBottom int) {
 	}
 	w.Enemies = kept
 	if stomped {
+		// Bounce from the top of the highest enemy stomped, as Celeste's
+		// Bounce does, so a stomp rises the same however deep the feet sank
+		// this step.
+		b := &pl.Body
+		b.MoveYExact(w.Map, top-(b.Y+b.H))
 		pl.stomp(w.tuning)
 		return
 	}

@@ -52,6 +52,7 @@ func TestRestart(t *testing.T) {
 		{"new tower", replay.Replay{Tower: true, Seed: 1}, true, false},
 		{"fixed seed", replay.Replay{Tower: true, Seed: 1}, false, true},
 		{"chunk", replay.Replay{Chunk: "Enemies"}, false, true},
+		{"new lab", replay.Replay{Lab: true, Seed: 1}, true, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -65,7 +66,7 @@ func TestRestart(t *testing.T) {
 				t.Fatalf("after restart: over %v tick %d recorded %d, want a fresh run with an empty recording",
 					g.world.Over, g.world.Tick, len(g.recorded))
 			}
-			if g.start.Tower != tt.start.Tower || g.start.Chunk != tt.start.Chunk ||
+			if g.start.Tower != tt.start.Tower || g.start.Lab != tt.start.Lab || g.start.Chunk != tt.start.Chunk ||
 				(g.start.Seed == tt.start.Seed) != tt.sameSeed {
 				t.Fatalf("next run starts in %s, from %s with newSeeds %v", g.start.Where(), tt.start.Where(), tt.newSeeds)
 			}
@@ -110,5 +111,32 @@ func TestRestartReadsTuningSavedJustBefore(t *testing.T) {
 	}
 	if _, err := os.Stat(path); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestRestartAfterAClear(t *testing.T) {
+	g, _ := restartGame(t, replay.Replay{Lab: true, Seed: 4}, false)
+	g.recorded = append(g.recorded, sim.Input{Button: true})
+	g.world.Cleared, g.world.ClearTick = true, 10
+	g.restart()
+	if g.world.Cleared || g.world.ClearTick != 0 || len(g.recorded) != 0 || g.start.Seed != 4 || !g.start.Lab {
+		t.Fatalf("after restart: cleared %v tick %d recorded %d start %s, want a fresh lab 4",
+			g.world.Cleared, g.world.ClearTick, len(g.recorded), g.start.Where())
+	}
+}
+
+func TestLabRestartsAnytime(t *testing.T) {
+	lab, _ := restartGame(t, replay.Replay{Lab: true, Seed: 4}, false)
+	tower, _ := restartGame(t, replay.Replay{Tower: true, Seed: 4}, false)
+	if !lab.canRestart() || tower.canRestart() {
+		t.Fatalf("mid-run restart: lab %v tower %v, want only the lab", lab.canRestart(), tower.canRestart())
+	}
+	tower.world.Over = true
+	if !tower.canRestart() {
+		t.Fatal("a tower run that ended cannot restart")
+	}
+	tower.replaying = true
+	if tower.canRestart() {
+		t.Fatal("a replay can restart")
 	}
 }

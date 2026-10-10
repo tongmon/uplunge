@@ -40,12 +40,21 @@ type World struct {
 	// Over is set when the player runs out of HP. The world no longer
 	// changes after that, except for Tick.
 	Over bool
+	// Goal makes reaching the top of the map clear the run. Tower runs
+	// have it; single-chunk runs, which start at the top, do not.
+	Goal bool
+	// Cleared is set when the player reached the top with HP left, at tick
+	// ClearTick. Like Over, it stops the world.
+	Cleared   bool
+	ClearTick uint64
 	// Events reports what happened during the last step.
 	Events Events
 
 	// freezeSteps is the number of steps left during which the world stands
-	// still after a stomp or a drill break.
+	// still after a stomp, a bullet hit, or a drill break.
 	freezeSteps int
+	// bulletHit is set when a bullet hit an enemy during this step.
+	bulletHit bool
 
 	// tuning is read every step; change it with SetTuning.
 	tuning tuning.Tuning
@@ -75,7 +84,7 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 func (w *World) Step(in Input) {
 	w.Tick++
 	w.Events = Events{}
-	if w.Over {
+	if w.Over || w.Cleared {
 		return
 	}
 	if w.freezeSteps > 0 {
@@ -84,6 +93,7 @@ func (w *World) Step(in Input) {
 		w.Player.noteFrozenInput(in)
 		return
 	}
+	w.bulletHit = false
 	w.stepBullets()
 	prevBottom := w.Player.Body.Y + w.Player.Body.H
 	if w.Player.step(in, w.tuning, w.Map, w.blocks) {
@@ -95,11 +105,13 @@ func (w *World) Step(in Input) {
 	w.stepWater(in)
 	w.touchWater()
 	w.Over = w.Player.HP <= 0
+	if w.Goal && !w.Over && w.Player.Body.Y <= 0 {
+		w.Cleared, w.ClearTick = true, w.Tick
+	}
 
 	w.Events = w.Player.events
-	if w.Events.Stomped || w.Events.Drilled {
-		w.freezeSteps = steps(w.tuning.Feel.FreezeTime)
-	}
+	w.Events.Hit = w.bulletHit
+	w.freezeSteps = freezeFor(w.Events, w.tuning.Feel)
 }
 
 // NewWorldInChunk returns a world with the player dropped in at the top
@@ -142,6 +154,7 @@ func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
 		return nil, err
 	}
 	w.startWater()
+	w.Goal = true
 	return w, nil
 }
 
@@ -202,4 +215,21 @@ func (w *World) setBlocks(blocks []tuning.Block) error {
 	}
 	w.blocks = bt
 	return nil
+}
+
+// freezeFor is how many steps the world stands still after a step with
+// events ev: a short hitch for a stomp or a bullet hit, as Downwell's one
+// slow frame on every hit and kill, and a longer freeze for a drill break,
+// as Celeste's for a broken block. The longest of the step's wins.
+func freezeFor(ev Events, f tuning.Feel) int {
+	n := 0
+	for _, fr := range []struct {
+		on   bool
+		time float64
+	}{{ev.Stomped, f.StompFreeze}, {ev.Hit, f.HitFreeze}, {ev.Drilled, f.DrillFreeze}} {
+		if fr.on {
+			n = max(n, steps(fr.time))
+		}
+	}
+	return n
 }

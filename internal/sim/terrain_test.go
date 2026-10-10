@@ -333,6 +333,39 @@ func TestSetTuningKeepsBlocksThatAreInUse(t *testing.T) {
 	}
 }
 
+// TestShippedTowerChunksCanBeClimbedThrough is a stopgap until the M2
+// reachability validator: every row of every chunk the shipped tower draws
+// from must have a cell the player can pass upward through, so no chunk
+// seals the tower. Empty cells, one-way platforms, and blocks the head
+// drills through all count.
+func TestShippedTowerChunksCanBeClimbedThrough(t *testing.T) {
+	tun, err := tuning.Load("../../data/tuning.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	chunks, err := level.LoadLDtk("../../assets/chunks/chunks.ldtk")
+	if err != nil {
+		t.Fatal(err)
+	}
+	bt := newBlockTable(tun.Blocks)
+	for _, name := range tun.Tower.Pool {
+		m, err := level.FindChunk(chunks, name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for r := 0; r < m.Rows; r++ {
+			open := false
+			for c := 1; c < m.Cols-1 && !open; c++ {
+				v := m.At(c, r)
+				open = v == level.Empty || bt[v].OneWay || bt[v].Drill
+			}
+			if !open {
+				t.Errorf("chunk %s: row %d has no cell to climb through", name, r)
+			}
+		}
+	}
+}
+
 func TestShippedChunksMatchShippedData(t *testing.T) {
 	tun, err := tuning.Load("../../data/tuning.json")
 	if err != nil {
