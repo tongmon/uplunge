@@ -19,7 +19,15 @@
 
     "oneWayAssist": 80,
     "cornerCorrection": 4,
-    "drillBounce": 240
+    "drillBounce": 240,
+
+    "stompSpeed": 280,
+    "stompHoldTime": 0.2,
+
+    "maxHP": 4,
+    "knockbackX": 180,
+    "knockbackY": 190,
+    "invulnTime": 1.5
   },
   "gun": {
     "magazine": 8,
@@ -47,5 +55,9 @@
     { "value": 3, "name": "drill", "drill": true, "color": "#c06040" },
     { "value": 4, "name": "soft", "drill": true, "bullet": true, "color": "#b0a040" },
     { "value": 5, "name": "bullet_only", "bullet": true, "color": "#4080c0" }
+  ],
+  "enemies": [
+    { "name": "Floater", "width": 14, "height": 12, "hp": 2, "stompable": true, "speed": 30, "color": "#60b060" },
+    { "name": "Spiker", "width": 14, "height": 14, "hp": 3, "speed": 0, "color": "#c04060" }
   ]
 }

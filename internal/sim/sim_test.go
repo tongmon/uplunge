@@ -19,6 +19,8 @@ func testTuning() tuning.Tuning {
 		ApexGravThreshold: 80, ApexGravMult: 0.5,
 		RunSpeed: 180, RunAccel: 2000, AirAccelMult: 0.65,
 		OneWayAssist: 80, CornerCorrection: 4, DrillBounce: 240,
+		StompSpeed: 280, StompHoldTime: 0.2,
+		MaxHP: 4, KnockbackX: 180, KnockbackY: 190, InvulnTime: 1.5,
 	}, Gun: tuning.Gun{
 		Magazine: 8, FireInterval: 0.1, Thrust: 240,
 		BulletSpeed: 480, BulletLife: 0.2, BulletWidth: 4, BulletHeight: 8,
@@ -32,6 +34,9 @@ func testTuning() tuning.Tuning {
 		{Value: 3, Name: "drill", Drill: true, Color: "#c06040"},
 		{Value: 4, Name: "soft", Drill: true, Bullet: true, Color: "#b0a040"},
 		{Value: 5, Name: "bullet_only", Bullet: true, Color: "#4080c0"},
+	}, Enemies: []tuning.Enemy{
+		{Name: "Floater", Width: 14, Height: 12, HP: 2, Stompable: true, Speed: 30, Color: "#60b060"},
+		{Name: "Spiker", Width: 14, Height: 14, HP: 3, Color: "#c04060"},
 	}}
 }
 

@@ -109,3 +109,30 @@ func TestFindChunk(t *testing.T) {
 		t.Fatalf("FindChunk(C) error = %v, want it to list the chunks", err)
 	}
 }
+
+func TestParseLDtkEntities(t *testing.T) {
+	entities := `{"__identifier": "Entities", "__type": "Entities", "__cWid": 13, "__cHei": 2, "__gridSize": 16,
+		"entityInstances": [
+			{"__identifier": "Floater", "px": [32, 16], "__pivot": [0, 0], "width": 16, "height": 16},
+			{"__identifier": "Spiker", "px": [104, 32], "__pivot": [0.5, 1], "width": 16, "height": 16}
+		]}`
+	chunks, err := ParseLDtk([]byte(ldtkJSON(entities + ", " + collisionJSON(16, "", validRows...))))
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := []Spawn{{"Floater", 40, 24}, {"Spiker", 104, 24}}
+	got := chunks[0].Map.Spawns
+	if len(got) != len(want) {
+		t.Fatalf("spawns %+v, want %+v", got, want)
+	}
+	for i := range want {
+		if got[i] != want[i] {
+			t.Fatalf("spawn %d = %+v, want %+v", i, got[i], want[i])
+		}
+	}
+	bad := strings.Replace(entities, `"__type": "Entities"`, `"__type": "IntGrid"`, 1)
+	if _, err := ParseLDtk([]byte(ldtkJSON(bad + ", " + collisionJSON(16, "", validRows...)))); err == nil ||
+		!strings.Contains(err.Error(), "want Entities") {
+		t.Fatalf("error = %v, want one about the layer type", err)
+	}
+}

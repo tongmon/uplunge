@@ -70,21 +70,22 @@ func Run(cfg Config) error {
 		return err
 	}
 
-	g := &game{recording: cfg.RecordPath != ""}
+	g := &game{recording: cfg.RecordPath != "", chunks: chunks}
 	start, err := startOf(cfg)
 	if err != nil {
 		return err
 	}
+	g.newSeeds = start.Tower && cfg.Seed == nil && cfg.ReplayPath == ""
 	if cfg.ReplayPath != "" {
 		g.playback = start.Inputs
 		g.replaying = true
 	} else if start.Tower && cfg.Seed == nil {
 		log.Printf("climbing tower %d (replay it with -seed %d)", start.Seed, start.Seed)
 	}
-	var m *level.TileMap
-	if g.world, m, err = replay.Start(start, tun, chunks); err != nil {
+	if err := g.begin(start, tun); err != nil {
 		return err
 	}
+	m := g.startMap
 	if g.replaying {
 		for _, msg := range start.Mismatches(tun.Fingerprint(), m.Fingerprint()) {
 			log.Printf("warning: %s: %s; playback may diverge", cfg.ReplayPath, msg)
@@ -112,8 +113,8 @@ func Run(cfg Config) error {
 	ebiten.SetScreenFilterEnabled(false)
 	runErr := ebiten.RunGame(g)
 	if g.recording {
-		out := replay.Replay{Tower: start.Tower, Seed: start.Seed, Chunk: start.Chunk,
-			Tuning: tun.Fingerprint(), Map: m.Fingerprint(), Inputs: g.recorded}
+		out := replay.Replay{Tower: g.start.Tower, Seed: g.start.Seed, Chunk: g.start.Chunk,
+			Tuning: tun.Fingerprint(), Map: g.startMap.Fingerprint(), Inputs: g.recorded}
 		if err := replay.Save(cfg.RecordPath, out); err != nil {
 			return errors.Join(runErr, err)
 		}
@@ -151,6 +152,13 @@ func startOf(cfg Config) (replay.Replay, error) {
 
 type game struct {
 	world *sim.World
+	// start and startMap are where the current run started.
+	start    replay.Replay
+	startMap *level.TileMap
+	chunks   []level.Chunk
+	// newSeeds makes each restart climb a new tower from the clock, unless
+	// -seed fixed it.
+	newSeeds bool
 
 	replaying bool
 	playback  []sim.Input
@@ -164,6 +172,40 @@ type game struct {
 	lastReloadErr string
 }
 
+// begin starts a new run where start says, with tuning t. Recording then
+// holds only this run.
+func (g *game) begin(start replay.Replay, t tuning.Tuning) error {
+	w, m, err := replay.Start(start, t, g.chunks)
+	if err != nil {
+		return err
+	}
+	g.world, g.start, g.startMap, g.recorded = w, start, m, nil
+	return nil
+}
+
+// restart begins the next run after the last one ended: a new tower unless
+// the seed is fixed, the same chunk in chunk mode, and the current tuning,
+// re-read first under -reload so an edit saved just before is not missed.
+// If the next run cannot start, such as after a reload dropped an enemy the
+// chunks use, it says why and stays on the ended run.
+func (g *game) restart() {
+	if g.reloadPath != "" {
+		g.reloadWait = 0
+		g.pollTuning()
+	}
+	next := replay.Replay{Tower: g.start.Tower, Seed: g.start.Seed, Chunk: g.start.Chunk}
+	if g.newSeeds {
+		next.Seed = uint64(time.Now().UnixNano())
+	}
+	if err := g.begin(next, g.world.Tuning()); err != nil {
+		log.Printf("cannot start the next run: %v", err)
+		return
+	}
+	if g.newSeeds {
+		log.Printf("climbing tower %d (replay it with -seed %d)", next.Seed, next.Seed)
+	}
+}
+
 // Update runs exactly one simulation step. Ebitengine calls it sim.Hz times
 // per second and catches up with extra calls when a frame runs long.
 func (g *game) Update() error {
@@ -174,6 +216,10 @@ func (g *game) Update() error {
 		if g.shots.done() {
 			return ebiten.Termination
 		}
+	}
+	if g.world.Over && !g.replaying && input.Restart() {
+		g.restart()
+		return nil
 	}
 	var in sim.Input
 	if g.replaying {
@@ -238,9 +284,14 @@ func reloadTuning(w *sim.World, path string) (applied bool, err error) {
 func (g *game) Draw(screen *ebiten.Image) {
 	render.World(screen, g.world)
 	p := g.world.Player
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("tick %d  fps %.0f\nx %d y %d\nvx %.0f vy %.0f\nfuel %d/%d\ncam %.0f",
-		g.world.Tick, ebiten.ActualFPS(), p.Body.X, p.Body.Y, p.VX, p.VY, p.Fuel, g.world.Tuning().Gun.Magazine,
-		g.world.Camera.Y))
+	t := g.world.Tuning()
+	msg := fmt.Sprintf("tick %d  fps %.0f\nx %d y %d\nvx %.0f vy %.0f\nfuel %d/%d  hp %d/%d\ncam %.0f",
+		g.world.Tick, ebiten.ActualFPS(), p.Body.X, p.Body.Y, p.VX, p.VY,
+		p.Fuel, t.Gun.Magazine, p.HP, t.Player.MaxHP, g.world.Camera.Y)
+	if g.world.Over {
+		msg += "\n\nRUN OVER - press R"
+	}
+	ebitenutil.DebugPrint(screen, msg)
 }
 
 func (g *game) Layout(int, int) (int, int) {

@@ -33,7 +33,12 @@ type World struct {
 	Player Player
 	// Bullets are the player's shots in flight, oldest first.
 	Bullets []Bullet
+	// Enemies are the live enemies, in spawn order.
+	Enemies []Enemy
 	Camera  Camera
+	// Over is set when the player runs out of HP. The world no longer
+	// changes after that, except for Tick.
+	Over bool
 
 	// tuning is read every step; change it with SetTuning.
 	tuning tuning.Tuning
@@ -53,25 +58,33 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 		blocks: newBlockTable(t.Blocks),
 	}
 	w.blocks.apply(w.Map)
+	w.spawnEnemies(m)
 	w.Camera.Y = w.cameraTarget()
 	return w
 }
 
 // Step advances the world by exactly one fixed timestep of Dt seconds.
 func (w *World) Step(in Input) {
+	w.Tick++
+	if w.Over {
+		return
+	}
 	w.stepBullets()
+	prevBottom := w.Player.Body.Y + w.Player.Body.H
 	if w.Player.step(in, w.tuning, w.Map, w.blocks) {
 		w.spawnBullet()
 	}
+	w.stepEnemies()
+	w.touchEnemies(prevBottom)
 	w.stepCamera()
-	w.Tick++
+	w.Over = w.Player.HP <= 0
 }
 
 // NewWorldInChunk returns a world with the player dropped in at the top
 // centre of m. Chunks carry no start position, so the spot must be open for
 // the whole hitbox.
 func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
-	if err := newBlockTable(t.Blocks).check(m); err != nil {
+	if err := checkLevel(t, m); err != nil {
 		return nil, err
 	}
 	p := t.Player
@@ -82,13 +95,16 @@ func NewWorldInChunk(t tuning.Tuning, m *level.TileMap) (*World, error) {
 		return nil, fmt.Errorf("sim: no room to spawn a %dx%d player at the top centre (%d, 0)",
 			p.Width, p.Height, x)
 	}
+	if err := w.enemyInWall(); err != nil {
+		return nil, err
+	}
 	return w, nil
 }
 
 // NewWorldInTower returns a world with the player standing on the floor at
 // the bottom centre of m, a tower built with level.BuildTower.
 func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
-	if err := newBlockTable(t.Blocks).check(m); err != nil {
+	if err := checkLevel(t, m); err != nil {
 		return nil, err
 	}
 	p := t.Player
@@ -99,7 +115,18 @@ func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
 		return nil, fmt.Errorf("sim: no room to stand a %dx%d player on the bottom centre (%d, %d)",
 			p.Width, p.Height, x, y)
 	}
+	if err := w.enemyInWall(); err != nil {
+		return nil, err
+	}
 	return w, nil
+}
+
+// checkLevel reports a tile value or spawn of m that t does not define.
+func checkLevel(t tuning.Tuning, m *level.TileMap) error {
+	if err := newBlockTable(t.Blocks).check(m); err != nil {
+		return err
+	}
+	return checkSpawns(t, m)
 }
 
 // Tuning returns a copy of the tuning the world currently steps with.
@@ -144,6 +171,10 @@ func (w *World) setBlocks(blocks []tuning.Block) error {
 	if b := w.Player.Body; collide.Overlaps(w.Map, b.X, b.Y, b.W, b.H) {
 		w.blocks.apply(w.Map)
 		return fmt.Errorf("a tile the player is inside would become solid")
+	}
+	if err := w.enemyInWall(); err != nil {
+		w.blocks.apply(w.Map)
+		return fmt.Errorf("a tile an enemy is inside would become solid")
 	}
 	w.blocks = bt
 	return nil

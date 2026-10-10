@@ -18,6 +18,8 @@ type Player struct {
 	OnGround bool
 	// Fuel is the number of shots left in the magazine.
 	Fuel int
+	// HP is the hits the player can still take; the run ends at 0.
+	HP int
 
 	// The timers below count whole steps rather than seconds, so each lasts
 	// exactly its tuned time instead of drifting with float error.
@@ -31,6 +33,11 @@ type Player struct {
 	// bufferSteps is the number of steps left in which an earlier press still
 	// starts a jump once one is allowed.
 	bufferSteps int
+	// bounceSteps is the number of steps left during which a stomp keeps
+	// VY at -StompSpeed, button or not.
+	bounceSteps int
+	// invulnSteps is the number of steps left during which hits do nothing.
+	invulnSteps int
 	// fireCooldown is the number of steps left until the next shot.
 	fireCooldown int
 	// firing is set by a press in the air that did not jump and lasts while
@@ -43,7 +50,45 @@ func newPlayer(t tuning.Tuning, x, y int) Player {
 	return Player{
 		Body: collide.Body{X: x, Y: y, W: t.Player.Width, H: t.Player.Height},
 		Fuel: t.Gun.Magazine,
+		HP:   t.Player.MaxHP,
 	}
+}
+
+// Invulnerable reports whether hits do nothing right now.
+func (pl *Player) Invulnerable() bool {
+	return pl.invulnSteps > 0
+}
+
+// stomp bounces the player off an enemy it landed on and refills the
+// magazine.
+func (pl *Player) stomp(t tuning.Tuning) {
+	// A stomp comes after the step's move, so the bounce drives the next
+	// StompHoldTime of steps (a jump's launch step moves in the same step).
+	pl.VY = -t.Player.StompSpeed
+	pl.bounceSteps = steps(t.Player.StompHoldTime)
+	pl.jumpHoldSteps = 0
+	pl.coyoteSteps = 0
+	pl.Fuel = t.Gun.Magazine
+}
+
+// hurt takes 1 HP, refills the magazine, knocks the player up and away,
+// and makes it immune to hits for a while. (dx, dy) points from what hit
+// the player to the player: the sideways knockback is KnockbackX scaled by
+// its horizontal part, so a hit from the side pushes hardest and one from
+// straight above or below leaves VX as it was. The upward knockback is
+// always KnockbackY.
+func (pl *Player) hurt(t tuning.Tuning, dx, dy float64) {
+	p := t.Player
+	pl.HP = max(0, pl.HP-1)
+	pl.Fuel = t.Gun.Magazine
+	if dx != 0 {
+		pl.VX = p.KnockbackX * dx / math.Hypot(dx, dy)
+	}
+	pl.VY = -p.KnockbackY
+	pl.jumpHoldSteps = 0
+	pl.bounceSteps = 0
+	pl.coyoteSteps = 0
+	pl.invulnSteps = steps(p.InvulnTime)
 }
 
 // step advances the player by one step and reports whether it fired a shot.
@@ -80,6 +125,16 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 			g *= p.ApexGravMult
 		}
 		pl.VY = approach(pl.VY, p.MaxFall, g*Dt)
+	}
+
+	if pl.invulnSteps > 0 {
+		pl.invulnSteps--
+	}
+
+	// Stomp bounce: keeps the bounce speed for StompHoldTime.
+	if pl.bounceSteps > 0 {
+		pl.VY = min(pl.VY, -p.StompSpeed)
+		pl.bounceSteps--
 	}
 
 	// Jump hold: holding the button keeps the launch speed for up to
@@ -152,6 +207,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 	if b.MoveY(m, pl.VY*Dt) && !(pl.VY < 0 && pl.clearCeiling(p, m, bt)) {
 		pl.VY = 0
 		pl.jumpHoldSteps = 0
+		pl.bounceSteps = 0
 	}
 	// Rising through a one-way platform gets a push, so a jump that only
 	// just reaches one still ends on top.
@@ -159,6 +215,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 		b.MoveY(m, -p.OneWayAssist*Dt) && !pl.clearCeiling(p, m, bt) {
 		pl.VY = 0
 		pl.jumpHoldSteps = 0
+		pl.bounceSteps = 0
 	}
 	pl.OnGround = pl.VY >= 0 && b.OnGround(m)
 	// Landing refills the magazine on the step it happens.

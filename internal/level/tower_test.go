@@ -129,3 +129,38 @@ func TestBuildTowerRejectsHugeLength(t *testing.T) {
 		t.Fatalf("error = %v, want one about the length limit", err)
 	}
 }
+
+func TestBuildTowerPlacesSpawns(t *testing.T) {
+	chunks := towerChunks(t)
+	chunks[0].Map.Spawns = []Spawn{{"E", 10, 8}} // Base: 5x2 tiles
+	chunks[1].Map.Spawns = []Spawn{{"E", 20, 4}} // A: 5x1 tiles
+	m, parts, err := BuildTower(chunks, "Base", []string{"A"}, 2, rng.New(0))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if parts[1].Name != "A" {
+		t.Fatalf("second chunk %s, want A", parts[1].Name)
+	}
+	ax := 20
+	if parts[1].Flipped {
+		ax = 5*16 - 20
+	}
+	want := []Spawn{{"E", 10, 16 + 8}, {"E", ax, 4}}
+	if len(m.Spawns) != 2 || m.Spawns[0] != want[0] || m.Spawns[1] != want[1] {
+		t.Fatalf("spawns %+v, want %+v", m.Spawns, want)
+	}
+	// Mirroring maps a centre x to the mirrored centre.
+	sawFlip := false
+	for seed := uint64(0); seed < 10; seed++ {
+		m, parts, _ := BuildTower(chunks, "Base", []string{"A"}, 2, rng.New(seed))
+		if parts[1].Flipped {
+			sawFlip = true
+			if m.Spawns[1].X != 60 {
+				t.Fatalf("flipped spawn x = %d, want 60", m.Spawns[1].X)
+			}
+		}
+	}
+	if !sawFlip {
+		t.Fatal("no seed flipped the chunk")
+	}
+}

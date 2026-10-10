@@ -18,7 +18,9 @@ const valid = `{"player": {
 	"coyoteTime": 0.1, "jumpBufferTime": 0.08,
 	"apexGravThreshold": 80, "apexGravMult": 0.5,
 	"runSpeed": 180, "runAccel": 2000, "airAccelMult": 0.65,
-	"oneWayAssist": 80, "cornerCorrection": 4, "drillBounce": 240
+	"oneWayAssist": 80, "cornerCorrection": 4, "drillBounce": 240,
+	"stompSpeed": 280, "stompHoldTime": 0.2,
+	"maxHP": 4, "knockbackX": 180, "knockbackY": 190, "invulnTime": 1.5
 }, "gun": {
 	"magazine": 8, "fireInterval": 0.1, "thrust": 240,
 	"bulletSpeed": 480, "bulletLife": 0.2, "bulletWidth": 4, "bulletHeight": 8
@@ -29,6 +31,9 @@ const valid = `{"player": {
 }, "blocks": [
 	{"value": 1, "name": "solid", "color": "#707070"},
 	{"value": 3, "name": "drill", "drill": true, "color": "#C06040"}
+], "enemies": [
+	{"name": "Floater", "width": 14, "height": 12, "hp": 2, "stompable": true, "speed": 30, "color": "#60b060"},
+	{"name": "Spiker", "width": 14, "height": 14, "hp": 3, "speed": 0, "color": "#c04060"}
 ]}`
 
 func TestParse(t *testing.T) {
@@ -55,6 +60,13 @@ func TestParse(t *testing.T) {
 		{"zero tower length", strings.Replace(valid, `"length": 6`, `"length": 0`, 1), "tower.length must be 1 to 1000"},
 		{"huge tower length", strings.Replace(valid, `"length": 6`, `"length": 2147483647`, 1), "tower.length must be 1 to 1000"},
 		{"empty pool name", strings.Replace(valid, `["Shaft", "Blocks"]`, `["Shaft", ""]`, 1), "tower.pool has an empty chunk name"},
+		{"missing max HP", strings.Replace(valid, `"maxHP": 4, `, ``, 1), "player.maxHP must be positive"},
+		{"enemy name twice", strings.Replace(valid, `"name": "Spiker"`, `"name": "Floater"`, 1), `enemies[1].name "Floater" is defined twice`},
+		{"enemy without name", strings.Replace(valid, `"name": "Spiker", `, ``, 1), "enemies[1].name is missing"},
+		{"enemy zero size", strings.Replace(valid, `"width": 14, "height": 14`, `"width": 0, "height": 14`, 1), "enemies[1] size must be positive"},
+		{"enemy zero hp", strings.Replace(valid, `"hp": 3`, `"hp": 0`, 1), "enemies[1].hp must be positive"},
+		{"enemy negative speed", strings.Replace(valid, `"speed": 30`, `"speed": -30`, 1), "enemies[0].speed must not be negative"},
+		{"enemy bad color", strings.Replace(valid, `"#c04060"`, `"red"`, 1), "enemies[1].color must be #rrggbb"},
 		{"block value out of range", strings.Replace(valid, `"value": 3`, `"value": 256`, 1), "blocks[1].value must be 1 to 255"},
 		{"block value twice", strings.Replace(valid, `"value": 3`, `"value": 1`, 1), "blocks[1].value 1 is defined twice"},
 		{"block name twice", strings.Replace(valid, `"name": "drill"`, `"name": "solid"`, 1), `blocks[1].name "solid" is defined twice`},

@@ -16,7 +16,16 @@ var (
 	backgroundColor = color.Gray{Y: 0x30}
 	playerColor     = color.Gray{Y: 0xd0}
 	bulletColor     = color.Gray{Y: 0xff}
+	// dangerColor marks the sides of an enemy that hurt.
+	dangerColor = color.RGBA{R: 0xff, G: 0x30, B: 0x30, A: 0xff}
 )
+
+// dangerEdge is the thickness of an enemy's marked dangerous sides.
+const dangerEdge = 2
+
+// invulnBlinkSteps is how many steps the player is shown, then hidden,
+// while hits do nothing.
+const invulnBlinkSteps = 4
 
 // oneWayThickness is how many pixels of a one-way tile are drawn, from its
 // top edge, so it reads as a thin platform.
@@ -53,11 +62,33 @@ func World(screen *ebiten.Image, w *sim.World) {
 		}
 	}
 
+	for _, e := range w.Enemies {
+		drawEnemy(screen, e, oy)
+	}
+
 	b := w.Player.Body
-	vector.FillRect(screen, float32(b.X), float32(b.Y)+oy, float32(b.W), float32(b.H), playerColor, false)
+	if !w.Player.Invulnerable() || (w.Tick/invulnBlinkSteps)%2 == 0 {
+		vector.FillRect(screen, float32(b.X), float32(b.Y)+oy, float32(b.W), float32(b.H), playerColor, false)
+	}
 
 	for _, bl := range w.Bullets {
 		b := bl.Body
 		vector.FillRect(screen, float32(b.X), float32(b.Y)+oy, float32(b.W), float32(b.H), bulletColor, false)
+	}
+}
+
+// drawEnemy fills e with its color and marks its dangerous sides: every side,
+// or every side but the top for an enemy that is safe to stomp.
+func drawEnemy(screen *ebiten.Image, e sim.Enemy, oy float32) {
+	r, g, b := e.Def.RGB()
+	x, y := float32(e.Body.X), float32(e.Body.Y)+oy
+	w, h := float32(e.Body.W), float32(e.Body.H)
+	vector.FillRect(screen, x, y, w, h, color.RGBA{R: r, G: g, B: b, A: 0xff}, false)
+	const d = dangerEdge
+	vector.FillRect(screen, x, y, d, h, dangerColor, false)
+	vector.FillRect(screen, x+w-d, y, d, h, dangerColor, false)
+	vector.FillRect(screen, x, y+h-d, w, d, dangerColor, false)
+	if !e.Def.Stompable {
+		vector.FillRect(screen, x, y, w, d, dangerColor, false)
 	}
 }

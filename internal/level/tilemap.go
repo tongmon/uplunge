@@ -41,9 +41,20 @@ type TileMap struct {
 	// TileSize is the edge length of one square tile in pixels.
 	TileSize int
 
+	// Spawns are the entities placed in the map, in placement order.
+	Spawns []Spawn
+
 	tiles []Tile
 	// shapes maps each tile value to its shape.
 	shapes [256]Shape
+}
+
+// Spawn is an entity placed in a map, such as an enemy.
+type Spawn struct {
+	// Name is the entity's identifier in the LDtk project.
+	Name string
+	// X and Y are the centre of the placed entity, in pixels.
+	X, Y int
 }
 
 // NewTileMap returns an all-empty map. Until SetShape says otherwise, Empty
@@ -69,6 +80,7 @@ func NewTileMap(cols, rows, tileSize int) *TileMap {
 func (m *TileMap) Clone() *TileMap {
 	c := *m
 	c.tiles = append([]Tile(nil), m.tiles...)
+	c.Spawns = append([]Spawn(nil), m.Spawns...)
 	return &c
 }
 
@@ -122,8 +134,8 @@ func (m *TileMap) inBounds(col, row int) bool {
 	return col >= 0 && col < m.Cols && row >= 0 && row < m.Rows
 }
 
-// Fingerprint returns a short hash of the size and tiles, so a replay can
-// tell whether it is played back on the map it was recorded on.
+// Fingerprint returns a short hash of the size, tiles, and spawns, so a
+// replay can tell whether it is played back on the map it was recorded on.
 func (m *TileMap) Fingerprint() string {
 	h := sha256.New()
 	var buf [8]byte
@@ -133,6 +145,10 @@ func (m *TileMap) Fingerprint() string {
 	}
 	for _, t := range m.tiles {
 		h.Write([]byte{byte(t)})
+	}
+	// Maps without spawns keep the fingerprints they had before spawns.
+	for _, s := range m.Spawns {
+		fmt.Fprintf(h, "\x00%s %d %d", s.Name, s.X, s.Y)
 	}
 	return hex.EncodeToString(h.Sum(nil)[:8])
 }
