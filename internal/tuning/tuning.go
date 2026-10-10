@@ -89,6 +89,10 @@ type Water struct {
 	PauseTime   float64 `json:"pauseTime"`
 }
 
+// MaxValue caps every positive number, so a typo such as 1e308 cannot
+// overflow the simulation's arithmetic.
+const MaxValue = 1e6
+
 // MaxCameraRemain caps Camera.RemainPerSecond. Closer to 1, a step of
 // following moves the camera by less than float precision and it stops.
 const MaxCameraRemain = 0.99
@@ -292,6 +296,15 @@ func (t Tuning) validate() error {
 		if !(f.v > 0) {
 			return fmt.Errorf("%s must be positive, got %v", f.name, f.v)
 		}
+		if f.v > MaxValue {
+			return fmt.Errorf("%s must be at most %g, got %v", f.name, float64(MaxValue), f.v)
+		}
+	}
+	if t.Water.PauseTime < t.Water.RetreatTime {
+		// The pause holds the rise while the water retreats; rising during
+		// the retreat would be undone by it every step.
+		return fmt.Errorf("water.pauseTime must be at least water.retreatTime (%v), got %v",
+			t.Water.RetreatTime, t.Water.PauseTime)
 	}
 	c := t.Camera
 	switch {

@@ -84,7 +84,7 @@ func World(screen *ebiten.Image, w *sim.World) {
 	}
 
 	if w.Water.On {
-		top := float32(math.Round(w.Water.Y)) + oy
+		top := float32(w.Water.Surface()) + oy
 		if top < sim.ViewHeight {
 			vector.FillRect(screen, 0, top, sim.ViewWidth, sim.ViewHeight-top, waterColor, false)
 			vector.FillRect(screen, 0, top, sim.ViewWidth, surfaceThickness, surfaceColor, false)

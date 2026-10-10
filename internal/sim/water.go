@@ -1,5 +1,7 @@
 package sim
 
+import "math"
+
 // Water is the rising water that chases the player up the tower, with the
 // rubber-band speed of Celeste's rising lava: it rises at its base speed
 // around a baseline just above the bottom of the view, faster the further
@@ -8,7 +10,8 @@ package sim
 type Water struct {
 	// On is false in chunk mode, which has no water.
 	On bool
-	// Y is the surface in world pixels; the water fills everything below.
+	// Y is the surface height in world pixels, kept with its fraction so
+	// slow speeds add up; Surface is the whole pixel it collides and draws at.
 	Y float64
 
 	// pauseSteps is the number of steps left during which the water does
@@ -18,6 +21,12 @@ type Water struct {
 	// steps after catching the player; retreatLeft counts down.
 	retreatFrom, retreatTo    float64
 	retreatTotal, retreatLeft int
+}
+
+// Surface returns the top row of water pixels: everything from it down is
+// water.
+func (wt Water) Surface() int {
+	return int(math.Round(wt.Y))
 }
 
 // startWater puts the water StartBelow under the map's bottom edge.
@@ -58,7 +67,7 @@ func (w *World) stepWater() {
 // it rising for PauseTime, counted from the touch.
 func (w *World) touchWater() {
 	wt, c, pl := &w.Water, w.tuning.Water, &w.Player
-	if !wt.On || wt.pauseSteps > 0 || float64(pl.Body.Y+pl.Body.H) <= wt.Y {
+	if !wt.On || wt.pauseSteps > 0 || pl.Body.Y+pl.Body.H <= wt.Surface() {
 		return
 	}
 	if pl.invulnSteps == 0 {

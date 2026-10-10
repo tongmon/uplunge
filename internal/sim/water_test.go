@@ -171,11 +171,76 @@ func TestWaterDoesNotCatchAgainWhilePaused(t *testing.T) {
 	// second launch, and the pause runs out instead of starting over.
 	for i := 0; i < 25; i++ {
 		pause := w.Water.pauseSteps
-		w.Player.Body.Y = int(w.Water.Y) + 4
+		w.Player.Body.Y = w.Water.Surface() + 4
 		w.Player.VY = 0
 		w.Step(Input{})
 		if w.Player.VY == -testTuning().Water.Bounce || w.Water.pauseSteps >= pause {
 			t.Fatalf("step %d of the pause: caught again (VY %v, pause %d -> %d)", i, w.Player.VY, pause, w.Water.pauseSteps)
 		}
+	}
+}
+
+func TestWaterCatchesAgainRightAfterThePause(t *testing.T) {
+	w := waterTower(t)
+	catchPlayer(t, w)
+	// Keep the player under the surface: no catch for the rest of the
+	// pause, then one on the step it ends.
+	for i := 1; i <= 30; i++ {
+		w.Player.Body.Y = w.Water.Surface() + 4
+		w.Player.VY = 0
+		w.Step(Input{})
+		caught := w.Player.VY == -testTuning().Water.Bounce
+		if want := i == 30; caught != want { // PauseTime 0.5 s from the catch
+			t.Fatalf("step %d after the catch: caught = %v, want %v", i, caught, want)
+		}
+	}
+}
+
+func TestWaterCollidesAtTheDrawnSurface(t *testing.T) {
+	w := waterTower(t)
+	b := w.Player.Body
+	feet := b.Y + b.H
+	// A surface of feet - 0.4 rounds to feet: the water only touches the
+	// feet's edge, so it must not catch yet.
+	w.Water.Y = float64(feet) - 0.4
+	w.touchWater()
+	if w.Player.HP != testTuning().Player.MaxHP {
+		t.Fatal("caught by water whose drawn surface only touches the feet")
+	}
+	w.Water.Y = float64(feet) - 0.6
+	w.touchWater()
+	if w.Player.HP != testTuning().Player.MaxHP-1 {
+		t.Fatal("not caught by water drawn a pixel over the feet")
+	}
+}
+
+func TestEnemyAndWaterInOneStepCostOneHP(t *testing.T) {
+	// An enemy hit makes the player immune, so water reaching the player in
+	// the same step only launches it.
+	w := waterTower(t)
+	b := w.Player.Body
+	w.Enemies = append(w.Enemies, Enemy{Def: testTuning().Enemies[1], Body: b, HP: 3})
+	w.Water.Y = float64(b.Y+b.H) - 2
+	w.Step(Input{})
+	if w.Player.HP != testTuning().Player.MaxHP-1 || w.Player.VY != -testTuning().Water.Bounce {
+		t.Fatalf("HP %d VY %v, want one HP lost and the water's launch", w.Player.HP, w.Player.VY)
+	}
+}
+
+func TestRetreatKeepsTheValuesFromTheCatch(t *testing.T) {
+	w := waterTower(t)
+	catchPlayer(t, w)
+	from := w.Water.retreatFrom
+	tun := testTuning()
+	tun.Water.Retreat = 10
+	tun.Water.RetreatTime = 2
+	tun.Water.PauseTime = 3
+	if err := w.SetTuning(tun); err != nil {
+		t.Fatal(err)
+	}
+	run(w, Input{}, 24)
+	if got := w.Water.Y - from; !near(got, testTuning().Water.Retreat) {
+		t.Fatalf("retreated %v px after a reload mid-retreat, want the %v px set at the catch",
+			got, testTuning().Water.Retreat)
 	}
 }

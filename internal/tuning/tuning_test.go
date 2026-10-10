@@ -63,6 +63,8 @@ func TestParse(t *testing.T) {
 		{"zero tower length", strings.Replace(valid, `"length": 6`, `"length": 0`, 1), "tower.length must be 1 to 1000"},
 		{"huge tower length", strings.Replace(valid, `"length": 6`, `"length": 2147483647`, 1), "tower.length must be 1 to 1000"},
 		{"empty pool name", strings.Replace(valid, `["Shaft", "Blocks"]`, `["Shaft", ""]`, 1), "tower.pool has an empty chunk name"},
+		{"retreat longer than the pause", strings.Replace(valid, `"pauseTime": 0.5`, `"pauseTime": 0.3`, 1), "water.pauseTime must be at least water.retreatTime"},
+		{"huge value", strings.Replace(valid, `"speed": 60, `, `"speed": 1e308, `, 1), "water.speed must be at most 1e+06"},
 		{"missing water speed", strings.Replace(valid, `"speed": 60, `, ``, 1), "water.speed must be positive"},
 		{"missing max HP", strings.Replace(valid, `"maxHP": 4, `, ``, 1), "player.maxHP must be positive"},
 		{"enemy name twice", strings.Replace(valid, `"name": "Spiker"`, `"name": "Floater"`, 1), `enemies[1].name "Floater" is defined twice`},
