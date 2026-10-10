@@ -60,7 +60,7 @@ func (s *shooter) maybeShoot(g *game) error {
 	s.ticks = s.ticks[1:]
 
 	s.img.Clear()
-	render.World(s.img, g.world)
+	render.World(s.img, g.world, &g.fx)
 	b := s.img.Bounds()
 	px := make([]byte, 4*b.Dx()*b.Dy())
 	s.img.ReadPixels(px)

@@ -44,6 +44,8 @@ type Player struct {
 	// the button stays down, so the press that starts a jump never fires.
 	firing     bool
 	prevButton bool
+	// events collects what the player did this step.
+	events Events
 }
 
 func newPlayer(t tuning.Tuning, x, y int) Player {
@@ -69,6 +71,7 @@ func (pl *Player) stomp(t tuning.Tuning) {
 	pl.jumpHoldSteps = 0
 	pl.coyoteSteps = 0
 	pl.Fuel = t.Gun.Magazine
+	pl.events.Stomped = true
 }
 
 // hurt takes 1 HP, refills the magazine, knocks the player up and away,
@@ -80,6 +83,7 @@ func (pl *Player) stomp(t tuning.Tuning) {
 func (pl *Player) hurt(t tuning.Tuning, dx, dy float64) {
 	p := t.Player
 	pl.HP = max(0, pl.HP-1)
+	pl.events.Hurt = true
 	pl.Fuel = t.Gun.Magazine
 	if dx != 0 {
 		pl.VX = p.KnockbackX * dx / math.Hypot(dx, dy)
@@ -96,6 +100,8 @@ func (pl *Player) hurt(t tuning.Tuning, dx, dy float64) {
 func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTable) (shot bool) {
 	p, g := t.Player, t.Gun
 	b := &pl.Body
+	pl.events = Events{}
+	wasOnGround := pl.OnGround
 	// Only a player that is not rising stands on something, as in Celeste;
 	// otherwise rising through a one-way platform would land on its top edge.
 	grounded := pl.VY >= 0 && b.OnGround(m)
@@ -160,6 +166,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 	jumped := false
 	if pl.bufferSteps > 0 && pl.coyoteSteps > 0 {
 		jumped = true
+		pl.events.Jumped = true
 		pl.VY = -p.JumpSpeed
 		// A buffered tap already released gets no hold, so a fresh press
 		// right after the launch cannot stretch it into a full jump.
@@ -194,6 +201,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 		pl.firing = true
 	}
 	if pl.firing && pl.Fuel > 0 && pl.fireCooldown == 0 {
+		pl.events.Shot = true
 		pl.VY = min(pl.VY, -g.Thrust)
 		pl.Fuel--
 		pl.fireCooldown = steps(g.FireInterval)
@@ -204,6 +212,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 	if b.MoveX(m, pl.VX*Dt) {
 		pl.VX = 0
 	}
+	fallSpeed := pl.VY
 	if b.MoveY(m, pl.VY*Dt) && !(pl.VY < 0 && pl.clearCeiling(p, m, bt)) {
 		pl.VY = 0
 		pl.jumpHoldSteps = 0
@@ -218,6 +227,10 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 		pl.bounceSteps = 0
 	}
 	pl.OnGround = pl.VY >= 0 && b.OnGround(m)
+	if pl.OnGround && !wasOnGround {
+		pl.events.Landed = true
+		pl.events.LandSpeed = max(0, fallSpeed)
+	}
 	// Landing refills the magazine on the step it happens.
 	if pl.OnGround {
 		pl.Fuel = g.Magazine
@@ -232,7 +245,11 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 // by moving sideways, trying the side the player is moving toward.
 func (pl *Player) clearCeiling(p tuning.Player, m *level.TileMap, bt *blockTable) bool {
 	b := &pl.Body
-	if bt.breakIn(m, b.X, b.Y-1, b.W, 1, byDrill) && !collide.Overlaps(m, b.X, b.Y-1, b.W, b.H) {
+	broke := bt.breakIn(m, b.X, b.Y-1, b.W, 1, byDrill)
+	if broke {
+		pl.events.Drilled = true
+	}
+	if broke && !collide.Overlaps(m, b.X, b.Y-1, b.W, b.H) {
 		pl.VY = min(pl.VY, -p.DrillBounce)
 		return true
 	}

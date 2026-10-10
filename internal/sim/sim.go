@@ -40,6 +40,12 @@ type World struct {
 	// Over is set when the player runs out of HP. The world no longer
 	// changes after that, except for Tick.
 	Over bool
+	// Events reports what happened during the last step.
+	Events Events
+
+	// freezeSteps is the number of steps left during which the world stands
+	// still after a stomp or a drill break.
+	freezeSteps int
 
 	// tuning is read every step; change it with SetTuning.
 	tuning tuning.Tuning
@@ -67,9 +73,16 @@ func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
 // Step advances the world by exactly one fixed timestep of Dt seconds.
 func (w *World) Step(in Input) {
 	w.Tick++
+	w.Events = Events{}
 	if w.Over {
 		return
 	}
+	if w.freezeSteps > 0 {
+		w.freezeSteps--
+		w.Events.Frozen = true
+		return
+	}
+	fuel := w.Player.Fuel
 	w.stepBullets()
 	prevBottom := w.Player.Body.Y + w.Player.Body.H
 	if w.Player.step(in, w.tuning, w.Map, w.blocks) {
@@ -81,6 +94,12 @@ func (w *World) Step(in Input) {
 	w.stepWater(in)
 	w.touchWater()
 	w.Over = w.Player.HP <= 0
+
+	w.Events = w.Player.events
+	w.Events.Refilled = w.Player.Fuel > fuel
+	if w.Events.Stomped || w.Events.Drilled {
+		w.freezeSteps = steps(w.tuning.Feel.FreezeTime)
+	}
 }
 
 // NewWorldInChunk returns a world with the player dropped in at the top

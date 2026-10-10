@@ -10,6 +10,7 @@ import (
 
 	"github.com/tongmon/uplunge/internal/level"
 	"github.com/tongmon/uplunge/internal/sim"
+	"github.com/tongmon/uplunge/internal/tuning"
 )
 
 var (
@@ -38,8 +39,11 @@ const invulnBlinkSteps = 4
 // top edge, so it reads as a thin platform.
 const oneWayThickness = 4
 
-// World draws the part of w the camera sees onto screen.
-func World(screen *ebiten.Image, w *sim.World) {
+// lampHeight is the height of the helmet lamp drawn on top of the player.
+const lampHeight = 4
+
+// World draws the part of w the camera sees onto screen, with fx on top.
+func World(screen *ebiten.Image, w *sim.World, fx *Effects) {
 	screen.Fill(backgroundColor)
 
 	var colors [256]color.RGBA
@@ -48,9 +52,10 @@ func World(screen *ebiten.Image, w *sim.World) {
 		colors[b.Value] = color.RGBA{R: r, G: g, B: bl, A: 0xff}
 	}
 
-	// Draw on whole pixels so tiles do not shimmer as the camera eases.
+	// Draw on whole pixels so tiles do not shimmer as the camera eases. The
+	// shake moves the picture, not the simulation's camera.
 	camY := int(math.Round(w.Camera.Y))
-	oy := float32(-camY)
+	oy := float32(-camY + fx.ShakeY())
 
 	m := w.Map
 	ts := float32(m.TileSize)
@@ -73,9 +78,8 @@ func World(screen *ebiten.Image, w *sim.World) {
 		drawEnemy(screen, e, oy)
 	}
 
-	b := w.Player.Body
 	if !w.Player.Invulnerable() || (w.Tick/invulnBlinkSteps)%2 == 0 {
-		vector.FillRect(screen, float32(b.X), float32(b.Y)+oy, float32(b.W), float32(b.H), playerColor, false)
+		drawPlayer(screen, w, fx, oy)
 	}
 
 	for _, bl := range w.Bullets {
@@ -106,4 +110,30 @@ func drawEnemy(screen *ebiten.Image, e sim.Enemy, oy float32) {
 	if !e.Def.Stompable {
 		vector.FillRect(screen, x, y, w, d, dangerColor, false)
 	}
+}
+
+// drawPlayer draws the player stretched by fx around the middle of its
+// feet, with a helmet lamp on top that shows the fuel: FullColor full,
+// shading to EmptyColor at none, white while it flashes for a refill.
+func drawPlayer(screen *ebiten.Image, w *sim.World, fx *Effects, oy float32) {
+	b, p, t := w.Player.Body, w.Player, w.Tuning()
+	sx, sy := fx.Scale()
+	bw, bh := float32(float64(b.W)*sx), float32(float64(b.H)*sy)
+	x := float32(b.X) + float32(b.W)/2 - bw/2
+	y := float32(b.Y+b.H) - bh + oy
+	vector.FillRect(screen, x, y, bw, bh, playerColor, false)
+
+	lamp := color.RGBA{R: 0xff, G: 0xff, B: 0xff, A: 0xff}
+	if !fx.Flashing() {
+		frac := float64(p.Fuel) / float64(t.Gun.Magazine)
+		r0, g0, b0 := tuning.RGB(t.Feel.EmptyColor)
+		r1, g1, b1 := tuning.RGB(t.Feel.FullColor)
+		lamp = color.RGBA{R: mix(r0, r1, frac), G: mix(g0, g1, frac), B: mix(b0, b1, frac), A: 0xff}
+	}
+	vector.FillRect(screen, x, y, bw, min(bh, lampHeight*float32(sy)), lamp, false)
+}
+
+// mix blends a toward b by t in [0, 1].
+func mix(a, b uint8, t float64) uint8 {
+	return uint8(math.Round(float64(a) + (float64(b)-float64(a))*t))
 }

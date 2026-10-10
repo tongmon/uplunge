@@ -29,6 +29,10 @@ const valid = `{"player": {
 }, "water": {
 	"speed": 30, "baseline": 24, "maxLag": 48, "maxMult": 3, "slowRange": 64, "minMult": 0.5,
 	"startBelow": 32, "bounce": 400, "retreat": 96, "retreatTime": 0.4, "pauseTime": 0.5
+}, "feel": {
+	"freezeTime": 0.05, "shakeTime": 0.2, "shakeInterval": 0.04, "shakeScale": 20,
+	"jumpX": 0.6, "jumpY": 1.4, "landX": 1.6, "landY": 0.4, "landSpeed": 480, "recover": 1.75,
+	"fullColor": "#ff9a3c", "emptyColor": "#3c78ff", "flashTime": 0.12
 }, "tower": {
 	"base": "Start", "pool": ["Shaft", "Blocks"], "length": 6
 }, "blocks": [
@@ -69,6 +73,8 @@ func TestParse(t *testing.T) {
 		{"huge enemy speed", strings.Replace(valid, `"stompable": true, "speed": 30`, `"stompable": true, "speed": 1e308`, 1), "enemies[0].speed must be at most 1e+06"},
 		{"huge enemy size", strings.Replace(valid, `"width": 14, "height": 14`, `"width": 2000000, "height": 14`, 1), "enemies[1] size must be at most 1e+06"},
 		{"huge enemy hp", strings.Replace(valid, `"hp": 3`, `"hp": 2000000`, 1), "enemies[1].hp must be at most 1e+06"},
+		{"missing freeze time", strings.Replace(valid, `"freezeTime": 0.05, `, ``, 1), "feel.freezeTime must be positive"},
+		{"bad lamp color", strings.Replace(valid, `"#3c78ff"`, `"blue"`, 1), "feel.emptyColor must be #rrggbb"},
 		{"missing water speed", strings.Replace(valid, `"speed": 30, `, ``, 1), "water.speed must be positive"},
 		{"missing max HP", strings.Replace(valid, `"maxHP": 4, `, ``, 1), "player.maxHP must be positive"},
 		{"enemy name twice", strings.Replace(valid, `"name": "Spiker"`, `"name": "Floater"`, 1), `enemies[1].name "Floater" is defined twice`},

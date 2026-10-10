@@ -85,8 +85,10 @@ func (w *World) touchWater() {
 	}
 	if pl.invulnSteps == 0 {
 		pl.HP = max(0, pl.HP-1)
+		pl.events.Hurt = true
 		pl.invulnSteps = steps(w.tuning.Player.InvulnTime)
 	}
+	pl.events.Caught = true
 	pl.Fuel = w.tuning.Gun.Magazine
 	pl.VY = -c.Bounce
 	pl.jumpHoldSteps = 0

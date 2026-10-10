@@ -67,6 +67,9 @@ func TestStomp(t *testing.T) {
 	for i := 0; i < Hz; i++ {
 		y := w.Player.Body.Y
 		w.Step(Input{})
+		if w.Events.Frozen {
+			continue // the stomp's freeze
+		}
 		if w.Player.VY != -tun.Player.StompSpeed || y-w.Player.Body.Y < 4 {
 			break
 		}
