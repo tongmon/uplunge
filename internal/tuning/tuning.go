@@ -111,8 +111,18 @@ type Feel struct {
 	// StompShakeScale.
 	StompShakeTime  float64 `json:"stompShakeTime"`
 	StompShakeScale float64 `json:"stompShakeScale"`
+	// A drill break shakes it for DrillShakeTime at DrillShakeScale.
+	DrillShakeTime  float64 `json:"drillShakeTime"`
+	DrillShakeScale float64 `json:"drillShakeScale"`
 
-	// A jump, a stomp, or the water's launch stretches the drawn player to
+	// A broken block bursts into debris: pieces thrown away from the hit at
+	// up to DebrisSpeed, falling at DebrisGravity, gone after DebrisLife.
+	DebrisSpeed   float64 `json:"debrisSpeed"`
+	DebrisGravity float64 `json:"debrisGravity"`
+	DebrisLife    float64 `json:"debrisLife"`
+
+	// A jump, a stomp, a drill break, or the water's launch stretches the
+	// drawn player to
 	// Jump{X,Y} times its size; a landing squashes it toward Land{X,Y}, fully
 	// at LandSpeed or faster.
 	// Both ease back to 1 at Recover per second.
@@ -352,6 +362,11 @@ func (t Tuning) validate() error {
 		{"feel.shakeScale", t.Feel.ShakeScale},
 		{"feel.stompShakeTime", t.Feel.StompShakeTime},
 		{"feel.stompShakeScale", t.Feel.StompShakeScale},
+		{"feel.drillShakeTime", t.Feel.DrillShakeTime},
+		{"feel.drillShakeScale", t.Feel.DrillShakeScale},
+		{"feel.debrisSpeed", t.Feel.DebrisSpeed},
+		{"feel.debrisGravity", t.Feel.DebrisGravity},
+		{"feel.debrisLife", t.Feel.DebrisLife},
 		{"feel.jumpX", t.Feel.JumpX},
 		{"feel.jumpY", t.Feel.JumpY},
 		{"feel.landX", t.Feel.LandX},

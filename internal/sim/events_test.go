@@ -280,3 +280,46 @@ func TestFreezeFor(t *testing.T) {
 		}
 	}
 }
+
+func TestBrokenCellEvents(t *testing.T) {
+	// The head drills the drill block above it: one broken cell, by drill.
+	w := roomWithRow(t, 8, drill, 96)
+	for i := 0; i < 20 && !w.Events.Drilled; i++ {
+		w.Step(Input{Button: true})
+	}
+	if w.Events.NBroken != 1 {
+		t.Fatalf("%d broken cells after the drill break, want 1", w.Events.NBroken)
+	}
+	if c := w.Events.Broken[0]; c != (BrokenCell{Col: 6, Row: 8, Tile: drill}) {
+		t.Fatalf("broken cell %+v, want the drill block at (6, 8) broken by drill", c)
+	}
+
+	// A bullet breaks a soft block under the player: one cell, by bullet.
+	ww := tallWorld()
+	for c := 1; c < 12; c++ {
+		ww.Map.Set(c, 104, soft)
+	}
+	ww.blocks.apply(ww.Map)
+	ww.Step(Input{})
+	ww.Step(Input{Button: true})
+	var got []BrokenCell
+	for i := 0; i < 20 && len(got) == 0; i++ {
+		ww.Step(Input{})
+		for j := 0; j < ww.Events.NBroken; j++ {
+			got = append(got, ww.Events.Broken[j])
+		}
+	}
+	if len(got) != 1 || got[0] != (BrokenCell{Col: 6, Row: 104, Tile: soft, ByBullet: true}) {
+		t.Fatalf("broken cells %+v, want the soft block at (6, 104) broken by a bullet", got)
+	}
+}
+
+func TestBrokenCellsAreCapped(t *testing.T) {
+	var ev Events
+	for i := 0; i < MaxBroken+3; i++ {
+		ev.addBroken(BrokenCell{Col: i})
+	}
+	if ev.NBroken != MaxBroken || ev.Broken[MaxBroken-1].Col != MaxBroken-1 {
+		t.Fatalf("NBroken %d, last %+v, want the first %d kept", ev.NBroken, ev.Broken[MaxBroken-1], MaxBroken)
+	}
+}

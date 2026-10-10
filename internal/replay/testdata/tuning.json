@@ -68,6 +68,12 @@
     "shakeScale": 20,
     "stompShakeTime": 0.16,
     "stompShakeScale": 12,
+    "drillShakeTime": 0.2,
+    "drillShakeScale": 15,
+
+    "debrisSpeed": 120,
+    "debrisGravity": 900,
+    "debrisLife": 0.5,
 
     "jumpX": 0.6,
     "jumpY": 1.4,

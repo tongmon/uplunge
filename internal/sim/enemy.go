@@ -80,7 +80,7 @@ func (w *World) shootEnemy(box collide.Body) bool {
 	if hit < 0 {
 		return false
 	}
-	w.bulletHit = true
+	w.worldEvents.Hit = true
 	if w.Enemies[hit].HP--; w.Enemies[hit].HP <= 0 {
 		w.Enemies = append(w.Enemies[:hit], w.Enemies[hit+1:]...)
 	}

@@ -2,6 +2,7 @@ package render
 
 import (
 	"math"
+	"reflect"
 	"testing"
 
 	"github.com/tongmon/uplunge/internal/level"
@@ -114,11 +115,13 @@ func TestFrozenStepsChangeNothing(t *testing.T) {
 	w := world(t)
 	fx := NewEffects()
 	stepWith(&fx, w, sim.Events{Shot: true, Jumped: true, Refilled: true})
+	fx.burst(sim.BrokenCell{Col: 3, Row: 3, Tile: 3}, 16, w.Tuning().Feel)
 	before := fx
+	before.Debris = append([]Piece(nil), fx.Debris...)
 	for i := 0; i < 3; i++ {
 		stepWith(&fx, w, sim.Events{Frozen: true})
 	}
-	if fx != before {
+	if !reflect.DeepEqual(fx, before) {
 		t.Fatal("effects changed during a freeze")
 	}
 }
@@ -212,5 +215,61 @@ func TestBounceBeatsALandingInTheSameStep(t *testing.T) {
 		if x, y := fx.Scale(); x != f.JumpX || y != f.JumpY {
 			t.Fatalf("events %+v: scale %v, %v, want the bounce's stretch", ev, x, y)
 		}
+	}
+}
+
+func TestDrillShakeAndStretch(t *testing.T) {
+	w := world(t)
+	f := w.Tuning().Feel
+	fx := NewEffects()
+	stepWith(&fx, w, sim.Events{Drilled: true})
+	// 0.2 s * 15 px/s = 3 px.
+	if got := fx.ShakeY(); got != -3 {
+		t.Fatalf("drill shake offset %d, want -3", got)
+	}
+	if x, y := fx.Scale(); x != f.JumpX || y != f.JumpY {
+		t.Fatalf("drill scale %v, %v, want the jump's stretch", x, y)
+	}
+}
+
+func TestDebris(t *testing.T) {
+	w := world(t)
+	f := w.Tuning().Feel
+	fx := NewEffects()
+	ev := sim.Events{Drilled: true, NBroken: 2}
+	ev.Broken[0] = sim.BrokenCell{Col: 3, Row: 5, Tile: 3}
+	ev.Broken[1] = sim.BrokenCell{Col: 7, Row: 9, Tile: 4, ByBullet: true}
+	stepWith(&fx, w, ev)
+	if len(fx.Debris) != 8 {
+		t.Fatalf("%d pieces from two broken tiles, want 8", len(fx.Debris))
+	}
+	// Pieces start inside their tile, apart from each other.
+	for i, p := range fx.Debris[:4] {
+		if p.X < 48 || p.X+pieceSize > 64 || p.Y < 80 || p.Y+pieceSize > 96 || p.Tile != 3 {
+			t.Fatalf("piece %d %+v starts outside its tile (3, 5)", i, p)
+		}
+	}
+	// Drilled pieces fly up, bulleted ones down; both fly outward.
+	for i, p := range fx.Debris {
+		up := p.VY < 0
+		if up == (i >= 4) {
+			t.Fatalf("piece %d VY %v: want drill debris up and bullet debris down", i, p.VY)
+		}
+		if (i%2 == 0) != (p.VX < 0) {
+			t.Fatalf("piece %d VX %v: want the left pieces left and the right ones right", i, p.VX)
+		}
+	}
+	// They fall, and are gone after DebrisLife.
+	y := fx.Debris[0].Y
+	life := int(math.Round(f.DebrisLife * sim.Hz))
+	for i := 0; i < life-1; i++ {
+		stepWith(&fx, w, sim.Events{})
+	}
+	if len(fx.Debris) == 0 || fx.Debris[0].Y <= y {
+		t.Fatal("debris gone early or never fell")
+	}
+	stepWith(&fx, w, sim.Events{})
+	if len(fx.Debris) != 0 {
+		t.Fatalf("%d pieces left after DebrisLife", len(fx.Debris))
 	}
 }

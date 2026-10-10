@@ -21,7 +21,7 @@ func (w *World) spawnBullet() {
 		H: g.BulletHeight,
 	}
 	if collide.Overlaps(w.Map, b.X, b.Y, b.W, b.H) {
-		w.blocks.breakIn(w.Map, b.X, b.Y, b.W, b.H, byBullet)
+		w.blocks.breakIn(w.Map, b.X, b.Y, b.W, b.H, byBullet, true, &w.worldEvents)
 		return
 	}
 	if w.shootEnemy(b) {
@@ -52,7 +52,7 @@ func (w *World) stepBullets() {
 			continue
 		}
 		if hitTile {
-			w.blocks.breakIn(w.Map, bb.X, bb.Y+bb.H, bb.W, 1, byBullet)
+			w.blocks.breakIn(w.Map, bb.X, bb.Y+bb.H, bb.W, 1, byBullet, true, &w.worldEvents)
 			continue
 		}
 		b.life--
