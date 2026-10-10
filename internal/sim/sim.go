@@ -72,19 +72,15 @@ func (w *World) Tuning() tuning.Tuning {
 // SetTuning replaces the tuning from the next step on. A new player size is
 // applied around the middle of the player's feet. If the resized hitbox would
 // overlap a solid, the old size is kept and an error says so; every other
-// value is still applied.
+// value is still applied, and calling SetTuning again later retries the size.
 func (w *World) SetTuning(t tuning.Tuning) error {
 	var err error
 	b := &w.Player.Body
 	if p := t.Player; p.Width != b.W || p.Height != b.H {
-		x := b.X + (b.W-p.Width)/2
-		y := b.Y + b.H - p.Height
-		if collide.Overlaps(w.Map, x, y, p.Width, p.Height) {
+		if !b.Resize(w.Map, p.Width, p.Height) {
 			err = fmt.Errorf("sim: kept the %dx%d player size: %dx%d would overlap a solid here",
 				b.W, b.H, p.Width, p.Height)
 			t.Player.Width, t.Player.Height = b.W, b.H
-		} else {
-			b.X, b.Y, b.W, b.H = x, y, p.Width, p.Height
 		}
 	}
 	w.tuning = t

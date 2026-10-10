@@ -286,7 +286,8 @@ func TestSetTuningResizesAroundFeet(t *testing.T) {
 	}{
 		{"grow", 16, 24, 94, floorY - 24},
 		{"shrink", 8, 10, 98, floorY - 10},
-		{"odd difference", 15, 20, 95, floorY - 20},
+		// The left edge moves by -1.5 px: X 94 plus a 0.5 px remainder.
+		{"odd difference", 15, 20, 94, floorY - 20},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -331,5 +332,19 @@ func TestSetTuningKeepsSizeWhenBlocked(t *testing.T) {
 	if got := w.Tuning().Player; got.Height != 20 || got.RunSpeed != 90 {
 		t.Fatalf("tuning height %d run %v, want the kept height 20 and the new run speed 90",
 			got.Height, got.RunSpeed)
+	}
+}
+
+func TestSetTuningResizeRoundTripDoesNotDrift(t *testing.T) {
+	w := standingWorld(t) // 12x20 at x 96
+	for _, width := range []int{13, 14, 12, 13, 12} {
+		tun := testTuning()
+		tun.Player.Width = width
+		if err := w.SetTuning(tun); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if w.Player.Body.X != 96 {
+		t.Fatalf("X = %d after resizing back to 12, want 96", w.Player.Body.X)
 	}
 }

@@ -49,6 +49,21 @@ func (b *Body) MoveY(m *level.TileMap, dy float64) bool {
 	return false
 }
 
+// Resize changes the size to w×h while keeping the middle of the bottom edge
+// in place. A half-pixel shift goes into the horizontal remainder, so resizing
+// back restores the exact position. If the new box would overlap a solid,
+// nothing changes and Resize returns false.
+func (b *Body) Resize(m *level.TileMap, w, h int) bool {
+	remX := b.remX + float64(b.W-w)/2
+	x := b.X + takeWhole(&remX, 0)
+	y := b.Y + b.H - h
+	if Overlaps(m, x, y, w, h) {
+		return false
+	}
+	b.X, b.Y, b.W, b.H, b.remX = x, y, w, h, remX
+	return true
+}
+
 // Overlaps reports whether the box at (x, y) of size w×h overlaps any solid
 // tile. Boxes that only touch a tile's edge do not overlap it.
 func Overlaps(m *level.TileMap, x, y, w, h int) bool {
