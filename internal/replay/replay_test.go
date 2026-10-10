@@ -144,8 +144,8 @@ func trace(t *testing.T, r Replay) string {
 	var b strings.Builder
 	line := func() {
 		p := w.Player
-		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t\n",
-			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround)
+		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d\n",
+			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround, p.Fuel, len(w.Bullets))
 	}
 	for _, in := range r.Inputs {
 		line()

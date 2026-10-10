@@ -1,0 +1,18 @@
+uplunge-replay 1
+chunk Start
+frames 300
+
+# Land on the first platform, jump, release, then hold to fire the whole
+# magazine; tap once more on empty. Fall back, refill on landing, and fire
+# two shots after a second jump.
+0 -
+30 B
+36 -
+40 B
+100 -
+120 B
+122 -
+200 B
+204 -
+210 B
+220 -

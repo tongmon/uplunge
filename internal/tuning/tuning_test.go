@@ -18,6 +18,9 @@ const valid = `{"player": {
 	"coyoteTime": 0.1, "jumpBufferTime": 0.08,
 	"apexGravThreshold": 80, "apexGravMult": 0.5,
 	"runSpeed": 180, "runAccel": 2000, "airAccelMult": 0.65
+}, "gun": {
+	"magazine": 8, "fireInterval": 0.1, "thrust": 240,
+	"bulletSpeed": 480, "bulletLife": 0.2, "bulletWidth": 4, "bulletHeight": 8
 }}`
 
 func TestParse(t *testing.T) {
@@ -34,6 +37,7 @@ func TestParse(t *testing.T) {
 		{"missing field", strings.Replace(valid, `"maxFall": 320,`, ``, 1), "player.maxFall must be positive"},
 		{"negative value", strings.Replace(valid, `"runSpeed": 180`, `"runSpeed": -180`, 1), "player.runSpeed must be positive"},
 		{"zero size", strings.Replace(valid, `"width": 12`, `"width": 0`, 1), "player.width must be positive"},
+		{"missing gun field", strings.Replace(valid, `"magazine": 8, `, ``, 1), "gun.magazine must be positive"},
 		{"not json", `{`, "unexpected EOF"},
 	}
 	for _, tt := range tests {

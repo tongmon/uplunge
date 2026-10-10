@@ -215,8 +215,8 @@ func reloadTuning(w *sim.World, path string) (applied bool, err error) {
 func (g *game) Draw(screen *ebiten.Image) {
 	render.World(screen, g.world)
 	p := g.world.Player
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("tick %d  fps %.0f\nx %d y %d\nvx %.0f vy %.0f",
-		g.world.Tick, ebiten.ActualFPS(), p.Body.X, p.Body.Y, p.VX, p.VY))
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("tick %d  fps %.0f\nx %d y %d\nvx %.0f vy %.0f\nfuel %d/%d",
+		g.world.Tick, ebiten.ActualFPS(), p.Body.X, p.Body.Y, p.VX, p.VY, p.Fuel, g.world.Tuning().Gun.Magazine))
 }
 
 func (g *game) Layout(int, int) (int, int) {
