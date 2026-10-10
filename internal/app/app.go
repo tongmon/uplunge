@@ -41,6 +41,10 @@ type Config struct {
 	ReplayPath string
 	// RecordPath, if set, saves every step's input there when the game exits.
 	RecordPath string
+	// ShotTicks, if set, saves the world as a PNG in ShotsDir at each of these
+	// ticks (ascending) and exits after the last one.
+	ShotTicks []uint64
+	ShotsDir  string
 }
 
 // Run opens the window and blocks until the game exits.
@@ -86,6 +90,15 @@ func Run(cfg Config) error {
 	if g.world, err = sim.NewWorldInChunk(tun, m); err != nil {
 		return err
 	}
+	if len(cfg.ShotTicks) > 0 {
+		last := cfg.ShotTicks[len(cfg.ShotTicks)-1]
+		if g.replaying && last > uint64(len(g.playback)) {
+			return fmt.Errorf("app: shot tick %d is past the replay's end at tick %d", last, len(g.playback))
+		}
+		if g.shots, err = newShooter(cfg.ShotsDir, cfg.ShotTicks); err != nil {
+			return err
+		}
+	}
 
 	ebiten.SetWindowTitle("uplunge")
 	ebiten.SetWindowSize(ScreenWidth*cfg.Scale, ScreenHeight*cfg.Scale)
@@ -108,11 +121,21 @@ type game struct {
 	playback  []sim.Input
 	recording bool
 	recorded  []sim.Input
+
+	shots *shooter
 }
 
 // Update runs exactly one simulation step. Ebitengine calls it sim.Hz times
 // per second and catches up with extra calls when a frame runs long.
 func (g *game) Update() error {
+	if g.shots != nil {
+		if err := g.shots.maybeShoot(g); err != nil {
+			return err
+		}
+		if g.shots.done() {
+			return ebiten.Termination
+		}
+	}
 	var in sim.Input
 	if g.replaying {
 		if g.world.Tick >= uint64(len(g.playback)) {
