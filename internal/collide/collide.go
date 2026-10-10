@@ -69,10 +69,11 @@ func Overlaps(m *level.TileMap, x, y, w, h int) bool {
 }
 
 // takeWhole adds d to *rem and removes and returns the nearest whole number of
-// pixels, leaving *rem in [-0.5, 0.5].
+// pixels, leaving *rem in [-0.5, 0.5]. Halves round to even, so a leftover of
+// exactly ±0.5 rounds to zero next time instead of moving back and forth.
 func takeWhole(rem *float64, d float64) int {
 	*rem += d
-	n := math.Round(*rem)
+	n := math.RoundToEven(*rem)
 	*rem -= n
 	return int(n)
 }

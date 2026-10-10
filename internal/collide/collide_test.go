@@ -107,6 +107,41 @@ func TestMoveAccumulatesSubPixels(t *testing.T) {
 	}
 }
 
+// A remainder of exactly ±0.5 must not turn into movement once the body stops.
+func TestHalfPixelRemainderHoldsStill(t *testing.T) {
+	tests := []struct {
+		name     string
+		vertical bool
+		d        float64
+	}{
+		{"x +0.5", false, 0.5},
+		{"x -0.5", false, -0.5},
+		{"y +0.5", true, 0.5},
+		{"y -0.5", true, -0.5},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			m := testRoom(t)
+			b := Body{X: 30, Y: 30, W: 10, H: 12}
+			move := b.MoveX
+			if tt.vertical {
+				move = b.MoveY
+			}
+			move(m, tt.d)
+			wantX, wantY := b.X, b.Y
+			for i := 0; i < 4; i++ {
+				if move(m, 0) {
+					t.Fatalf("step %d: zero move reported a hit", i)
+				}
+				if b.X != wantX || b.Y != wantY {
+					t.Fatalf("step %d: zero move went to (%d, %d), want (%d, %d)",
+						i, b.X, b.Y, wantX, wantY)
+				}
+			}
+		})
+	}
+}
+
 func TestHitDiscardsRemainder(t *testing.T) {
 	m := testRoom(t)
 	b := Body{X: 70, Y: 20, W: 10, H: 12}
