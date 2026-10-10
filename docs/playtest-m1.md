@@ -19,6 +19,10 @@
 - 화면 왼쪽 위: 연료, HP, 물까지 거리, **비율 = 탄창 높이 / 평균 적 간격**.
 - 탑 꼭대기에 닿으면 클리어 시간과 남은 HP가 나옴.
 
+### 꼭대기 클리어를 빨리 확인하려면
+
+`-lab -reload`로 실행한 상태에서 `lab.rows`를 40, `lab.spacing`을 200 정도로 바꿔 저장하고 R. 통로가 짧아져 연사 몇 번이면 꼭대기의 체크무늬 결승선에 닿음. 일반 탑은 `tower.length`를 2~3으로 줄이고 게임을 다시 실행.
+
 ## 2. 통과 기준
 
 - [ ] 1~2분 플레이가 "한 판 더"를 부른다.
@@ -50,7 +54,7 @@
 | 점프 높이와 가변 점프 | 210px/s를 최대 0.2초 | `player.jumpSpeed`, `player.jumpHoldTime` | |
 | 꼭대기 중력 절반 | 속도 80 미만에서 × 0.5 | `player.apexGravThreshold`, `player.apexGravMult` | |
 | 좌우 이동과 미끄러짐 | 180px/s, 가속·감속 2000, 공중 × 0.65 | `player.runSpeed`, `player.runAccel`, `player.airAccelMult` | |
-| 밟기 바운스 | 280px/s를 0.2초 | `player.stompSpeed`, `player.stompHoldTime` | |
+| 밟기 바운스 (적 윗면에서 출발, 늘어남과 흔들림 포함) | 280px/s를 0.2초, 흔들림 0.16초 2px | `player.stompSpeed`, `player.stompHoldTime`, `feel.stompShakeTime`, `feel.stompShakeScale` | |
 | 넉백 (Downwell 측정값) | 좌우 180 × 각도, 위 190 | `player.knockbackX`, `player.knockbackY` | |
 | 무적 시간 | 1.5초 | `player.invulnTime` | |
 | 드릴 튕김 | 240px/s 한 번 | `player.drillBounce` | |

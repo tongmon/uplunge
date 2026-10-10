@@ -19,7 +19,8 @@
 | 발사 | `if (ysp > recoil) ysp = recoil`. 기본 총은 반동 0이라 감속만 함 | `scrPlayerShootN:12-15` |
 | 기본 총 (머신건) | 발사 간격 7f, 총알 속도 8 px/f (480px/s) - 0~2 무작위, 12f 날아간 뒤 프레임마다 속도 × 0.8로 감속 | `bStatInitLevel1:16,34,44,46`, `bStatUpdate:21,26-27`, `bulletRanged_Create_0:11-15`, `bulletRanged_Step_0:9-12` |
 | 탄약 충전 | 착지, 밟기, 피격 시 전량 | `scrWallCol:80-89`, `scrEnemyStomped:17`, `scrTypicalDamage:10` |
-| 밟기 | 바운스 -2.5, 100 피해 | `scrEnemyStomped:6-17` |
+| 밟기 | 바운스 -2.5 (위로 약 16px, 점프 약 48px보다 낮음), 100 피해, 화면 흔들림 2px·10f | `scrEnemyStomped:6-17` |
+| 밟기 판정 | 적이 플레이어보다 아래에 있고, 공중에서 떨어지는 중이면 | `enmBabyObake_Collision_objPlayer_n:1-7` |
 | 콤보 | 처치마다 +1, 착지 시 종료. 8 → 젬 100 / 15 → 최대 탄약 +1 / 25 → HP +1 | `comboDone`, `comboRewardText_Create_0` |
 | 젬하이 | 연속 획득 100개, 타이머 300f | `scrControlBeginstepCheck:66-76` |
 | HP | 4, 피격 후 무적 90f | `scrPlayerGlobalStat:45`, `scrPDamage:4-11` |
@@ -86,6 +87,7 @@
   - 어시스트 무적 모드: 플레이어를 -200으로 튕기고 대시 충전, 용암이 0.4초 동안 48px 후퇴(CubeOut), 닿은 순간부터 0.5초 정지 (후퇴 시간 포함).
   - 시작 위치는 레벨 바닥 + 16px. 위치는 `RisingLava.cs:62`, 속도와 고정은 `:142-151`, 어시스트 처리는 `:95-112`.
 - **퍼퍼(Puffer)**: 위에서 밟으면 -140을 0.2초 유지 + 충전. 옆이나 아래에서 닿으면 폭발하며 옆으로 날림.
+  - 튕김은 `Player.Bounce`: 발을 밟은 물체의 윗면에 맞추고, 속도 -140, 0.1초는 자동 유지 + 점프 버튼을 누르면 0.2초까지, 늘어남 (0.6, 1.4) (`Player.cs:2684-2713`).
 - **스프링**: -185를 0.2초 유지. **범퍼**: 280px/s로 튕김.
 - **깃털(StarFly)**: 2초 비행, 속도 91~190, 마지막 0.5초 동안 깜빡임 경고.
 - **물**: 수면 근처에서만 부력 -60. 물속 최대 속도 60~80.
