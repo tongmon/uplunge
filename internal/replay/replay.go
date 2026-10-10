@@ -320,9 +320,21 @@ func (r Replay) Where() string {
 // r.Chunk. It also returns the starting map, whose fingerprint
 // a recording keeps.
 func Start(r Replay, t tuning.Tuning, chunks []level.Chunk) (*sim.World, *level.TileMap, error) {
+	if err := r.validate(); err != nil {
+		return nil, nil, err
+	}
 	if r.Lab {
 		l := t.Lab
-		m, err := level.BuildLab(l.Rows, l.Enemy, l.Spacing, l.Jitter, rng.New(r.Seed))
+		var ew, eh int
+		for _, e := range t.Enemies {
+			if e.Name == l.Enemy {
+				ew, eh = e.Width, e.Height
+			}
+		}
+		if ew == 0 {
+			return nil, nil, fmt.Errorf("replay: lab.enemy %q has no enemy definition", l.Enemy)
+		}
+		m, err := level.BuildLab(l.Rows, l.Enemy, ew, eh, l.Spacing, l.Jitter, rng.New(r.Seed))
 		if err != nil {
 			return nil, nil, err
 		}

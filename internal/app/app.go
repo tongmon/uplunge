@@ -83,7 +83,7 @@ func Run(cfg Config) error {
 		g.playback = start.Inputs
 		g.replaying = true
 	} else if g.newSeeds {
-		log.Printf("climbing %s (replay it with -seed %d)", start.Where(), start.Seed)
+		logClimb(start)
 	}
 	if err := g.begin(start, tun); err != nil {
 		return err
@@ -123,6 +123,15 @@ func Run(cfg Config) error {
 		}
 	}
 	return runErr
+}
+
+// logClimb says which tower or lab a run climbs and how to climb it again.
+func logClimb(r replay.Replay) {
+	again := fmt.Sprintf("-seed %d", r.Seed)
+	if r.Lab {
+		again = "-lab " + again
+	}
+	log.Printf("climbing %s (climb it again with %s)", r.Where(), again)
 }
 
 // startOf decides where the run starts: where the replay started, else the
@@ -168,9 +177,12 @@ type game struct {
 	// -seed fixed it.
 	newSeeds bool
 	// rise and gap are the two sides of the core tuning ratio for the HUD:
-	// the current tuning's magazine rise, and the run's average enemy gap.
-	rise int
-	gap  float64
+	// the current tuning's magazine rise (a lower bound unless riseDone), and
+	// the average gap between the run's stompers stompable enemies.
+	rise     int
+	riseDone bool
+	gap      float64
+	stompers int
 
 	replaying bool
 	playback  []sim.Input
@@ -193,7 +205,8 @@ func (g *game) begin(start replay.Replay, t tuning.Tuning) error {
 	}
 	g.world, g.start, g.startMap, g.recorded = w, start, m, nil
 	g.fx = render.NewEffects()
-	g.rise, g.gap = sim.MagazineRise(t), sim.EnemyGap(t, m)
+	g.rise, g.riseDone = sim.MagazineRise(t)
+	g.gap, g.stompers = sim.EnemyGap(t, m)
 	return nil
 }
 
@@ -216,8 +229,15 @@ func (g *game) restart() {
 		return
 	}
 	if g.newSeeds {
-		log.Printf("climbing %s (replay it with -seed %d)", next.Where(), next.Seed)
+		logClimb(next)
 	}
+}
+
+// canRestart reports whether R starts the next run now: once a run is over
+// or cleared, and at any time in a lab run, which is for trying out
+// numbers. A replay never restarts.
+func (g *game) canRestart() bool {
+	return !g.replaying && (g.world.Over || g.world.Cleared || g.start.Lab)
 }
 
 // Update runs exactly one simulation step. Ebitengine calls it sim.Hz times
@@ -231,7 +251,7 @@ func (g *game) Update() error {
 			return ebiten.Termination
 		}
 	}
-	if (g.world.Over || g.world.Cleared) && !g.replaying && input.Restart() {
+	if g.canRestart() && input.Restart() {
 		g.restart()
 		return nil
 	}
@@ -265,6 +285,10 @@ func (g *game) pollTuning() {
 	g.reloadWait = reloadPollSteps
 
 	applied, err := reloadTuning(g.world, g.reloadPath)
+	if applied {
+		// Part of the tuning may apply even when err says what was kept.
+		g.rise, g.riseDone = sim.MagazineRise(g.world.Tuning())
+	}
 	if err != nil {
 		if msg := err.Error(); msg != g.lastReloadErr {
 			log.Printf("tuning reload at tick %d: %v", g.world.Tick, err)
@@ -274,7 +298,6 @@ func (g *game) pollTuning() {
 	}
 	g.lastReloadErr = ""
 	if applied {
-		g.rise = sim.MagazineRise(g.world.Tuning())
 		log.Printf("tuning reloaded at tick %d", g.world.Tick)
 	}
 }
@@ -307,10 +330,17 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if wt := g.world.Water; wt.On {
 		msg += fmt.Sprintf("  water %+.0f", wt.Y-float64(p.Body.Y+p.Body.H))
 	}
-	if g.gap > 0 {
-		msg += fmt.Sprintf("\nratio %.2f = mag %d / gap %.0f", float64(g.rise)/g.gap, g.rise, g.gap)
-	} else {
-		msg += fmt.Sprintf("\nratio - (mag %d, no stompable enemies)", g.rise)
+	mag := fmt.Sprint(g.rise)
+	if !g.riseDone {
+		mag = ">=" + mag // the measurement hit its step limit
+	}
+	switch {
+	case g.stompers < 2:
+		msg += fmt.Sprintf("\nratio - (mag %s, %d stompable enemies)", mag, g.stompers)
+	case g.gap == 0:
+		msg += fmt.Sprintf("\nratio - (mag %s, enemies all at one height)", mag)
+	default:
+		msg += fmt.Sprintf("\nratio %.2f = mag %s / gap %.0f", float64(g.rise)/g.gap, mag, g.gap)
 	}
 	switch {
 	case g.world.Over:

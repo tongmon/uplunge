@@ -398,7 +398,7 @@ func (t Tuning) validate() error {
 		return fmt.Errorf("lab.enemy is missing")
 	case t.Lab.Spacing <= 0 || t.Lab.Spacing > MaxValue:
 		return fmt.Errorf("lab.spacing must be 1 to %g, got %d", float64(MaxValue), t.Lab.Spacing)
-	case t.Lab.Jitter < 0 || 2*t.Lab.Jitter >= t.Lab.Spacing:
+	case t.Lab.Jitter < 0 || t.Lab.Jitter > (t.Lab.Spacing-1)/2:
 		return fmt.Errorf("lab.jitter must be 0 to under half of lab.spacing, got %d", t.Lab.Jitter)
 	}
 	if err := validateBlocks(t.Blocks); err != nil {

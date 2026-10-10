@@ -1,301 +1,301 @@
-tick 0 x 98 y 0 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 1 x 98 y 0 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 2 x 98 y 2 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 3 x 98 y 3 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 4 x 98 y 5 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 5 x 98 y 7 vx 0 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 6 x 98 y 11 vx 0 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 7 x 98 y 14 vx 0 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 8 x 98 y 18 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 9 x 98 y 22 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 10 x 98 y 28 vx 0 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 11 x 98 y 33 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 12 x 98 y 38 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 13 x 98 y 43 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 14 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 15 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 16 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 17 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 18 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 19 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 20 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 21 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 22 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 23 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 24 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 25 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 26 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 27 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 28 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 29 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 30 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 31 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 32 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 33 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 34 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 35 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 36 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 37 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 38 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 39 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 40 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 41 x 99 y 44 vx 33.333333333333336 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 42 x 100 y 44 vx 66.66666666666667 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 43 x 101 y 44 vx 100 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 44 x 104 y 44 vx 133.33333333333334 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 45 x 106 y 44 vx 166.66666666666669 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 46 x 109 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 47 x 112 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 48 x 115 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 49 x 118 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 50 x 121 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 51 x 124 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 52 x 127 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 53 x 130 y 44 vx 180 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 54 x 133 y 44 vx 180 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 55 x 136 y 46 vx 180 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 56 x 139 y 47 vx 180 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 57 x 142 y 49 vx 180 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 58 x 145 y 51 vx 180 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 59 x 148 y 55 vx 180 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 60 x 151 y 58 vx 180 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 61 x 154 y 62 vx 180 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 62 x 157 y 66 vx 180 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 63 x 160 y 72 vx 180 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 64 x 163 y 77 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 65 x 166 y 82 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 66 x 169 y 87 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 67 x 172 y 93 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 68 x 175 y 98 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 69 x 178 y 103 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 70 x 180 y 109 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 71 x 180 y 114 vx 21.666666666666668 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 72 x 180 y 119 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 73 x 180 y 125 vx 21.666666666666668 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 74 x 180 y 130 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 75 x 180 y 135 vx 21.666666666666668 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 76 x 180 y 141 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 77 x 180 y 146 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 78 x 180 y 151 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 79 x 180 y 157 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 80 x 180 y 162 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 81 x 180 y 167 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 82 x 180 y 173 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 83 x 180 y 178 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 84 x 180 y 183 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 85 x 180 y 189 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 86 x 180 y 194 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 87 x 180 y 199 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 88 x 180 y 205 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 89 x 180 y 210 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 90 x 180 y 215 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 91 x 180 y 221 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 92 x 180 y 226 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 93 x 180 y 231 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 94 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 95 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 96 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 97 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 98 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 99 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 100 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 101 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 102 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 103 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 104 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 105 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 106 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 107 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 108 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 109 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 110 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 111 x 180 y 232 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 112 x 180 y 229 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 113 x 180 y 225 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 114 x 180 y 222 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 115 x 180 y 218 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 116 x 180 y 215 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 117 x 180 y 211 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 118 x 180 y 208 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 119 x 180 y 204 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 120 x 180 y 201 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 121 x 180 y 197 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 122 x 180 y 194 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 123 x 180 y 191 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 124 x 180 y 189 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 125 x 180 y 187 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 126 x 180 y 185 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 127 x 180 y 184 vx 0 vy -60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 128 x 180 y 183 vx 0 vy -45 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 129 x 180 y 183 vx 0 vy -30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 130 x 180 y 183 vx 0 vy -15 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 131 x 180 y 183 vx -21.666666666666668 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 132 x 179 y 183 vx -43.333333333333336 vy 15 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 133 x 178 y 183 vx -65 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 134 x 177 y 184 vx -86.66666666666667 vy 45 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 135 x 175 y 185 vx -108.33333333333334 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 136 x 173 y 186 vx -130 vy 75 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 137 x 170 y 188 vx -151.66666666666666 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 138 x 167 y 190 vx -173.33333333333331 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 139 x 164 y 192 vx -180 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 140 x 161 y 195 vx -180 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 141 x 158 y 199 vx -180 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 142 x 155 y 203 vx -180 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 143 x 152 y 207 vx -180 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 144 x 149 y 212 vx -180 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 145 x 146 y 218 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 146 x 143 y 223 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 147 x 140 y 228 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 148 x 137 y 234 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 149 x 134 y 236 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 150 x 131 y 236 vx -180 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 151 x 128 y 236 vx -180 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 152 x 125 y 238 vx -180 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 153 x 122 y 239 vx -180 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 154 x 119 y 241 vx -180 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 155 x 116 y 243 vx -180 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 156 x 113 y 247 vx -180 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 157 x 110 y 250 vx -180 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 158 x 107 y 254 vx -180 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 159 x 104 y 258 vx -180 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 160 x 101 y 264 vx -180 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 161 x 98 y 269 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 162 x 95 y 274 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 163 x 92 y 279 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 164 x 89 y 285 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 165 x 86 y 290 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 166 x 83 y 295 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 167 x 80 y 301 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 168 x 77 y 306 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 169 x 74 y 311 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 170 x 71 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 171 x 69 y 316 vx -146.66666666666666 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 172 x 67 y 316 vx -113.33333333333331 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 173 x 66 y 316 vx -79.99999999999997 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 174 x 65 y 316 vx -46.666666666666636 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 175 x 65 y 316 vx -13.3333333333333 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 176 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 177 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 178 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 179 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 180 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 181 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 182 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 183 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 184 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 185 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 186 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 187 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 188 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 189 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 190 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 191 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 192 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 193 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 194 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 195 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 196 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 197 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 198 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 199 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 200 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 201 x 65 y 312 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 202 x 65 y 309 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 203 x 65 y 305 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 204 x 65 y 302 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 205 x 65 y 299 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 206 x 65 y 297 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 207 x 65 y 295 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 208 x 65 y 293 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 209 x 65 y 292 vx 0 vy -60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 210 x 65 y 292 vx 0 vy -30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 211 x 65 y 292 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 212 x 65 y 292 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 213 x 65 y 293 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 214 x 65 y 295 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 215 x 65 y 297 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 216 x 65 y 299 vx 0 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 217 x 65 y 302 vx 0 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 218 x 65 y 306 vx 0 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 219 x 65 y 310 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 220 x 65 y 314 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 221 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 222 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 223 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 224 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 225 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 226 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 227 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 228 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 229 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 230 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 231 x 65 y 312 vx 33.333333333333336 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 232 x 66 y 309 vx 55 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 233 x 67 y 305 vx 76.66666666666667 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 234 x 69 y 302 vx 98.33333333333334 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 235 x 71 y 298 vx 120.00000000000001 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 236 x 73 y 295 vx 141.66666666666669 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 237 x 76 y 291 vx 163.33333333333334 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 238 x 79 y 288 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 239 x 82 y 284 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 240 x 85 y 281 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 241 x 88 y 277 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 242 x 91 y 274 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 243 x 94 y 271 vx 180 vy -180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 244 x 97 y 269 vx 180 vy -150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 245 x 100 y 267 vx 180 vy -120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 246 x 103 y 265 vx 180 vy -90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 247 x 106 y 264 vx 180 vy -60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 248 x 109 y 263 vx 180 vy -45 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 249 x 112 y 263 vx 180 vy -30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 250 x 115 y 263 vx 180 vy -15 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 251 x 118 y 263 vx 180 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 252 x 121 y 263 vx 180 vy 15 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 253 x 124 y 263 vx 180 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 254 x 127 y 264 vx 180 vy 45 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 255 x 130 y 265 vx 180 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 256 x 132 y 266 vx 0 vy 75 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 257 x 132 y 268 vx 21.666666666666668 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 258 x 132 y 270 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 259 x 132 y 272 vx 21.666666666666668 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 260 x 133 y 275 vx 43.333333333333336 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 261 x 133 y 279 vx 21.666666666666668 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 262 x 133 y 283 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 263 x 133 y 287 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 264 x 133 y 292 vx 0 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 265 x 133 y 298 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 266 x 133 y 303 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 267 x 133 y 308 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 268 x 133 y 314 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 269 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 270 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 271 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 272 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 273 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 274 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 275 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 276 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 277 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 278 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 279 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 280 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 281 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 282 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 283 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 284 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 285 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 286 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 287 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 288 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 289 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 290 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 291 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 292 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 293 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 294 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 295 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 296 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 297 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 298 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 299 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
-tick 300 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off
+tick 0 x 98 y 0 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 1 x 98 y 0 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 2 x 98 y 2 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 3 x 98 y 3 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 4 x 98 y 5 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 5 x 98 y 7 vx 0 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 6 x 98 y 11 vx 0 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 7 x 98 y 14 vx 0 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 8 x 98 y 18 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 9 x 98 y 22 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 10 x 98 y 28 vx 0 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 11 x 98 y 33 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 12 x 98 y 38 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 13 x 98 y 43 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 14 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 15 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 16 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 17 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 18 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 19 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 20 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 21 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 22 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 23 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 24 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 25 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 26 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 27 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 28 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 29 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 30 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 31 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 32 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 33 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 34 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 35 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 36 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 37 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 38 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 39 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 40 x 98 y 44 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 41 x 99 y 44 vx 33.333333333333336 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 42 x 100 y 44 vx 66.66666666666667 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 43 x 101 y 44 vx 100 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 44 x 104 y 44 vx 133.33333333333334 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 45 x 106 y 44 vx 166.66666666666669 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 46 x 109 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 47 x 112 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 48 x 115 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 49 x 118 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 50 x 121 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 51 x 124 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 52 x 127 y 44 vx 180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 53 x 130 y 44 vx 180 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 54 x 133 y 44 vx 180 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 55 x 136 y 46 vx 180 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 56 x 139 y 47 vx 180 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 57 x 142 y 49 vx 180 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 58 x 145 y 51 vx 180 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 59 x 148 y 55 vx 180 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 60 x 151 y 58 vx 180 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 61 x 154 y 62 vx 180 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 62 x 157 y 66 vx 180 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 63 x 160 y 72 vx 180 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 64 x 163 y 77 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 65 x 166 y 82 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 66 x 169 y 87 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 67 x 172 y 93 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 68 x 175 y 98 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 69 x 178 y 103 vx 180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 70 x 180 y 109 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 71 x 180 y 114 vx 21.666666666666668 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 72 x 180 y 119 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 73 x 180 y 125 vx 21.666666666666668 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 74 x 180 y 130 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 75 x 180 y 135 vx 21.666666666666668 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 76 x 180 y 141 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 77 x 180 y 146 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 78 x 180 y 151 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 79 x 180 y 157 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 80 x 180 y 162 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 81 x 180 y 167 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 82 x 180 y 173 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 83 x 180 y 178 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 84 x 180 y 183 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 85 x 180 y 189 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 86 x 180 y 194 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 87 x 180 y 199 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 88 x 180 y 205 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 89 x 180 y 210 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 90 x 180 y 215 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 91 x 180 y 221 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 92 x 180 y 226 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 93 x 180 y 231 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 94 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 95 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 96 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 97 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 98 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 99 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 100 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 101 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 102 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 103 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 104 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 105 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 106 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 107 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 108 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 109 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 110 x 180 y 236 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 111 x 180 y 232 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 112 x 180 y 229 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 113 x 180 y 225 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 114 x 180 y 222 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 115 x 180 y 218 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 116 x 180 y 215 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 117 x 180 y 211 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 118 x 180 y 208 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 119 x 180 y 204 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 120 x 180 y 201 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 121 x 180 y 197 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 122 x 180 y 194 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 123 x 180 y 191 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 124 x 180 y 189 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 125 x 180 y 187 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 126 x 180 y 185 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 127 x 180 y 184 vx 0 vy -60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 128 x 180 y 183 vx 0 vy -45 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 129 x 180 y 183 vx 0 vy -30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 130 x 180 y 183 vx 0 vy -15 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 131 x 180 y 183 vx -21.666666666666668 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 132 x 179 y 183 vx -43.333333333333336 vy 15 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 133 x 178 y 183 vx -65 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 134 x 177 y 184 vx -86.66666666666667 vy 45 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 135 x 175 y 185 vx -108.33333333333334 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 136 x 173 y 186 vx -130 vy 75 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 137 x 170 y 188 vx -151.66666666666666 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 138 x 167 y 190 vx -173.33333333333331 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 139 x 164 y 192 vx -180 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 140 x 161 y 195 vx -180 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 141 x 158 y 199 vx -180 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 142 x 155 y 203 vx -180 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 143 x 152 y 207 vx -180 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 144 x 149 y 212 vx -180 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 145 x 146 y 218 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 146 x 143 y 223 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 147 x 140 y 228 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 148 x 137 y 234 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 149 x 134 y 236 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 150 x 131 y 236 vx -180 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 151 x 128 y 236 vx -180 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 152 x 125 y 238 vx -180 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 153 x 122 y 239 vx -180 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 154 x 119 y 241 vx -180 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 155 x 116 y 243 vx -180 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 156 x 113 y 247 vx -180 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 157 x 110 y 250 vx -180 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 158 x 107 y 254 vx -180 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 159 x 104 y 258 vx -180 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 160 x 101 y 264 vx -180 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 161 x 98 y 269 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 162 x 95 y 274 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 163 x 92 y 279 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 164 x 89 y 285 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 165 x 86 y 290 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 166 x 83 y 295 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 167 x 80 y 301 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 168 x 77 y 306 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 169 x 74 y 311 vx -180 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 170 x 71 y 316 vx -180 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 171 x 69 y 316 vx -146.66666666666666 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 172 x 67 y 316 vx -113.33333333333331 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 173 x 66 y 316 vx -79.99999999999997 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 174 x 65 y 316 vx -46.666666666666636 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 175 x 65 y 316 vx -13.3333333333333 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 176 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 177 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 178 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 179 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 180 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 181 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 182 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 183 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 184 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 185 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 186 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 187 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 188 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 189 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 190 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 191 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 192 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 193 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 194 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 195 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 196 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 197 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 198 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 199 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 200 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 201 x 65 y 312 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 202 x 65 y 309 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 203 x 65 y 305 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 204 x 65 y 302 vx 0 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 205 x 65 y 299 vx 0 vy -180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 206 x 65 y 297 vx 0 vy -150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 207 x 65 y 295 vx 0 vy -120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 208 x 65 y 293 vx 0 vy -90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 209 x 65 y 292 vx 0 vy -60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 210 x 65 y 292 vx 0 vy -30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 211 x 65 y 292 vx 0 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 212 x 65 y 292 vx 0 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 213 x 65 y 293 vx 0 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 214 x 65 y 295 vx 0 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 215 x 65 y 297 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 216 x 65 y 299 vx 0 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 217 x 65 y 302 vx 0 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 218 x 65 y 306 vx 0 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 219 x 65 y 310 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 220 x 65 y 314 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 221 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 222 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 223 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 224 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 225 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 226 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 227 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 228 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 229 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 230 x 65 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 231 x 65 y 312 vx 33.333333333333336 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 232 x 66 y 309 vx 55 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 233 x 67 y 305 vx 76.66666666666667 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 234 x 69 y 302 vx 98.33333333333334 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 235 x 71 y 298 vx 120.00000000000001 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 236 x 73 y 295 vx 141.66666666666669 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 237 x 76 y 291 vx 163.33333333333334 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 238 x 79 y 288 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 239 x 82 y 284 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 240 x 85 y 281 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 241 x 88 y 277 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 242 x 91 y 274 vx 180 vy -210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 243 x 94 y 271 vx 180 vy -180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 244 x 97 y 269 vx 180 vy -150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 245 x 100 y 267 vx 180 vy -120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 246 x 103 y 265 vx 180 vy -90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 247 x 106 y 264 vx 180 vy -60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 248 x 109 y 263 vx 180 vy -45 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 249 x 112 y 263 vx 180 vy -30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 250 x 115 y 263 vx 180 vy -15 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 251 x 118 y 263 vx 180 vy 0 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 252 x 121 y 263 vx 180 vy 15 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 253 x 124 y 263 vx 180 vy 30 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 254 x 127 y 264 vx 180 vy 45 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 255 x 130 y 265 vx 180 vy 60 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 256 x 132 y 266 vx 0 vy 75 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 257 x 132 y 268 vx 21.666666666666668 vy 90 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 258 x 132 y 270 vx 0 vy 120 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 259 x 132 y 272 vx 21.666666666666668 vy 150 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 260 x 133 y 275 vx 43.333333333333336 vy 180 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 261 x 133 y 279 vx 21.666666666666668 vy 210 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 262 x 133 y 283 vx 0 vy 240 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 263 x 133 y 287 vx 0 vy 270 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 264 x 133 y 292 vx 0 vy 300 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 265 x 133 y 298 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 266 x 133 y 303 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 267 x 133 y 308 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 268 x 133 y 314 vx 0 vy 320 ground false fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 269 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 270 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 271 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 272 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 273 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 274 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 275 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 276 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 277 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 278 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 279 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 280 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 281 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 282 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 283 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 284 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 285 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 286 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 287 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 288 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 289 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 290 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 291 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 292 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 293 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 294 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 295 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 296 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 297 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 298 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 299 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -
+tick 300 x 133 y 316 vx 0 vy 0 ground true fuel 8 bullets 0 tiles 70 cam 0.000 hp 4 enemies 0 over false water off clear -

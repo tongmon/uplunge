@@ -140,9 +140,9 @@ func trace(t *testing.T, r Replay) string {
 	var b strings.Builder
 	line := func() {
 		p := w.Player
-		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d tiles %d cam %.3f hp %d enemies %d over %t water %s\n",
+		fmt.Fprintf(&b, "tick %d x %d y %d vx %g vy %g ground %t fuel %d bullets %d tiles %d cam %.3f hp %d enemies %d over %t water %s clear %s\n",
 			w.Tick, p.Body.X, p.Body.Y, p.VX, p.VY, p.OnGround, p.Fuel, len(w.Bullets), countTiles(w.Map), w.Camera.Y,
-			p.HP, len(w.Enemies), w.Over, water(w))
+			p.HP, len(w.Enemies), w.Over, water(w), clear(w))
 	}
 	for _, in := range r.Inputs {
 		line()
@@ -382,8 +382,18 @@ func TestLabHeader(t *testing.T) {
 	if err := Write(&bytes.Buffer{}, Replay{Tower: true, Lab: true}); err == nil {
 		t.Fatal("a run that is both a tower and a lab was written")
 	}
-	if _, err := Read(strings.NewReader("uplunge-replay 1\nlab x\nframes 0\n")); err == nil {
-		t.Fatal("a bad lab seed was read")
+	for _, seed := range []string{"x", "-1", "18446744073709551616", ""} {
+		if _, err := Read(strings.NewReader("uplunge-replay 1\nlab " + seed + "\nframes 0\n")); err == nil {
+			t.Errorf("lab seed %q was read", seed)
+		}
+	}
+	for _, seed := range []string{"0", "18446744073709551615"} {
+		if _, err := Read(strings.NewReader("uplunge-replay 1\nlab " + seed + "\nframes 0\n")); err != nil {
+			t.Errorf("lab seed %q: %v", seed, err)
+		}
+	}
+	if _, _, err := Start(Replay{Tower: true, Lab: true}, tuning.Tuning{}, nil); err == nil {
+		t.Fatal("Start ran a run that is both a tower and a lab")
 	}
 }
 
@@ -399,7 +409,15 @@ func TestStartLab(t *testing.T) {
 	if !w.Water.On || !w.Goal || len(w.Enemies) == 0 || m.Rows != tun.Lab.Rows {
 		t.Fatalf("lab run: water %v goal %v enemies %d rows %d", w.Water.On, w.Goal, len(w.Enemies), m.Rows)
 	}
-	if gap := sim.EnemyGap(tun, m); gap < float64(tun.Lab.Spacing)-2 || gap > float64(tun.Lab.Spacing)+2 {
+	if gap, _ := sim.EnemyGap(tun, m); gap < float64(tun.Lab.Spacing)-2 || gap > float64(tun.Lab.Spacing)+2 {
 		t.Fatalf("lab enemy gap %v, want about the spacing %d", gap, tun.Lab.Spacing)
 	}
+}
+
+// clear formats the clear for a trace: the tick it happened, or "-".
+func clear(w *sim.World) string {
+	if !w.Cleared {
+		return "-"
+	}
+	return fmt.Sprint(w.ClearTick)
 }

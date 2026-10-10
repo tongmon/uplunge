@@ -286,12 +286,22 @@ func TestPressDuringCooldownIsBuffered(t *testing.T) {
 }
 
 func TestMagazineRiseMatchesTheMeasurement(t *testing.T) {
-	if got, want := MagazineRise(testTuning()), magazineRise(t, testTuning().Player.ApexGravMult); got != want {
-		t.Fatalf("MagazineRise = %d, want the measured %d", got, want)
+	got, done := MagazineRise(testTuning())
+	if want := magazineRise(t, testTuning().Player.ApexGravMult); got != want || !done {
+		t.Fatalf("MagazineRise = %d, %v, want the measured %d, done", got, done, want)
 	}
 	tun := testTuning()
 	tun.Gun.Magazine = 4
-	if half := MagazineRise(tun); half >= MagazineRise(testTuning()) || half <= 0 {
+	if half, _ := MagazineRise(tun); half >= got || half <= 0 {
 		t.Fatalf("a half magazine rose %d px, want less than a full one", half)
+	}
+	tun.Gun.Magazine = 1000
+	if _, done := MagazineRise(tun); done {
+		t.Fatal("a magazine too big to empty in the step limit was reported as measured")
+	}
+	tun = testTuning()
+	tun.Gun.BulletSpeed, tun.Gun.BulletLife = 1e6, 1e3
+	if r, _ := MagazineRise(tun); r != got {
+		t.Fatalf("bullet settings changed the rise to %d", r)
 	}
 }

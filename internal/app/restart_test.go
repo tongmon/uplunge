@@ -113,3 +113,30 @@ func TestRestartReadsTuningSavedJustBefore(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestRestartAfterAClear(t *testing.T) {
+	g, _ := restartGame(t, replay.Replay{Lab: true, Seed: 4}, false)
+	g.recorded = append(g.recorded, sim.Input{Button: true})
+	g.world.Cleared, g.world.ClearTick = true, 10
+	g.restart()
+	if g.world.Cleared || g.world.ClearTick != 0 || len(g.recorded) != 0 || g.start.Seed != 4 || !g.start.Lab {
+		t.Fatalf("after restart: cleared %v tick %d recorded %d start %s, want a fresh lab 4",
+			g.world.Cleared, g.world.ClearTick, len(g.recorded), g.start.Where())
+	}
+}
+
+func TestLabRestartsAnytime(t *testing.T) {
+	lab, _ := restartGame(t, replay.Replay{Lab: true, Seed: 4}, false)
+	tower, _ := restartGame(t, replay.Replay{Tower: true, Seed: 4}, false)
+	if !lab.canRestart() || tower.canRestart() {
+		t.Fatalf("mid-run restart: lab %v tower %v, want only the lab", lab.canRestart(), tower.canRestart())
+	}
+	tower.world.Over = true
+	if !tower.canRestart() {
+		t.Fatal("a tower run that ended cannot restart")
+	}
+	tower.replaying = true
+	if tower.canRestart() {
+		t.Fatal("a replay can restart")
+	}
+}

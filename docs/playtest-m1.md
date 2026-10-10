@@ -8,13 +8,13 @@
 | 목적 | 명령 |
 |---|---|
 | 한 판 (1~2분 분량 탑, 물 있음) | `go run ./cmd/uplunge -reload` |
-| 같은 탑 다시 | `go run ./cmd/uplunge -seed <로그의 시드> -reload` |
+| 같은 탑 다시 | `go run ./cmd/uplunge -seed <로그의 시드> -reload` (실험 통로는 `-lab -seed <시드>`) |
 | 비율 실험 (적 간격 고정 통로) | `go run ./cmd/uplunge -lab -reload` |
 | 블록만 시험 (물 없음) | `go run ./cmd/uplunge -chunk Blocks -reload` |
 | 적만 시험 (물 없음) | `go run ./cmd/uplunge -chunk Enemies -reload` |
 | 플레이 녹화 (공유용) | `go run ./cmd/uplunge -record out/<이름>.rpl` (`-reload`와 같이 못 씀) |
 
-- 조작: ← → 또는 A D 이동, Z 또는 Space 점프/발사, R 재시작 (판이 끝나거나 클리어한 뒤).
+- 조작: ← → 또는 A D 이동, Z 또는 Space 점프/발사, R 재시작 (탑은 판이 끝나거나 클리어한 뒤, 실험 통로는 언제든).
 - `-reload`로 실행하면 `data/tuning.json`을 저장할 때마다 0.5초 안에 반영됨. 적, 탑 구성, 실험 통로는 다음 판(R)부터.
 - 화면 왼쪽 위: 연료, HP, 물까지 거리, **비율 = 탄창 높이 / 평균 적 간격**.
 - 탑 꼭대기에 닿으면 클리어 시간과 남은 HP가 나옴.
@@ -27,7 +27,7 @@
 ## 3. 비율 찾기 절차
 
 1. `go run ./cmd/uplunge -lab -reload`
-2. `data/tuning.json`의 `lab.spacing`을 바꾸고 R. 탄창 높이(지금 약 134px)를 기준으로 아래 값을 차례로 시험.
+2. `data/tuning.json`의 `lab.spacing`을 바꿔 저장하고 R (실험 통로에서는 언제든 재시작됨). 탄창 높이(지금 약 134px)를 기준으로 아래 값을 차례로 시험.
 
 | `lab.spacing` | 비율 (탄창 134px 기준) | 예상 |
 |---|---|---|
@@ -62,7 +62,7 @@
 | 기본 키 배치 | 위 조작 표 | 코드 (`internal/input`) | |
 | 남길 블록 종류 | 드릴 / 무른 / 총알 전용 모두 있음 | `-chunk Blocks`, 탑의 DrillGate·SoftFloor | |
 | 적 속도와 체력 | Floater 30px/s·2발, Spiker 제자리·3발 | `enemies` | |
-| 탑 길이 (1~2분 맞는지) | 조각 24개 | `tower.length` | |
+| 탑 길이 (1~2분 맞는지) | 시작 조각 포함 24개 | `tower.length` | |
 
 ## 5. 결과 기록
 

@@ -39,11 +39,24 @@ func TestEnemyGap(t *testing.T) {
 		{Name: "Floater", X: 50, Y: 500},
 		{Name: "Floater", X: 50, Y: 600},
 	}
-	if got := EnemyGap(testTuning(), m); got != 200 {
-		t.Fatalf("EnemyGap = %v, want (900-500)/2 = 200", got)
+	if got, n := EnemyGap(testTuning(), m); got != 200 || n != 3 {
+		t.Fatalf("EnemyGap = %v over %d, want (900-500)/2 = 200 over 3", got, n)
 	}
 	m.Spawns = m.Spawns[:2]
-	if got := EnemyGap(testTuning(), m); got != 0 {
-		t.Fatalf("EnemyGap with one Floater = %v, want 0", got)
+	if got, n := EnemyGap(testTuning(), m); got != 0 || n != 1 {
+		t.Fatalf("EnemyGap with one Floater = %v over %d, want 0 over 1", got, n)
+	}
+}
+
+func TestLosingTheLastHPAtTheTopIsNotAClear(t *testing.T) {
+	w := waterTower(t)
+	w.Player.HP = 1
+	b := w.Player.Body
+	w.Enemies = append(w.Enemies, Enemy{Def: testTuning().Enemies[1], Body: b, HP: 3})
+	w.Enemies[0].Body.Y = 0
+	w.Player.Body.Y, w.Player.VY = 0, 0
+	w.Step(Input{})
+	if !w.Over || w.Cleared {
+		t.Fatalf("Over=%v Cleared=%v, want the run over, not cleared", w.Over, w.Cleared)
 	}
 }
