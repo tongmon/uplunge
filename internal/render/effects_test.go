@@ -171,3 +171,46 @@ func TestStompShake(t *testing.T) {
 		t.Fatalf("stomp shook for %d steps, want about 10", steps)
 	}
 }
+
+func TestShakesDoNotMix(t *testing.T) {
+	w := world(t)
+	// A stomp during a shot's shake: the stronger of the two goes on whole,
+	// never the shot's time with the stomp's scale.
+	fx := NewEffects()
+	stepWith(&fx, w, sim.Events{Shot: true})
+	stepWith(&fx, w, sim.Events{Stomped: true})
+	if got := abs(fx.ShakeY()); got != 4 && got != 3 {
+		t.Fatalf("shake %d px after a stomp during a shot's shake, want the shot's", got)
+	}
+	// Both in one step: the shot's stronger shake.
+	fx = NewEffects()
+	stepWith(&fx, w, sim.Events{Shot: true, Stomped: true})
+	if got := abs(fx.ShakeY()); got != 4 {
+		t.Fatalf("shake %d px for a shot and a stomp at once, want the shot's 4", got)
+	}
+	// A shot late in a stomp's shake takes over.
+	fx = NewEffects()
+	stepWith(&fx, w, sim.Events{Stomped: true})
+	for i := 0; i < 8; i++ {
+		stepWith(&fx, w, sim.Events{})
+	}
+	stepWith(&fx, w, sim.Events{Shot: true})
+	if got := abs(fx.ShakeY()); got != 4 {
+		t.Fatalf("shake %d px for a shot late in a stomp's shake, want the shot's 4", got)
+	}
+}
+
+func TestBounceBeatsALandingInTheSameStep(t *testing.T) {
+	w := world(t)
+	f := w.Tuning().Feel
+	for _, ev := range []sim.Events{
+		{Landed: true, LandSpeed: f.LandSpeed, Stomped: true},
+		{Landed: true, LandSpeed: f.LandSpeed, Caught: true},
+	} {
+		fx := NewEffects()
+		stepWith(&fx, w, ev)
+		if x, y := fx.Scale(); x != f.JumpX || y != f.JumpY {
+			t.Fatalf("events %+v: scale %v, %v, want the bounce's stretch", ev, x, y)
+		}
+	}
+}
