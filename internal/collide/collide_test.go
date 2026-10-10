@@ -6,39 +6,21 @@ import (
 	"github.com/tongmon/uplunge/internal/level"
 )
 
-const ts = 16
-
-// mapFromRows builds a map from rows of '#' (solid) and '.' (empty).
-func mapFromRows(t *testing.T, rows ...string) *level.TileMap {
-	t.Helper()
-	m := level.NewTileMap(len(rows[0]), len(rows), ts)
-	for r, row := range rows {
-		if len(row) != m.Cols {
-			t.Fatalf("row %d has %d cells, want %d", r, len(row), m.Cols)
-		}
-		for c, ch := range row {
-			switch ch {
-			case '#':
-				m.Set(c, r, level.Solid)
-			case '.':
-			default:
-				t.Fatalf("unknown cell %q at (%d, %d)", ch, c, r)
-			}
-		}
-	}
-	return m
-}
-
-// testRoom has an open interior spanning x 16..79 and y 16..63, plus one solid
-// tile at x 48..63, y 48..63.
+// testRoom has 16 px tiles, an open interior spanning x 16..79 and y 16..63,
+// and one solid tile at x 48..63, y 48..63.
 func testRoom(t *testing.T) *level.TileMap {
-	return mapFromRows(t,
+	t.Helper()
+	m, err := level.ParseRows(16,
 		"######",
 		"#....#",
 		"#....#",
 		"#..#.#",
 		"######",
 	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return m
 }
 
 func TestMove(t *testing.T) {

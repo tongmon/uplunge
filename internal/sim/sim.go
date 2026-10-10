@@ -3,6 +3,11 @@
 // source of nondeterminism.
 package sim
 
+import (
+	"github.com/tongmon/uplunge/internal/level"
+	"github.com/tongmon/uplunge/internal/tuning"
+)
+
 // Hz is the fixed simulation rate in steps per second.
 const Hz = 60
 
@@ -20,14 +25,24 @@ type Input struct {
 type World struct {
 	// Tick counts the steps taken since the world was created.
 	Tick uint64
+	// Tuning is read every step, so replacing it takes effect on the next step.
+	Tuning tuning.Tuning
+	Map    *level.TileMap
+	Player Player
 }
 
-// NewWorld returns a world at tick zero.
-func NewWorld() *World {
-	return &World{}
+// NewWorld returns a world at tick zero with the player's top-left corner at
+// (x, y).
+func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
+	return &World{
+		Tuning: t,
+		Map:    m,
+		Player: newPlayer(t.Player, x, y),
+	}
 }
 
 // Step advances the world by exactly one fixed timestep of Dt seconds.
 func (w *World) Step(in Input) {
+	w.Player.step(in, w.Tuning.Player, w.Map)
 	w.Tick++
 }

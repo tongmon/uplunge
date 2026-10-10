@@ -1,0 +1,16 @@
+{
+  "player": {
+    "width": 12,
+    "height": 20,
+
+    "gravity": 1800,
+    "maxFall": 320,
+
+    "jumpSpeed": 210,
+    "jumpHoldTime": 0.2,
+
+    "runSpeed": 180,
+    "runAccel": 2000,
+    "airAccelMult": 0.65
+  }
+}
