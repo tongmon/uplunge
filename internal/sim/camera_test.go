@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/tongmon/uplunge/internal/level"
+	"github.com/tongmon/uplunge/internal/tuning"
 )
 
 // floorTower returns a 13x200-tile map with a solid bottom row.
@@ -121,5 +122,28 @@ func TestNewWorldInTower(t *testing.T) {
 	open := level.NewTileMap(13, 30, tile)
 	if _, err := NewWorldInTower(testTuning(), open); err == nil {
 		t.Fatal("a tower without a floor under the start gave no error")
+	}
+}
+
+func TestCameraFollowsAtTheSlowestRemain(t *testing.T) {
+	tun := testTuning()
+	tun.Camera.RemainPerSecond = tuning.MaxCameraRemain
+	w := NewWorld(tun, floorTower(), 96, 1600)
+	y := w.Camera.Y
+	w.Player.Body.Y -= 100
+	w.stepCamera()
+	if !(w.Camera.Y < y) {
+		t.Fatalf("camera stayed at %v with the slowest RemainPerSecond, want it to creep up", y)
+	}
+}
+
+func TestTowerPoolIsNotShared(t *testing.T) {
+	tun := testTuning()
+	w := NewWorld(tun, testRoom(t), 96, 0)
+	tun.Tower.Pool[0] = "changed"
+	got := w.Tuning()
+	got.Tower.Pool[1] = "changed"
+	if p := w.Tuning().Tower.Pool; p[0] != "Shaft" || p[1] != "Blocks" {
+		t.Fatalf("world tower pool changed through a caller's slice: %v", p)
 	}
 }

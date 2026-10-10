@@ -45,6 +45,7 @@ func (w *World) clampCamera(y float64) float64 {
 // RemainPerSecond of the gap each second, and never moves it down.
 func (w *World) stepCamera() {
 	target := w.cameraTarget()
-	follow := 1 - math.Pow(w.tuning.Camera.RemainPerSecond, Dt)
+	// 1 - remain^Dt, computed without rounding to 0 for remain near 1.
+	follow := -math.Expm1(Dt * math.Log(w.tuning.Camera.RemainPerSecond))
 	w.Camera.Y = min(w.Camera.Y, w.Camera.Y+(target-w.Camera.Y)*follow)
 }

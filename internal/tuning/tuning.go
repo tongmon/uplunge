@@ -37,6 +37,22 @@ type Camera struct {
 	RemainPerSecond float64 `json:"remainPerSecond"`
 }
 
+// MaxCameraRemain caps Camera.RemainPerSecond. Closer to 1, a step of
+// following moves the camera by less than float precision and it stops.
+const MaxCameraRemain = 0.99
+
+// MaxTowerLength matches level.MaxTowerLength, which this package cannot
+// import.
+const MaxTowerLength = 1000
+
+// Clone returns a copy that shares no slices with t, so a caller cannot
+// change a copy someone else keeps.
+func (t Tuning) Clone() Tuning {
+	t.Blocks = slices.Clone(t.Blocks)
+	t.Tower.Pool = slices.Clone(t.Tower.Pool)
+	return t
+}
+
 // Tower holds how a run's tower is stacked from chunks. It is read once,
 // when a run starts.
 type Tower struct {
@@ -199,12 +215,12 @@ func (t Tuning) validate() error {
 		return fmt.Errorf("camera.anchor must be between 0 and 1, got %v", c.Anchor)
 	case !(c.Lookahead >= 0):
 		return fmt.Errorf("camera.lookahead must not be negative, got %v", c.Lookahead)
-	case !(c.RemainPerSecond > 0 && c.RemainPerSecond < 1):
-		return fmt.Errorf("camera.remainPerSecond must be between 0 and 1, got %v", c.RemainPerSecond)
+	case !(c.RemainPerSecond > 0 && c.RemainPerSecond <= MaxCameraRemain):
+		return fmt.Errorf("camera.remainPerSecond must be above 0 and at most %v, got %v", MaxCameraRemain, c.RemainPerSecond)
 	case t.Tower.Base == "":
 		return fmt.Errorf("tower.base is missing")
-	case t.Tower.Length < 1:
-		return fmt.Errorf("tower.length must be at least 1, got %d", t.Tower.Length)
+	case t.Tower.Length < 1 || t.Tower.Length > MaxTowerLength:
+		return fmt.Errorf("tower.length must be 1 to %d, got %d", MaxTowerLength, t.Tower.Length)
 	case slices.Contains(t.Tower.Pool, ""):
 		return fmt.Errorf("tower.pool has an empty chunk name")
 	}

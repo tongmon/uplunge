@@ -101,7 +101,7 @@ func TestBuildTowerErrors(t *testing.T) {
 		length  int
 		wantErr string
 	}{
-		{"zero length", "Base", []string{"A"}, 0, "at least 1"},
+		{"zero length", "Base", []string{"A"}, 0, "must be 1 to at most"},
 		{"unknown base", "Nope", []string{"A"}, 2, `no chunk "Nope"`},
 		{"unknown pool chunk", "Base", []string{"A", "Nope"}, 2, `no chunk "Nope"`},
 		{"empty pool", "Base", nil, 2, "needs a pool"},
@@ -120,5 +120,12 @@ func TestBuildTowerErrors(t *testing.T) {
 	// The base alone needs no pool.
 	if _, _, err := BuildTower(chunks, "Base", nil, 1, rng.New(0)); err != nil {
 		t.Fatalf("base-only tower: %v", err)
+	}
+}
+
+func TestBuildTowerRejectsHugeLength(t *testing.T) {
+	_, _, err := BuildTower(towerChunks(t), "Base", []string{"A", "B"}, MaxTowerLength+1, rng.New(0))
+	if err == nil || !strings.Contains(err.Error(), "at most") {
+		t.Fatalf("error = %v, want one about the length limit", err)
 	}
 }

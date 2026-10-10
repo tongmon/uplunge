@@ -6,7 +6,6 @@ package sim
 import (
 	"errors"
 	"fmt"
-	"slices"
 
 	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/level"
@@ -46,7 +45,7 @@ type World struct {
 // (x, y). The world plays on its own copy of m, so breaking blocks leaves m
 // unchanged. Every tile value in m must have a block definition in t.
 func NewWorld(t tuning.Tuning, m *level.TileMap, x, y int) *World {
-	t.Blocks = slices.Clone(t.Blocks)
+	t = t.Clone()
 	w := &World{
 		tuning: t,
 		Map:    m.Clone(),
@@ -105,9 +104,7 @@ func NewWorldInTower(t tuning.Tuning, m *level.TileMap) (*World, error) {
 
 // Tuning returns a copy of the tuning the world currently steps with.
 func (w *World) Tuning() tuning.Tuning {
-	t := w.tuning
-	t.Blocks = slices.Clone(t.Blocks)
-	return t
+	return w.tuning.Clone()
 }
 
 // SetTuning replaces the tuning from the next step on. A new player size is
@@ -118,7 +115,7 @@ func (w *World) Tuning() tuning.Tuning {
 // is still applied, and calling SetTuning again later retries what was kept.
 func (w *World) SetTuning(t tuning.Tuning) error {
 	var errs []error
-	t.Blocks = slices.Clone(t.Blocks)
+	t = t.Clone()
 	b := &w.Player.Body
 	if err := w.setBlocks(t.Blocks); err != nil {
 		errs = append(errs, fmt.Errorf("sim: kept the block definitions: %w", err))

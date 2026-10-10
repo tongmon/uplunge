@@ -49,9 +49,11 @@ func TestParse(t *testing.T) {
 		{"anchor out of range", strings.Replace(valid, `"anchor": 0.667`, `"anchor": 1`, 1), "camera.anchor must be between 0 and 1"},
 		{"negative lookahead", strings.Replace(valid, `"lookahead": 0.2`, `"lookahead": -0.2`, 1), "camera.lookahead must not be negative"},
 		{"zero lookahead", strings.Replace(valid, `"lookahead": 0.2`, `"lookahead": 0`, 1), ""},
-		{"remain of 1", strings.Replace(valid, `"remainPerSecond": 0.01`, `"remainPerSecond": 1`, 1), "camera.remainPerSecond must be between 0 and 1"},
+		{"remain of 1", strings.Replace(valid, `"remainPerSecond": 0.01`, `"remainPerSecond": 1`, 1), "camera.remainPerSecond must be above 0 and at most 0.99"},
+		{"remain of 0.99", strings.Replace(valid, `"remainPerSecond": 0.01`, `"remainPerSecond": 0.99`, 1), ""},
 		{"no tower base", strings.Replace(valid, `"base": "Start", `, ``, 1), "tower.base is missing"},
-		{"zero tower length", strings.Replace(valid, `"length": 6`, `"length": 0`, 1), "tower.length must be at least 1"},
+		{"zero tower length", strings.Replace(valid, `"length": 6`, `"length": 0`, 1), "tower.length must be 1 to 1000"},
+		{"huge tower length", strings.Replace(valid, `"length": 6`, `"length": 2147483647`, 1), "tower.length must be 1 to 1000"},
 		{"empty pool name", strings.Replace(valid, `["Shaft", "Blocks"]`, `["Shaft", ""]`, 1), "tower.pool has an empty chunk name"},
 		{"block value out of range", strings.Replace(valid, `"value": 3`, `"value": 256`, 1), "blocks[1].value must be 1 to 255"},
 		{"block value twice", strings.Replace(valid, `"value": 3`, `"value": 1`, 1), "blocks[1].value 1 is defined twice"},
@@ -107,5 +109,18 @@ func TestBlockRGB(t *testing.T) {
 	r, g, b := Block{Color: "#C06040"}.RGB()
 	if r != 0xc0 || g != 0x60 || b != 0x40 {
 		t.Fatalf("RGB() = %x %x %x, want c0 60 40", r, g, b)
+	}
+}
+
+func TestCloneSharesNoSlices(t *testing.T) {
+	a, err := Parse([]byte(valid))
+	if err != nil {
+		t.Fatal(err)
+	}
+	b := a.Clone()
+	b.Blocks[0].Name = "x"
+	b.Tower.Pool[0] = "x"
+	if a.Blocks[0].Name == "x" || a.Tower.Pool[0] == "x" {
+		t.Fatal("changing the clone changed the original")
 	}
 }

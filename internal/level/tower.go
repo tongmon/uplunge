@@ -7,6 +7,10 @@ import (
 	"github.com/tongmon/uplunge/internal/rng"
 )
 
+// MaxTowerLength caps the chunks in a tower, so a typo in the tuning cannot
+// ask for gigabytes of map.
+const MaxTowerLength = 1000
+
 // Placement is one chunk in a tower.
 type Placement struct {
 	Name string
@@ -21,8 +25,8 @@ type Placement struct {
 // mirrored, and the same chunk never comes twice in a row (docs/design.md
 // section 7). Placements lists the chunks from the bottom up.
 func BuildTower(chunks []Chunk, base string, pool []string, length int, r *rng.Rand) (*TileMap, []Placement, error) {
-	if length < 1 {
-		return nil, nil, fmt.Errorf("level: tower length must be at least 1, got %d", length)
+	if length < 1 || length > MaxTowerLength {
+		return nil, nil, fmt.Errorf("level: tower length must be 1 to at most %d, got %d", MaxTowerLength, length)
 	}
 	byName := map[string]*TileMap{}
 	for _, c := range chunks {
