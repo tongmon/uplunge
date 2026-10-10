@@ -18,6 +18,8 @@ type Effects struct {
 	shakeClock float64
 	shakeSide  int
 	shakeY     int
+	// shakeScale is the px per second left of the shake running.
+	shakeScale float64
 
 	scaleX, scaleY float64
 
@@ -45,9 +47,11 @@ func (fx *Effects) Step(w *sim.World) {
 	// Shake: firing (down) shakes the view along the shot. The offset flips
 	// side every ShakeInterval, ShakeScale px per second left, rounded up.
 	if ev.Shot {
-		fx.shakeLeft = max(fx.shakeLeft, f.ShakeTime)
-		fx.shakeSide = 0
-		fx.shakeClock = f.ShakeInterval // flip on this step
+		fx.startShake(f.ShakeTime, f.ShakeScale, f.ShakeInterval)
+	}
+	// A stomp shakes the view too, as Downwell does on every stomp.
+	if ev.Stomped {
+		fx.startShake(f.StompShakeTime, f.StompShakeScale, f.ShakeInterval)
 	}
 	if fx.shakeLeft > 0 {
 		if fx.shakeClock >= f.ShakeInterval {
@@ -58,7 +62,7 @@ func (fx *Effects) Step(w *sim.World) {
 				fx.shakeSide = -fx.shakeSide
 			}
 			// The shot goes down, so the view is pushed opposite to it first.
-			fx.shakeY = -fx.shakeSide * int(math.Ceil(fx.shakeLeft*f.ShakeScale))
+			fx.shakeY = -fx.shakeSide * int(math.Ceil(fx.shakeLeft*fx.shakeScale))
 		}
 		fx.shakeClock += sim.Dt
 		fx.shakeLeft -= sim.Dt
@@ -69,7 +73,9 @@ func (fx *Effects) Step(w *sim.World) {
 	// Squash and stretch ease back to 1; a jump or a landing sets them anew.
 	fx.scaleX = approach(fx.scaleX, 1, f.Recover*sim.Dt)
 	fx.scaleY = approach(fx.scaleY, 1, f.Recover*sim.Dt)
-	if ev.Jumped {
+	// A stomp and the water's launch stretch like a jump, as Celeste's
+	// Bounce does.
+	if ev.Jumped || ev.Stomped || ev.Caught {
 		fx.scaleX, fx.scaleY = f.JumpX, f.JumpY
 	}
 	if ev.Landed {
@@ -88,6 +94,15 @@ func (fx *Effects) Step(w *sim.World) {
 	} else {
 		fx.flashing = false
 	}
+}
+
+// startShake starts a shake of time seconds at scale px per second left, or
+// keeps a longer one going, as Celeste's DirectionalShake does.
+func (fx *Effects) startShake(time, scale, interval float64) {
+	fx.shakeLeft = max(fx.shakeLeft, time)
+	fx.shakeScale = scale
+	fx.shakeSide = 0
+	fx.shakeClock = interval // flip on this step
 }
 
 // ShakeY is the vertical screen offset of the shake, in whole pixels.

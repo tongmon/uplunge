@@ -23,7 +23,13 @@ var (
 	// see-through so the player stays visible under the surface.
 	waterColor   = color.RGBA{R: 0x10, G: 0x50, B: 0xa0, A: 0xa0}
 	surfaceColor = color.RGBA{R: 0x80, G: 0xd0, B: 0xff, A: 0xff}
+	// The goal line marks the top of the map, where a run with a goal
+	// clears: alternating squares, like a finish line.
+	goalColors = [2]color.RGBA{{R: 0xff, G: 0xd0, B: 0x40, A: 0xff}, {R: 0x40, G: 0x30, B: 0x10, A: 0xff}}
 )
+
+// goalSquare is the size of one square of the goal line.
+const goalSquare = 4
 
 // surfaceThickness is the height of the bright line on the water surface.
 const surfaceThickness = 2
@@ -70,6 +76,15 @@ func World(screen *ebiten.Image, w *sim.World, fx *Effects) {
 				h = oneWayThickness
 			}
 			vector.FillRect(screen, x, y, ts, h, colors[m.At(c, r)], false)
+		}
+	}
+
+	if w.Goal {
+		for i := 0; i*goalSquare < sim.ViewWidth; i++ {
+			for row := 0; row < 2; row++ {
+				vector.FillRect(screen, float32(i*goalSquare), float32(row*goalSquare)+oy,
+					goalSquare, goalSquare, goalColors[(i+row)%2], false)
+			}
 		}
 	}
 

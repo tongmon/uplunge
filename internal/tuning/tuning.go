@@ -103,9 +103,14 @@ type Feel struct {
 	ShakeTime     float64 `json:"shakeTime"`
 	ShakeInterval float64 `json:"shakeInterval"`
 	ShakeScale    float64 `json:"shakeScale"`
+	// A stomp shakes the view the same way for StompShakeTime at
+	// StompShakeScale.
+	StompShakeTime  float64 `json:"stompShakeTime"`
+	StompShakeScale float64 `json:"stompShakeScale"`
 
-	// A jump stretches the drawn player to Jump{X,Y} times its size; a
-	// landing squashes it toward Land{X,Y}, fully at LandSpeed or faster.
+	// A jump, a stomp, or the water's launch stretches the drawn player to
+	// Jump{X,Y} times its size; a landing squashes it toward Land{X,Y}, fully
+	// at LandSpeed or faster.
 	// Both ease back to 1 at Recover per second.
 	JumpX     float64 `json:"jumpX"`
 	JumpY     float64 `json:"jumpY"`
@@ -339,6 +344,8 @@ func (t Tuning) validate() error {
 		{"feel.shakeTime", t.Feel.ShakeTime},
 		{"feel.shakeInterval", t.Feel.ShakeInterval},
 		{"feel.shakeScale", t.Feel.ShakeScale},
+		{"feel.stompShakeTime", t.Feel.StompShakeTime},
+		{"feel.stompShakeScale", t.Feel.StompShakeScale},
 		{"feel.jumpX", t.Feel.JumpX},
 		{"feel.jumpY", t.Feel.JumpY},
 		{"feel.landX", t.Feel.LandX},

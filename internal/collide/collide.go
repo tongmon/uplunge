@@ -41,6 +41,22 @@ func (b *Body) MoveY(m *level.TileMap, dy float64) bool {
 	return b.moveY(m, dy, true)
 }
 
+// MoveYExact moves the body vertically by exactly n whole pixels, as MoveY
+// would, and drops the vertical remainder, so the body ends on an exact
+// pixel with nothing carried over.
+func (b *Body) MoveYExact(m *level.TileMap, n int) bool {
+	b.remY = 0
+	step := sign(n)
+	for ; n != 0; n -= step {
+		if Overlaps(m, b.X, b.Y+step, b.W, b.H) ||
+			(step > 0 && onOneWayTop(m, b.X, b.Y, b.W, b.H)) {
+			return true
+		}
+		b.Y += step
+	}
+	return false
+}
+
 // MoveYThrough is MoveY that passes through one-way platforms.
 func (b *Body) MoveYThrough(m *level.TileMap, dy float64) bool {
 	return b.moveY(m, dy, false)

@@ -388,3 +388,31 @@ func TestKnockbackFollowsTheHitAngle(t *testing.T) {
 		})
 	}
 }
+
+func TestStompSnapsOntoTheEnemyTop(t *testing.T) {
+	// However deep the feet sank into the Floater on the stomp step, the
+	// bounce starts with the feet on its top, so every stomp of it rises the
+	// same height.
+	peak := map[int]int{}
+	for _, drop := range []int{10, 40, 90} {
+		w := stillEnemyWorld(t, "Floater", 104, 1006, 98, 1000-20-drop)
+		for i := 0; i < Hz && !w.Events.Stomped; i++ {
+			w.Step(Input{})
+		}
+		if !w.Events.Stomped {
+			t.Fatalf("drop %d: no stomp", drop)
+		}
+		if b := w.Player.Body; b.Y+b.H != 1000 {
+			t.Fatalf("drop %d: feet at %d after the stomp, want on the Floater's top at 1000", drop, b.Y+b.H)
+		}
+		top := w.Player.Body.Y
+		for i := 0; i < Hz; i++ {
+			w.Step(Input{})
+			top = min(top, w.Player.Body.Y)
+		}
+		peak[drop] = top
+	}
+	if peak[10] != peak[40] || peak[40] != peak[90] {
+		t.Fatalf("bounce peaks %v, want the same from every drop height", peak)
+	}
+}

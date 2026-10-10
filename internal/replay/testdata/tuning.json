@@ -64,6 +64,8 @@
     "shakeTime": 0.2,
     "shakeInterval": 0.04,
     "shakeScale": 20,
+    "stompShakeTime": 0.16,
+    "stompShakeScale": 12,
 
     "jumpX": 0.6,
     "jumpY": 1.4,

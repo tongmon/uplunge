@@ -140,3 +140,34 @@ func TestVisibleRowsFollowTheShake(t *testing.T) {
 		}
 	}
 }
+
+func TestStompAndCatchStretch(t *testing.T) {
+	w := world(t)
+	f := w.Tuning().Feel
+	for _, ev := range []sim.Events{{Stomped: true}, {Caught: true}} {
+		fx := NewEffects()
+		stepWith(&fx, w, ev)
+		if x, y := fx.Scale(); x != f.JumpX || y != f.JumpY {
+			t.Fatalf("events %+v: scale %v, %v, want the jump's %v, %v", ev, x, y, f.JumpX, f.JumpY)
+		}
+	}
+}
+
+func TestStompShake(t *testing.T) {
+	w := world(t)
+	fx := NewEffects()
+	stepWith(&fx, w, sim.Events{Stomped: true})
+	// 0.16 s * 12 px/s = 1.92, rounded up: 2 px, as Downwell's 2 px stomp
+	// shake.
+	if got := fx.ShakeY(); got != -2 {
+		t.Fatalf("stomp shake offset %d, want -2", got)
+	}
+	steps := 0
+	for fx.ShakeY() != 0 && steps < sim.Hz {
+		stepWith(&fx, w, sim.Events{})
+		steps++
+	}
+	if steps < 9 || steps > 11 { // StompShakeTime 0.16 s at 60 Hz
+		t.Fatalf("stomp shook for %d steps, want about 10", steps)
+	}
+}

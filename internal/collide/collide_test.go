@@ -293,3 +293,19 @@ func TestOnGround(t *testing.T) {
 		})
 	}
 }
+
+func TestMoveYExact(t *testing.T) {
+	m := testRoom(t)
+	b := Body{X: 20, Y: 30, W: 10, H: 12}
+	b.MoveY(m, 0.4) // leave a remainder
+	if hit := b.MoveYExact(m, -5); hit || b.Y != 25 {
+		t.Fatalf("Y = %d hit = %v after moving up 5, want 25 and no hit", b.Y, hit)
+	}
+	if hit := b.MoveYExact(m, -100); !hit || b.Y != 16 {
+		t.Fatalf("Y = %d hit = %v moving into the ceiling, want stopped at 16", b.Y, hit)
+	}
+	// The remainder was dropped: 0.2 alone does not add up to a pixel.
+	if b.MoveY(m, 0.2); b.Y != 16 {
+		t.Fatalf("Y = %d after a 0.2 px move, want 16 with the remainder dropped", b.Y)
+	}
+}
