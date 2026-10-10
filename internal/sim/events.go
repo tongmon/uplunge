@@ -1,5 +1,18 @@
 package sim
 
+import "github.com/tongmon/uplunge/internal/level"
+
+// MaxBroken caps the broken cells one step reports.
+const MaxBroken = 8
+
+// BrokenCell is a tile broken during a step: where it was, what it was, and
+// whether a bullet broke it (from above) rather than the head (from below).
+type BrokenCell struct {
+	Col, Row int
+	Tile     level.Tile
+	ByBullet bool
+}
+
 // Events reports what happened during the last step, for effects that live
 // outside the simulation, such as screen shake and sound.
 type Events struct {
@@ -23,4 +36,17 @@ type Events struct {
 	// the player.
 	Hurt   bool
 	Caught bool
+
+	// Broken holds the first NBroken tiles broken this step, for debris.
+	// It is an array, not a slice, so Events stays comparable.
+	Broken  [MaxBroken]BrokenCell
+	NBroken int
+}
+
+// addBroken records a broken tile, dropping it once MaxBroken are recorded.
+func (e *Events) addBroken(c BrokenCell) {
+	if e.NBroken < MaxBroken {
+		e.Broken[e.NBroken] = c
+		e.NBroken++
+	}
 }

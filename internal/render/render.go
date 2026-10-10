@@ -103,6 +103,11 @@ func World(screen *ebiten.Image, w *sim.World, fx *Effects) {
 		vector.FillRect(screen, float32(b.X), float32(b.Y)+oy, float32(b.W), float32(b.H), bulletColor, false)
 	}
 
+	for _, p := range fx.Debris {
+		vector.FillRect(screen, float32(math.Round(p.X)), float32(math.Round(p.Y))+oy,
+			float32(p.Size), float32(p.Size), colors[p.Tile], false)
+	}
+
 	if w.Water.On {
 		top := float32(w.Water.Surface()) + oy
 		if top < sim.ViewHeight {

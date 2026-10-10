@@ -3,6 +3,7 @@ package sim
 import (
 	"testing"
 
+	"github.com/tongmon/uplunge/internal/collide"
 	"github.com/tongmon/uplunge/internal/level"
 )
 
@@ -278,5 +279,80 @@ func TestFreezeFor(t *testing.T) {
 		if got := freezeFor(tt.ev, f); got != tt.want {
 			t.Errorf("freezeFor(%+v) = %d, want %d", tt.ev, got, tt.want)
 		}
+	}
+}
+
+func TestBrokenCellEvents(t *testing.T) {
+	// The head drills the drill block above it: one broken cell, by drill.
+	w := roomWithRow(t, 8, drill, 96)
+	for i := 0; i < 20 && !w.Events.Drilled; i++ {
+		w.Step(Input{Button: true})
+	}
+	if w.Events.NBroken != 1 {
+		t.Fatalf("%d broken cells after the drill break, want 1", w.Events.NBroken)
+	}
+	if c := w.Events.Broken[0]; c != (BrokenCell{Col: 6, Row: 8, Tile: drill}) {
+		t.Fatalf("broken cell %+v, want the drill block at (6, 8) broken by drill", c)
+	}
+
+	// A bullet breaks a soft block under the player: one cell, by bullet.
+	ww := tallWorld()
+	for c := 1; c < 12; c++ {
+		ww.Map.Set(c, 104, soft)
+	}
+	ww.blocks.apply(ww.Map)
+	ww.Step(Input{})
+	ww.Step(Input{Button: true})
+	var got []BrokenCell
+	for i := 0; i < 20 && len(got) == 0; i++ {
+		ww.Step(Input{})
+		for j := 0; j < ww.Events.NBroken; j++ {
+			got = append(got, ww.Events.Broken[j])
+		}
+	}
+	if len(got) != 1 || got[0] != (BrokenCell{Col: 6, Row: 104, Tile: soft, ByBullet: true}) {
+		t.Fatalf("broken cells %+v, want the soft block at (6, 104) broken by a bullet", got)
+	}
+}
+
+func TestBrokenCellsAreCapped(t *testing.T) {
+	var ev Events
+	for i := 0; i < MaxBroken+3; i++ {
+		ev.addBroken(BrokenCell{Col: i})
+	}
+	if ev.NBroken != MaxBroken || ev.Broken[MaxBroken-1].Col != MaxBroken-1 {
+		t.Fatalf("NBroken %d, last %+v, want the first %d kept", ev.NBroken, ev.Broken[MaxBroken-1], MaxBroken)
+	}
+}
+
+func TestManyBrokenCellsInOneStep(t *testing.T) {
+	// Ten bullets right above ten soft blocks break all ten in one step;
+	// the step reports the first MaxBroken, and the next step none.
+	w := tallWorld()
+	for c := 1; c <= 10; c++ {
+		w.Map.Set(c, 110, soft)
+		w.Bullets = append(w.Bullets, Bullet{
+			Body: collide.Body{X: c*tile + 6, Y: 110*tile - 9, W: 4, H: 8},
+			life: 5,
+		})
+	}
+	w.blocks.apply(w.Map)
+	w.Step(Input{})
+	for c := 1; c <= 10; c++ {
+		if w.Map.At(c, 110) != level.Empty {
+			t.Fatalf("soft block at column %d not broken", c)
+		}
+	}
+	if w.Events.NBroken != MaxBroken {
+		t.Fatalf("NBroken %d with 10 cells broken, want the cap %d", w.Events.NBroken, MaxBroken)
+	}
+	for i := 0; i < w.Events.NBroken; i++ {
+		if c := w.Events.Broken[i]; !c.ByBullet || c.Row != 110 {
+			t.Fatalf("broken cell %d %+v, want a bullet break in row 110", i, c)
+		}
+	}
+	w.Step(Input{})
+	if w.Events.NBroken != 0 {
+		t.Fatalf("the next step reports %d broken cells, want none", w.Events.NBroken)
 	}
 }

@@ -45,12 +45,14 @@ func (bt *blockTable) apply(m *level.TileMap) {
 }
 
 // breakIn empties every tile the box at (x, y) of size w×h overlaps whose
-// block breaks by the given cause, and reports whether any did.
-func (bt *blockTable) breakIn(m *level.TileMap, x, y, w, h int, breaks func(tuning.Block) bool) bool {
+// block breaks by the given cause, records each in ev, and reports whether
+// any broke. byBullet says the cause, for the record.
+func (bt *blockTable) breakIn(m *level.TileMap, x, y, w, h int, breaks func(tuning.Block) bool, byBullet bool, ev *Events) bool {
 	broke := false
 	collide.EachTile(m, x, y, w, h, func(c, r int) bool {
 		if t := m.At(c, r); t != level.Empty && breaks(bt[t]) {
 			m.Set(c, r, level.Empty)
+			ev.addBroken(BrokenCell{Col: c, Row: r, Tile: t, ByBullet: byBullet})
 			broke = true
 		}
 		return true

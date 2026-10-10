@@ -272,7 +272,7 @@ func (pl *Player) step(in Input, t tuning.Tuning, m *level.TileMap, bt *blockTab
 // by moving sideways, trying the side the player is moving toward.
 func (pl *Player) clearCeiling(p tuning.Player, m *level.TileMap, bt *blockTable) bool {
 	b := &pl.Body
-	broke := bt.breakIn(m, b.X, b.Y-1, b.W, 1, byDrill)
+	broke := bt.breakIn(m, b.X, b.Y-1, b.W, 1, byDrill, false, &pl.events)
 	if broke {
 		pl.events.Drilled = true
 	}

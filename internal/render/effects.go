@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"github.com/tongmon/uplunge/internal/sim"
+	"github.com/tongmon/uplunge/internal/tuning"
 )
 
 // Effects is what the screen adds on top of the simulation to sell impacts:
@@ -27,6 +28,20 @@ type Effects struct {
 	// is whether this step shows it.
 	flashSteps int
 	flashing   bool
+
+	// Debris is the pieces of broken blocks in flight, oldest first.
+	Debris []Piece
+}
+
+// Piece is one bit of a broken block, in world pixels.
+type Piece struct {
+	X, Y, VX, VY float64
+	// Size is the edge of the square piece.
+	Size float64
+	// Tile is the broken block's value, for its color.
+	Tile uint8
+	// Steps is how many steps it has left.
+	Steps int
 }
 
 // NewEffects returns effects at rest.
@@ -49,9 +64,13 @@ func (fx *Effects) Step(w *sim.World) {
 	if ev.Shot {
 		fx.startShake(f.ShakeTime, f.ShakeScale, f.ShakeInterval)
 	}
-	// A stomp shakes the view too, as Downwell does on every stomp.
+	// A stomp shakes the view too, as Downwell does on every stomp, and so
+	// does the head breaking a block.
 	if ev.Stomped {
 		fx.startShake(f.StompShakeTime, f.StompShakeScale, f.ShakeInterval)
+	}
+	if ev.Drilled {
+		fx.startShake(f.DrillShakeTime, f.DrillShakeScale, f.ShakeInterval)
 	}
 	if fx.shakeLeft > 0 {
 		if fx.shakeClock >= f.ShakeInterval {
@@ -78,11 +97,16 @@ func (fx *Effects) Step(w *sim.World) {
 		fx.scaleX = 1 + (f.LandX-1)*s
 		fx.scaleY = 1 + (f.LandY-1)*s
 	}
-	// A stomp and the water's launch stretch like a jump, as Celeste's
-	// Bounce does, and win over a landing in the same step: the player
-	// leaves going up.
-	if ev.Jumped || ev.Stomped || ev.Caught {
+	// A stomp, a drill break, and the water's launch stretch like a jump,
+	// as Celeste's Bounce does, and win over a landing in the same step: the
+	// player leaves going up.
+	if ev.Jumped || ev.Stomped || ev.Drilled || ev.Caught {
 		fx.scaleX, fx.scaleY = f.JumpX, f.JumpY
+	}
+
+	fx.stepDebris(f.DebrisGravity)
+	for i := 0; i < ev.NBroken; i++ {
+		fx.burst(ev.Broken[i], w.Map.TileSize, f)
 	}
 
 	// The lamp flashes white for FlashTime on a refill, counting this step.
@@ -95,6 +119,52 @@ func (fx *Effects) Step(w *sim.World) {
 	} else {
 		fx.flashing = false
 	}
+}
+
+// burst breaks a tile into 2×2 pieces, DebrisGap apart around the tile's
+// middle so the break reads even while frozen, thrown away from the hit: up
+// for the head breaking it from below, down for a bullet from above, and
+// outward from the middle. Speeds depend only on the piece's place, so a
+// replay bursts the same.
+func (fx *Effects) burst(c sim.BrokenCell, tileSize int, f tuning.Feel) {
+	size, gap := f.DebrisSize, f.DebrisGap
+	midX := float64(c.Col*tileSize) + float64(tileSize)/2
+	midY := float64(c.Row*tileSize) + float64(tileSize)/2
+	for i := 0; i < 4; i++ {
+		side, low := float64(i%2*2-1), i/2 == 1 // -1 left, 1 right; top or bottom row
+		x := midX + side*gap/2 + (side-1)*size/2
+		y := midY - gap/2 - size
+		if low {
+			y = midY + gap/2
+		}
+		vy := -f.DebrisSpeed // the head breaks from below: pieces fly up
+		if c.ByBullet {
+			vy = f.DebrisSpeed * f.DebrisBulletMult // a bullet from above knocks them down
+		}
+		if low != c.ByBullet {
+			vy *= f.DebrisFarMult // the row away from the hit flies less
+		}
+		fx.Debris = append(fx.Debris, Piece{
+			X: x, Y: y, VX: side * f.DebrisSpeed / 2, VY: vy, Size: size,
+			Tile: uint8(c.Tile), Steps: max(1, int(math.Round(f.DebrisLife*sim.Hz))),
+		})
+	}
+}
+
+// stepDebris moves the debris one step and drops the pieces whose time is
+// up.
+func (fx *Effects) stepDebris(gravity float64) {
+	kept := fx.Debris[:0]
+	for _, p := range fx.Debris {
+		if p.Steps--; p.Steps <= 0 {
+			continue
+		}
+		p.VY += gravity * sim.Dt
+		p.X += p.VX * sim.Dt
+		p.Y += p.VY * sim.Dt
+		kept = append(kept, p)
+	}
+	fx.Debris = kept
 }
 
 // startShake starts a shake of time seconds at scale px per second left,

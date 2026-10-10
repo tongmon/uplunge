@@ -31,7 +31,9 @@ const valid = `{"player": {
 	"startBelow": 32, "bounce": 400, "retreat": 96, "retreatTime": 0.4, "pauseTime": 0.5
 }, "feel": {
 	"stompFreeze": 0.0167, "hitFreeze": 0.0167, "drillFreeze": 0.05, "shakeTime": 0.2, "shakeInterval": 0.04, "shakeScale": 20,
-	"stompShakeTime": 0.16, "stompShakeScale": 12,
+	"stompShakeTime": 0.16, "stompShakeScale": 12, "drillShakeTime": 0.2, "drillShakeScale": 15,
+	"debrisSize": 4, "debrisGap": 2, "debrisSpeed": 120, "debrisBulletMult": 0.5, "debrisFarMult": 0.6,
+	"debrisGravity": 900, "debrisLife": 0.5,
 	"jumpX": 0.6, "jumpY": 1.4, "landX": 1.6, "landY": 0.4, "landSpeed": 480, "recover": 1.75,
 	"fullColor": "#ff9a3c", "emptyColor": "#3c78ff", "flashTime": 0.12
 }, "tower": {

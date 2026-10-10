@@ -53,8 +53,9 @@ type World struct {
 	// freezeSteps is the number of steps left during which the world stands
 	// still after a stomp, a bullet hit, or a drill break.
 	freezeSteps int
-	// bulletHit is set when a bullet hit an enemy during this step.
-	bulletHit bool
+	// worldEvents collects this step's events that come from the world
+	// rather than the player: bullet hits and blocks bullets broke.
+	worldEvents Events
 
 	// tuning is read every step; change it with SetTuning.
 	tuning tuning.Tuning
@@ -93,7 +94,7 @@ func (w *World) Step(in Input) {
 		w.Player.noteFrozenInput(in)
 		return
 	}
-	w.bulletHit = false
+	w.worldEvents = Events{}
 	w.stepBullets()
 	prevBottom := w.Player.Body.Y + w.Player.Body.H
 	if w.Player.step(in, w.tuning, w.Map, w.blocks) {
@@ -110,7 +111,10 @@ func (w *World) Step(in Input) {
 	}
 
 	w.Events = w.Player.events
-	w.Events.Hit = w.bulletHit
+	w.Events.Hit = w.worldEvents.Hit
+	for i := 0; i < w.worldEvents.NBroken; i++ {
+		w.Events.addBroken(w.worldEvents.Broken[i])
+	}
 	w.freezeSteps = freezeFor(w.Events, w.tuning.Feel)
 }
 
